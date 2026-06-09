@@ -87,10 +87,16 @@ function normalizeText(value) {
     .trim();
 }
 
-function getUsdaNutrient(food, names) {
-  const nutrient = (food.foodNutrients || []).find((entry) =>
+function getUsdaNutrient(food, names, preferredUnit = '') {
+  const nutrients = food.foodNutrients || [];
+  const matches = nutrients.filter((entry) =>
     names.some((name) => normalizeText(entry.nutrientName) === normalizeText(name))
   );
+
+  const preferred = preferredUnit
+    ? matches.find((entry) => normalizeText(entry.unitName) === normalizeText(preferredUnit))
+    : null;
+  const nutrient = preferred || matches[0];
 
   return Number(nutrient?.value || 0);
 }
@@ -98,7 +104,7 @@ function getUsdaNutrient(food, names) {
 function mapUsdaFood(food) {
   if (!food) return null;
 
-  const calories = getUsdaNutrient(food, USDA_NUTRIENTS.calories);
+  const calories = getUsdaNutrient(food, USDA_NUTRIENTS.calories, 'KCAL');
   const protein = getUsdaNutrient(food, USDA_NUTRIENTS.protein);
   const carbs = getUsdaNutrient(food, USDA_NUTRIENTS.carbs);
   const fat = getUsdaNutrient(food, USDA_NUTRIENTS.fat);
@@ -172,13 +178,10 @@ async function parseMealWithClaude(meal) {
 }
 
 async function searchUsdaFood(item) {
-  if (!process.env.USDA_API_KEY) return null;
-
   const url = new URL('https://api.nal.usda.gov/fdc/v1/foods/search');
-  url.searchParams.set('api_key', process.env.USDA_API_KEY);
+  url.searchParams.set('api_key', process.env.USDA_API_KEY || 'DEMO_KEY');
   url.searchParams.set('query', item.food_query);
-  url.searchParams.set('pageSize', '5');
-  url.searchParams.set('dataType', 'Foundation,SR Legacy,Survey (FNDDS)');
+  url.searchParams.set('pageSize', '10');
 
   const response = await fetch(url);
   if (!response.ok) return null;
