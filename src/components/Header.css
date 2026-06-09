@@ -16,7 +16,7 @@
   justify-content: center;
   align-items: center;
   padding: 25px 0;
-  gap: 80px;
+  gap: clamp(36px, 7vw, 88px);
 }
 
 .logo {
@@ -62,25 +62,6 @@
 
 .nav a:hover::after {
   width: 100%;
-}
-
-.btn-cta {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  color: white;
-  border: none;
-  padding: 14px 32px;
-  border-radius: 50px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--transition);
-  box-shadow: 0 4px 15px rgba(0, 208, 132, 0.3);
-  font-size: 15px;
-  letter-spacing: 0.5px;
-}
-
-.btn-cta:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
 }
 
 .hamburger {
@@ -177,10 +158,6 @@
     background: rgba(0, 208, 132, 0.1);
   }
 
-  .btn-cta {
-    padding: 12px 24px;
-    font-size: 13px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -211,8 +188,4 @@
     font-size: 14px;
   }
 
-  .btn-cta {
-    padding: 10px 20px;
-    font-size: 12px;
-  }
 }

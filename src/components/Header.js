@@ -12,11 +12,6 @@ export function Header() {
     setMobileMenuOpen(false);
   };
 
-  const handleCheckout = () => {
-    setMobileMenuOpen(false);
-    window.location.href = '/checkout';
-  };
-
   return (
     <header className="header sticky">
       <div className="container">
@@ -39,10 +34,8 @@ export function Header() {
             <a onClick={() => scrollToSection('lectii')} href="#lectii">Lecții</a>
             <a onClick={() => scrollToSection('transformari')} href="#transformari">Transformări</a>
             <a onClick={() => scrollToSection('tarife')} href="#tarife">Tarife</a>
-            <a href="contact.html">Contact</a>
+            <a href="mailto:fiifitonline@gmail.com">Contact</a>
           </nav>
-          
-          <button className="btn-cta" onClick={handleCheckout}>Înscrie-te acum</button>
         </div>
       </div>
     </header>
