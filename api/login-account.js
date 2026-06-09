@@ -62,6 +62,13 @@ module.exports = async function handler(req, res) {
       });
     }
 
+    if (!data.session?.access_token) {
+      return res.status(500).json({
+        field: 'form',
+        error: 'Login succeeded, but Supabase did not return a session. Add SUPABASE_ANON_KEY in Vercel and redeploy.'
+      });
+    }
+
     return res.status(200).json({
       user: {
         id: data.user?.id,

@@ -25,7 +25,6 @@ export function Account() {
     const isExpired = expiresAt && expiresAt < Date.now();
 
     if (!storedAuth.user || !storedAuth.session?.access_token || isExpired) {
-      clearStoredAuth();
       window.location.href = '/login';
       return;
     }

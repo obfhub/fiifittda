@@ -115,9 +115,14 @@ export function Login() {
         return;
       }
 
+      if (!data?.session?.access_token) {
+        setErrors({ form: 'Autentificarea a reusit, dar sesiunea lipseste. Adauga SUPABASE_ANON_KEY in Vercel si redeploy.' });
+        return;
+      }
+
       localStorage.setItem('fiifit_user', JSON.stringify(data.user));
       localStorage.setItem('fiifit_session', JSON.stringify(data.session));
-      window.location.href = '/account';
+      window.location.assign('/account');
     } catch (error) {
       setErrors({ form: error.message || 'Nu am putut autentifica.' });
     } finally {
