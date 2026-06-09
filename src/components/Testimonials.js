@@ -1,4 +1,5 @@
 import React from 'react';
+import { Marquee } from './Marquee';
 import './Testimonials.css';
 
 const testimonials = [
@@ -58,30 +59,6 @@ function TestimonialCard({ testimonial }) {
   );
 }
 
-function TestimonialColumn({ items, reverse = false, delay = '0s' }) {
-  const loopItems = Array.from({ length: 3 }, () => items).flat();
-
-  return (
-    <div className="testimonial-column">
-      <div
-        className={`testimonial-track${reverse ? ' reverse' : ''}`}
-        style={{ '--marquee-delay': delay }}
-      >
-        {[0, 1].map((group) => (
-          <div className="testimonial-group" key={group} aria-hidden={group > 0}>
-            {loopItems.map((testimonial, index) => (
-              <TestimonialCard
-                testimonial={testimonial}
-                key={`${group}-${testimonial.name}-${index}`}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 export function Testimonials() {
   const columns = [
     testimonials,
@@ -104,10 +81,48 @@ export function Testimonials() {
 
         <div className="testimonials-stage" aria-label="Povești de transformare">
           <div className="testimonials-marquee">
-            <TestimonialColumn items={columns[0]} delay="-8s" />
-            <TestimonialColumn items={columns[1]} reverse delay="-20s" />
-            <TestimonialColumn items={columns[2]} delay="-32s" />
-            <TestimonialColumn items={columns[3]} reverse delay="-44s" />
+            <Marquee
+              className="testimonial-marquee-column"
+              vertical
+              repeat={3}
+              pauseOnHover
+            >
+              {columns[0].map((testimonial) => (
+                <TestimonialCard key={testimonial.name} testimonial={testimonial} />
+              ))}
+            </Marquee>
+            <Marquee
+              className="testimonial-marquee-column"
+              vertical
+              repeat={3}
+              pauseOnHover
+              reverse
+            >
+              {columns[1].map((testimonial) => (
+                <TestimonialCard key={testimonial.name} testimonial={testimonial} />
+              ))}
+            </Marquee>
+            <Marquee
+              className="testimonial-marquee-column"
+              vertical
+              repeat={3}
+              pauseOnHover
+            >
+              {columns[2].map((testimonial) => (
+                <TestimonialCard key={testimonial.name} testimonial={testimonial} />
+              ))}
+            </Marquee>
+            <Marquee
+              className="testimonial-marquee-column"
+              vertical
+              repeat={3}
+              pauseOnHover
+              reverse
+            >
+              {columns[3].map((testimonial) => (
+                <TestimonialCard key={testimonial.name} testimonial={testimonial} />
+              ))}
+            </Marquee>
           </div>
           <div className="testimonial-fade fade-top"></div>
           <div className="testimonial-fade fade-bottom"></div>
