@@ -7,21 +7,46 @@ function clearStoredAuth() {
   localStorage.removeItem('fiifit_session');
 }
 
+function getStoredAuth() {
+  try {
+    const user = JSON.parse(localStorage.getItem('fiifit_user') || 'null');
+    const auth = JSON.parse(localStorage.getItem('fiifit_auth') || 'null');
+    const expiresAt = Number(auth?.expires_at || 0) * 1000;
+
+    if (!user || !auth?.authenticated) return null;
+    if (expiresAt && expiresAt < Date.now()) return null;
+
+    return { user, auth };
+  } catch (error) {
+    return null;
+  }
+}
+
 export function Account() {
-  const [{ user, auth }, setAuth] = useState(() => ({ user: null, auth: null }));
+  const [{ user, auth }, setAuth] = useState(() => getStoredAuth() || { user: null, auth: null });
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
 
     async function checkAuth() {
+      const storedAuth = getStoredAuth();
+
       try {
         const response = await fetch('/api/me', { credentials: 'include' });
         const data = await response.json();
 
         if (!response.ok || !data.authenticated) {
+          if (storedAuth) {
+            if (isMounted) {
+              setAuth(storedAuth);
+              setIsChecking(false);
+            }
+            return;
+          }
+
           clearStoredAuth();
-          window.location.href = '/login';
+          window.location.replace('/login');
           return;
         }
 
@@ -33,8 +58,16 @@ export function Account() {
           setIsChecking(false);
         }
       } catch (error) {
+        if (storedAuth) {
+          if (isMounted) {
+            setAuth(storedAuth);
+            setIsChecking(false);
+          }
+          return;
+        }
+
         clearStoredAuth();
-        window.location.href = '/login';
+        window.location.replace('/login');
       }
     }
 

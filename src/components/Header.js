@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Header.css';
 
 function getStoredUser() {
@@ -18,6 +18,22 @@ function getStoredUser() {
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [signedInUser, setSignedInUser] = useState(getStoredUser);
+
+  useEffect(() => {
+    const syncStoredUser = () => {
+      setSignedInUser(getStoredUser());
+    };
+
+    window.addEventListener('focus', syncStoredUser);
+    window.addEventListener('pageshow', syncStoredUser);
+    window.addEventListener('storage', syncStoredUser);
+
+    return () => {
+      window.removeEventListener('focus', syncStoredUser);
+      window.removeEventListener('pageshow', syncStoredUser);
+      window.removeEventListener('storage', syncStoredUser);
+    };
+  }, []);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
