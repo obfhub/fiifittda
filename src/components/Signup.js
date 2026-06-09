@@ -69,6 +69,7 @@ export function Signup() {
   const params = new URLSearchParams(window.location.search);
   const nextPath = params.get('next') || '';
   const safeNextPath = nextPath.startsWith('/') && !nextPath.startsWith('//') ? nextPath : '';
+  const redirectPath = safeNextPath || '/account';
   const loginPath = `/login${safeNextPath ? `?next=${encodeURIComponent(safeNextPath)}` : ''}`;
   const [formData, setFormData] = useState({
     name: '',
@@ -124,8 +125,28 @@ export function Signup() {
         return;
       }
 
-      setSubmitted(true);
-      setFormData((current) => ({ ...current, password: '' }));
+      const loginResponse = await fetch('/api/login-account', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        })
+      });
+      const loginData = await loginResponse.json();
+
+      if (!loginResponse.ok || !loginData?.user || !loginData?.auth?.authenticated) {
+        setSubmitted(true);
+        setFormData((current) => ({ ...current, password: '' }));
+        setErrors({ form: 'Contul a fost creat, dar autentificarea automata nu a reusit. Te rugam sa te autentifici.' });
+        return;
+      }
+
+      localStorage.setItem('fiifit_user', JSON.stringify(loginData.user));
+      localStorage.setItem('fiifit_auth', JSON.stringify(loginData.auth));
+      localStorage.setItem('fiifit_session', JSON.stringify(loginData.session));
+      window.location.assign(redirectPath);
     } catch (error) {
       setErrors({ form: error.message || 'Nu am putut crea contul.' });
     } finally {
@@ -232,7 +253,7 @@ export function Signup() {
 
           {submitted && (
             <p className="signup-success" role="status">
-              Contul a fost creat in backend. Bine ai venit in FiiFit!
+              Contul a fost creat. Te autentificam automat...
             </p>
           )}
 
