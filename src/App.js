@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
@@ -13,31 +13,24 @@ import { FAQ } from './components/FAQ';
 import { CTA } from './components/CTA';
 import { Footer } from './components/Footer';
 import { Signup } from './components/Signup';
-import PaymentModal from './components/ui/PaymentModal';
-import Welcome from './components/ui/Welcome';
+import { Checkout } from './components/Checkout';
 
 function App() {
-  const isSignupPage = window.location.pathname === '/checkout';
-  const [paymentPlan, setPaymentPlan] = useState(null);
-  const [paymentOpen, setPaymentOpen] = useState(false);
-  const [paymentComplete, setPaymentComplete] = useState(false);
+  const currentPath = window.location.pathname;
+  const isCheckoutPage = currentPath === '/checkout';
+  const isSignupPage = currentPath === '/signup';
 
   const openPayment = (plan = null) => {
-    setPaymentPlan(plan);
-    setPaymentOpen(true);
-  };
+    const params = new URLSearchParams();
+    if (plan?.duration) params.set('plan', plan.duration);
+    if (plan?.price) params.set('price', plan.price);
+    if (plan?.description) params.set('description', plan.description);
 
-  const closePayment = () => {
-    setPaymentOpen(false);
-  };
-
-  const completePayment = () => {
-    setPaymentOpen(false);
-    setPaymentComplete(true);
+    window.location.href = `/checkout${params.toString() ? `?${params.toString()}` : ''}`;
   };
 
   useEffect(() => {
-    if (isSignupPage) return undefined;
+    if (isCheckoutPage || isSignupPage) return undefined;
 
     // Initialize animations
     const observerOptions = {
@@ -82,7 +75,11 @@ function App() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isSignupPage]);
+  }, [isCheckoutPage, isSignupPage]);
+
+  if (isCheckoutPage) {
+    return <Checkout />;
+  }
 
   if (isSignupPage) {
     return <Signup />;
@@ -102,8 +99,6 @@ function App() {
       <FAQ onOpenPayment={openPayment} />
       <CTA onOpenPayment={openPayment} />
       <Footer />
-      <PaymentModal isOpen={paymentOpen} plan={paymentPlan} onClose={closePayment} onPaid={completePayment} />
-      {paymentComplete && <Welcome onContinue={() => setPaymentComplete(false)} />}
     </div>
   );
 }
