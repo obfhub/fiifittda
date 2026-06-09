@@ -161,10 +161,12 @@
 
 .footer-social-icon {
   position: relative;
-  display: grid;
+  display: inline-grid;
   width: 54px;
   height: 54px;
   place-items: center;
+  flex-shrink: 0;
+  gap: 0;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 50%;
@@ -188,11 +190,18 @@
 .footer-social i {
   position: relative;
   z-index: 1;
+  display: grid;
+  width: 1.1em;
+  height: 1.1em;
+  place-items: center;
   color: currentColor;
+  line-height: 1;
+  text-align: center;
   transition: transform 0.25s ease;
 }
 
 .footer-social-label {
+  display: block;
   margin-top: 8px;
   color: currentColor;
   font-size: 11px;
