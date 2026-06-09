@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import './Signup.css';
 
 const orbitIcons = [
-  { icon: 'fa-apple-whole', label: 'Nutriție', radius: 105, delay: 0, size: 'small' },
-  { icon: 'fa-carrot', label: 'Alimentație sănătoasă', radius: 105, delay: -10, size: 'small' },
+  { icon: 'fa-apple-whole', label: 'Nutritie', radius: 105, delay: 0, size: 'small' },
+  { icon: 'fa-carrot', label: 'Alimentatie sanatoasa', radius: 105, delay: -10, size: 'small' },
   { icon: 'fa-dumbbell', label: 'Fitness', radius: 165, delay: -4, reverse: true },
-  { icon: 'fa-person-running', label: 'Mișcare', radius: 165, delay: -14, reverse: true },
-  { icon: 'fa-heart-pulse', label: 'Sănătate', radius: 225, delay: -8 },
+  { icon: 'fa-person-running', label: 'Miscare', radius: 165, delay: -14, reverse: true },
+  { icon: 'fa-heart-pulse', label: 'Sanatate', radius: 225, delay: -8 },
   { icon: 'fa-bottle-water', label: 'Hidratare', radius: 225, delay: -18 },
-  { icon: 'fa-bicycle', label: 'Activitate fizică', radius: 285, delay: -3, reverse: true },
-  { icon: 'fa-seedling', label: 'Stil de viață', radius: 285, delay: -13, reverse: true }
+  { icon: 'fa-bicycle', label: 'Activitate fizica', radius: 285, delay: -3, reverse: true },
+  { icon: 'fa-seedling', label: 'Stil de viata', radius: 285, delay: -13, reverse: true }
 ];
 
 function OrbitIcon({ item }) {
@@ -53,7 +53,7 @@ function SignupInput({ label, error, type = 'text', ...props }) {
               type="button"
               className="password-toggle"
               onClick={() => setShowPassword((visible) => !visible)}
-              aria-label={showPassword ? 'Ascunde parola' : 'Arată parola'}
+              aria-label={showPassword ? 'Ascunde parola' : 'Arata parola'}
             >
               <i className={`fas ${showPassword ? 'fa-eye' : 'fa-eye-slash'}`}></i>
             </button>
@@ -73,39 +73,70 @@ export function Signup() {
   });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const updateField = (event) => {
     const { name, value } = event.target;
     setFormData((current) => ({ ...current, [name]: value }));
-    setErrors((current) => ({ ...current, [name]: '' }));
+    setErrors((current) => ({ ...current, [name]: '', form: '' }));
+    setSubmitted(false);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const nextErrors = {};
 
-    if (!formData.name.trim()) nextErrors.name = 'Introdu numele tău.';
+    if (!formData.name.trim()) nextErrors.name = 'Introdu numele tau.';
     if (!formData.email.trim()) {
       nextErrors.email = 'Introdu adresa de email.';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      nextErrors.email = 'Adresa de email nu este validă.';
+      nextErrors.email = 'Adresa de email nu este valida.';
     }
     if (formData.password.length < 6) {
-      nextErrors.password = 'Parola trebuie să aibă cel puțin 6 caractere.';
+      nextErrors.password = 'Parola trebuie sa aiba cel putin 6 caractere.';
     }
 
     setErrors(nextErrors);
-    setSubmitted(Object.keys(nextErrors).length === 0);
+    setSubmitted(false);
+
+    if (Object.keys(nextErrors).length > 0) return;
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/create-account', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (data?.field) {
+          setErrors({ [data.field]: data.error || 'Nu am putut crea contul.' });
+        } else {
+          setErrors({ form: data?.error || 'Nu am putut crea contul.' });
+        }
+        return;
+      }
+
+      setSubmitted(true);
+      setFormData((current) => ({ ...current, password: '' }));
+    } catch (error) {
+      setErrors({ form: error.message || 'Nu am putut crea contul.' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <main className="signup-page">
-      <a className="signup-back" href="/" aria-label="Înapoi la pagina principală">
+      <a className="signup-back" href="/" aria-label="Inapoi la pagina principala">
         <i className="fas fa-arrow-left"></i>
         FiiFit.online
       </a>
 
-      <section className="signup-visual" aria-label="Nutriție și fitness">
+      <section className="signup-visual" aria-label="Nutritie si fitness">
         <div className="signup-ripples" aria-hidden="true">
           {Array.from({ length: 9 }, (_, index) => (
             <span
@@ -121,7 +152,7 @@ export function Signup() {
         <div className="signup-orbit-display">
           <div className="signup-orbit-copy">
             <span>FiiFit</span>
-            <strong>Transformarea începe cu tine</strong>
+            <strong>Transformarea incepe cu tine</strong>
           </div>
           {orbitIcons.map((item) => (
             <OrbitIcon item={item} key={item.label} />
@@ -132,12 +163,16 @@ export function Signup() {
       <section className="signup-form-side">
         <form className="signup-form" onSubmit={handleSubmit} noValidate>
           <div className="signup-title reveal-item">
-            <span className="signup-kicker">Bine ai venit în comunitate</span>
-            <h1>Creează-ți contul</h1>
-            <p>Începe călătoria către o versiune mai sănătoasă și mai puternică a ta.</p>
+            <span className="signup-kicker">Bine ai venit in comunitate</span>
+            <h1>Creeaza-ti contul</h1>
+            <p>Incepe calatoria catre o versiune mai sanatoasa si mai puternica a ta.</p>
           </div>
 
-          <button className="google-signup reveal-item" type="button">
+          <button
+            className="google-signup reveal-item"
+            type="button"
+            onClick={() => setErrors({ form: 'Google signup nu este conectat inca. Foloseste email si parola.' })}
+          >
             <span className="google-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" role="img">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -146,7 +181,7 @@ export function Signup() {
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06L5.84 9.9c.87-2.6 3.3-4.52 6.16-4.52z" />
               </svg>
             </span>
-            Continuă cu Google
+            Continua cu Google
           </button>
 
           <div className="signup-divider reveal-item">
@@ -159,11 +194,12 @@ export function Signup() {
             label="Nume complet"
             id="signup-name"
             name="name"
-            placeholder="Introdu numele tău"
+            placeholder="Introdu numele tau"
             value={formData.name}
             onChange={updateField}
             error={errors.name}
             autoComplete="name"
+            disabled={isSubmitting}
           />
           <SignupInput
             label="Email"
@@ -175,31 +211,39 @@ export function Signup() {
             onChange={updateField}
             error={errors.email}
             autoComplete="email"
+            disabled={isSubmitting}
           />
           <SignupInput
-            label="Parolă"
+            label="Parola"
             id="signup-password"
             name="password"
             type="password"
-            placeholder="Creează o parolă"
+            placeholder="Creeaza o parola"
             value={formData.password}
             onChange={updateField}
             error={errors.password}
             autoComplete="new-password"
+            disabled={isSubmitting}
           />
 
           {submitted && (
             <p className="signup-success" role="status">
-              Contul este pregătit. Bine ai venit în FiiFit!
+              Contul a fost creat in backend. Bine ai venit in FiiFit!
             </p>
           )}
 
-          <button className="signup-submit reveal-item" type="submit">
-            Creează contul <span aria-hidden="true">→</span>
+          {errors.form && (
+            <p className="signup-form-error reveal-item" role="alert">
+              {errors.form}
+            </p>
+          )}
+
+          <button className="signup-submit reveal-item" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Se creeaza contul...' : 'Creeaza contul'} <span aria-hidden="true">→</span>
           </button>
 
           <p className="signup-login reveal-item">
-            Ai deja un cont? <button type="button">Autentifică-te</button>
+            Ai deja un cont? <button type="button">Autentifica-te</button>
           </p>
         </form>
       </section>

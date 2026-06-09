@@ -21,6 +21,18 @@ Add these environment variables in Vercel before using the tracker:
 
 Do not place keys in frontend code. Claude only parses food text into database search items. Calories and macros are calculated on the backend from USDA/Open Food Facts matches only.
 
+## Account Backend
+
+The signup page at `/signup` creates real users through Supabase Auth using the server-only Vercel API route `api/create-account.js`.
+
+Add these environment variables in Vercel before using account creation:
+
+`SUPABASE_URL=your_supabase_project_url`
+
+`SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key`
+
+Keep `SUPABASE_SERVICE_ROLE_KEY` server-only. Do not add it to frontend code or expose it with a `REACT_APP_` prefix.
+
 ### `npm start`
 
 Runs the app in the development mode.\

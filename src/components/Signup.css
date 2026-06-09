@@ -326,6 +326,13 @@
   box-shadow: 0 14px 36px rgba(0, 208, 132, 0.35);
 }
 
+.signup-submit:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+  box-shadow: 0 8px 20px rgba(0, 208, 132, 0.16);
+}
+
 .signup-submit span {
   margin-left: 7px;
   font-size: 17px;
@@ -339,6 +346,17 @@
   background: rgba(0, 208, 132, 0.08);
   color: var(--primary-light);
   font-size: 12px;
+}
+
+.signup-form-error {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 102, 114, 0.32);
+  border-radius: 7px;
+  background: rgba(255, 102, 114, 0.08);
+  color: #ff8c96;
+  font-size: 12px;
+  line-height: 1.45;
 }
 
 .signup-login {
