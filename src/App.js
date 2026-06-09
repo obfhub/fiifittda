@@ -21,8 +21,8 @@ function App() {
 
     // Initialize animations
     const observerOptions = {
-      threshold: 0.15,
-      rootMargin: '0px 0px -100px 0px'
+      threshold: 0.04,
+      rootMargin: '0px 0px 180px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -35,11 +35,20 @@ function App() {
       });
     }, observerOptions);
 
-    document.querySelectorAll('.problem-card, .feature, .lectie-card, .pricing-card, .faq-item').forEach((el, index) => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(30px)';
-      el.style.transition = `all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.1}s`;
-      observer.observe(el);
+    const revealGroups = [
+      { selector: '.problem-card, .feature, .pricing-card', duration: 0.42, distance: 24, stagger: 0.05, maxDelay: 0.18 },
+      { selector: '.lectie-card', duration: 0.28, distance: 14, stagger: 0.018, maxDelay: 0.09 },
+      { selector: '.faq-item', duration: 0.3, distance: 14, stagger: 0.03, maxDelay: 0.12 }
+    ];
+
+    revealGroups.forEach(({ selector, duration, distance, stagger, maxDelay }) => {
+      document.querySelectorAll(selector).forEach((el, index) => {
+        const delay = Math.min(index * stagger, maxDelay);
+        el.style.opacity = '0';
+        el.style.transform = `translateY(${distance}px)`;
+        el.style.transition = `opacity ${duration}s ease ${delay}s, transform ${duration}s cubic-bezier(0.2, 0.8, 0.2, 1) ${delay}s`;
+        observer.observe(el);
+      });
     });
 
     // Parallax effect
