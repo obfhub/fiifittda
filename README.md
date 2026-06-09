@@ -31,7 +31,9 @@ Add these environment variables in Vercel before using account creation:
 
 `SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key`
 
-Keep `SUPABASE_SERVICE_ROLE_KEY` server-only. Do not add it to frontend code or expose it with a `REACT_APP_` prefix.
+`SUPABASE_ANON_KEY=your_supabase_anon_key`
+
+Keep `SUPABASE_SERVICE_ROLE_KEY` server-only. Do not add it to frontend code or expose it with a `REACT_APP_` prefix. The login page at `/login` uses `api/login-account.js` and stores the returned session in browser local storage.
 
 ### `npm start`
 

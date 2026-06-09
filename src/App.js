@@ -13,12 +13,14 @@ import { FAQ } from './components/FAQ';
 import { CTA } from './components/CTA';
 import { Footer } from './components/Footer';
 import { Signup } from './components/Signup';
+import { Login } from './components/Login';
 import { Checkout } from './components/Checkout';
 
 function App() {
   const currentPath = window.location.pathname;
   const isCheckoutPage = currentPath === '/checkout';
   const isSignupPage = currentPath === '/signup';
+  const isLoginPage = currentPath === '/login';
 
   const openPayment = (plan = null) => {
     const params = new URLSearchParams();
@@ -30,7 +32,7 @@ function App() {
   };
 
   useEffect(() => {
-    if (isCheckoutPage || isSignupPage) return undefined;
+    if (isCheckoutPage || isSignupPage || isLoginPage) return undefined;
 
     // Initialize animations
     const observerOptions = {
@@ -75,7 +77,7 @@ function App() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isCheckoutPage, isSignupPage]);
+  }, [isCheckoutPage, isSignupPage, isLoginPage]);
 
   if (isCheckoutPage) {
     return <Checkout />;
@@ -83,6 +85,10 @@ function App() {
 
   if (isSignupPage) {
     return <Signup />;
+  }
+
+  if (isLoginPage) {
+    return <Login />;
   }
 
   return (

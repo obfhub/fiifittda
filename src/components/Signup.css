@@ -366,13 +366,19 @@
   text-align: center;
 }
 
-.signup-login button {
+.signup-login button,
+.signup-login a {
   border: 0;
   background: none;
   color: var(--primary);
   cursor: pointer;
   font-family: inherit;
   font-weight: 700;
+  text-decoration: none;
+}
+
+.signup-login a:hover {
+  text-decoration: underline;
 }
 
 .reveal-item {
