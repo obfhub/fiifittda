@@ -109,6 +109,73 @@
   color: rgba(255, 255, 255, 0.34);
 }
 
+.macro-photo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.macro-photo-row input[type='file'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.macro-photo-button,
+.macro-remove-photo {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 9px;
+  padding: 0 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.macro-photo-button {
+  border: 1px solid rgba(0, 208, 132, 0.24);
+  background: rgba(0, 208, 132, 0.08);
+  color: white;
+}
+
+.macro-remove-photo {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.75);
+  font-family: inherit;
+}
+
+.macro-photo-preview {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.macro-photo-preview img {
+  width: 88px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.macro-photo-preview span {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 800;
+}
+
 .macro-actions {
   display: flex;
   flex-wrap: wrap;
@@ -159,7 +226,7 @@
 
 .macro-results {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 14px;
   margin-top: 22px;
 }
@@ -186,6 +253,34 @@
   color: white;
   font-size: 34px;
   line-height: 1;
+}
+
+.health-card {
+  border-color: rgba(255, 201, 102, 0.26);
+  background:
+    radial-gradient(circle at 82% 18%, rgba(255, 201, 102, 0.16), transparent 40%),
+    rgba(0, 208, 132, 0.07);
+}
+
+.health-notes {
+  margin-top: 12px;
+  padding: 16px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.health-notes strong {
+  display: block;
+  color: white;
+  font-size: 13px;
+}
+
+.health-notes p {
+  margin-top: 5px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .detected-foods {
@@ -250,6 +345,53 @@
   margin-top: 4px;
   color: rgba(255, 255, 255, 0.52);
   font-size: 12px;
+}
+
+.portion-edit {
+  display: inline-grid;
+  grid-template-columns: auto 86px auto;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+  padding: 7px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.portion-edit span {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.54);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.portion-edit input {
+  width: 86px;
+  height: 30px;
+  border: 1px solid rgba(0, 208, 132, 0.24);
+  border-radius: 999px;
+  outline: none;
+  background: rgba(0, 208, 132, 0.08);
+  color: white;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.portion-edit input:focus {
+  border-color: rgba(0, 208, 132, 0.65);
+  box-shadow: 0 0 0 3px rgba(0, 208, 132, 0.1);
+}
+
+.portion-edit em {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 900;
 }
 
 .detected-item ul {
@@ -323,8 +465,19 @@
   }
 
   .macro-actions button,
+  .macro-photo-button,
+  .macro-remove-photo,
   .macro-results {
     width: 100%;
+  }
+
+  .macro-photo-preview {
+    grid-template-columns: 72px 1fr;
+  }
+
+  .macro-photo-preview img {
+    width: 72px;
+    height: 62px;
   }
 
   .macro-total-card {
@@ -333,5 +486,10 @@
 
   .macro-total-card strong {
     font-size: 28px;
+  }
+
+  .portion-edit {
+    width: 100%;
+    grid-template-columns: auto minmax(74px, 1fr) auto;
   }
 }
