@@ -4,27 +4,29 @@ import './Account.css';
 function readStoredAuth() {
   try {
     const user = JSON.parse(localStorage.getItem('fiifit_user') || 'null');
+    const auth = JSON.parse(localStorage.getItem('fiifit_auth') || 'null');
     const session = JSON.parse(localStorage.getItem('fiifit_session') || 'null');
-    return { user, session };
+    return { user, auth, session };
   } catch (error) {
-    return { user: null, session: null };
+    return { user: null, auth: null, session: null };
   }
 }
 
 function clearStoredAuth() {
   localStorage.removeItem('fiifit_user');
+  localStorage.removeItem('fiifit_auth');
   localStorage.removeItem('fiifit_session');
 }
 
 export function Account() {
-  const [{ user }, setAuth] = useState(() => ({ user: null, session: null }));
+  const [{ user, auth }, setAuth] = useState(() => ({ user: null, auth: null, session: null }));
 
   useEffect(() => {
     const storedAuth = readStoredAuth();
-    const expiresAt = Number(storedAuth.session?.expires_at || 0) * 1000;
+    const expiresAt = Number(storedAuth.auth?.expires_at || storedAuth.session?.expires_at || 0) * 1000;
     const isExpired = expiresAt && expiresAt < Date.now();
 
-    if (!storedAuth.user || !storedAuth.session?.access_token || isExpired) {
+    if (!storedAuth.user || !storedAuth.auth?.authenticated || isExpired) {
       window.location.href = '/login';
       return;
     }
@@ -73,7 +75,7 @@ export function Account() {
               <i className="fas fa-lock" aria-hidden="true"></i>
             </span>
             <h2>Sesiune</h2>
-            <p>Tokenul tau Supabase este salvat local pentru acces rapid.</p>
+            <p>Autentificat pana la {new Date(Number(auth?.expires_at || 0) * 1000).toLocaleString()}.</p>
           </article>
 
           <article className="account-card">

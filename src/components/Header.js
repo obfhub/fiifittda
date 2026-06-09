@@ -3,7 +3,13 @@ import './Header.css';
 
 function getStoredUser() {
   try {
-    return JSON.parse(localStorage.getItem('fiifit_user') || 'null');
+    const user = JSON.parse(localStorage.getItem('fiifit_user') || 'null');
+    const auth = JSON.parse(localStorage.getItem('fiifit_auth') || 'null');
+    const expiresAt = Number(auth?.expires_at || 0) * 1000;
+
+    if (!user || !auth?.authenticated || (expiresAt && expiresAt < Date.now())) return null;
+
+    return user;
   } catch (error) {
     return null;
   }
@@ -23,6 +29,7 @@ export function Header() {
 
   const handleLogout = () => {
     localStorage.removeItem('fiifit_user');
+    localStorage.removeItem('fiifit_auth');
     localStorage.removeItem('fiifit_session');
     setSignedInUser(null);
     setMobileMenuOpen(false);
