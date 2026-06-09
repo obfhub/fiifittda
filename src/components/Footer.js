@@ -37,6 +37,33 @@ const footerSections = [
   }
 ];
 
+const socialLinks = [
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/fiifitonline/',
+    icon: 'fa-instagram',
+    className: 'instagram'
+  },
+  {
+    label: 'Facebook',
+    href: 'https://www.facebook.com/fiifitonline/',
+    icon: 'fa-facebook-f',
+    className: 'facebook'
+  },
+  {
+    label: 'WhatsApp',
+    href: 'https://wa.me/37300000000',
+    icon: 'fa-whatsapp',
+    className: 'whatsapp'
+  },
+  {
+    label: 'Telegram',
+    href: 'https://t.me/fiifitonline',
+    icon: 'fa-telegram',
+    className: 'telegram'
+  }
+];
+
 export function Footer() {
   const footerRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -116,6 +143,23 @@ export function Footer() {
           <i className="fas fa-lock" aria-hidden="true"></i>
           FiiFit Club Online LLC
         </span>
+        <div className="footer-socials" aria-label="Social media">
+          {socialLinks.map((link) => (
+            <a
+              className={`footer-social ${link.className}`}
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={link.label}
+              key={link.label}
+            >
+              <span className="footer-social-icon">
+                <i className={`fab ${link.icon}`} aria-hidden="true"></i>
+              </span>
+              <span className="footer-social-label">{link.label}</span>
+            </a>
+          ))}
+        </div>
         <span>EIN: 37-2077501</span>
       </div>
     </footer>
