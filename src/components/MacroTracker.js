@@ -1,7 +1,5 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import './MacroTracker.css';
-
-const { calculateMacros } = require('../data/foodDatabase');
 
 const exampleMeal = '2 eggs, 100g rice, 150g chicken breast and a banana';
 
@@ -10,11 +8,6 @@ export function MacroTracker() {
   const [parsedMeal, setParsedMeal] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  const macroResult = useMemo(() => {
-    if (!parsedMeal?.items) return null;
-    return calculateMacros(parsedMeal.items);
-  }, [parsedMeal]);
 
   const handleAnalyze = async () => {
     const mealText = meal.trim();
@@ -30,7 +23,7 @@ export function MacroTracker() {
     setParsedMeal(null);
 
     try {
-      const response = await fetch('/api/parse-meal', {
+      const response = await fetch('/api/analyze-meal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ meal: mealText })
@@ -64,7 +57,7 @@ export function MacroTracker() {
             <h2>AI Calorie & Macro Tracker</h2>
             <p>
               Scrie masa în engleză. AI-ul o transformă doar în termeni de căutare,
-              iar caloriile și macronutrienții sunt calculați strict din baza noastră de alimente.
+              iar caloriile și macronutrienții sunt calculați pe server din potriviri reale USDA sau Open Food Facts.
             </p>
             <div className="macro-guardrail">
               <i className="fas fa-shield-heart" aria-hidden="true"></i>
@@ -91,49 +84,52 @@ export function MacroTracker() {
             </div>
             {error && <p className="macro-error">{error}</p>}
             <p className="macro-disclaimer">
-              Estimated values only. Food recognition is AI-assisted, but nutrition values come from the food database.
+              Estimated values only. Food recognition is AI-assisted, but nutrition values come from real food database matches.
             </p>
           </div>
         </div>
 
-        {macroResult && (
+        {parsedMeal && (
           <div className="macro-results" aria-live="polite">
             <div className="macro-total-card">
               <span>Calories</span>
-              <strong>{macroResult.totals.calories}</strong>
+              <strong>{parsedMeal.totals.calories}</strong>
               <small>kcal</small>
             </div>
             <div className="macro-total-card">
               <span>Protein</span>
-              <strong>{macroResult.totals.protein}</strong>
+              <strong>{parsedMeal.totals.protein}</strong>
               <small>g</small>
             </div>
             <div className="macro-total-card">
               <span>Carbs</span>
-              <strong>{macroResult.totals.carbs}</strong>
+              <strong>{parsedMeal.totals.carbs}</strong>
               <small>g</small>
             </div>
             <div className="macro-total-card">
               <span>Fat</span>
-              <strong>{macroResult.totals.fat}</strong>
+              <strong>{parsedMeal.totals.fat}</strong>
               <small>g</small>
             </div>
           </div>
         )}
 
-        {macroResult && (
+        {parsedMeal && (
           <div className="detected-foods">
             <div className="detected-heading">
               <h3>Detected foods</h3>
-              <p>Nutrition values below are calculated from local database matches only.</p>
+              <p>Nutrition values below are calculated from real food database matches only.</p>
             </div>
             <div className="detected-list">
-              {macroResult.items.map((item, index) => (
+              {parsedMeal.items.map((item, index) => (
                 <article className={`detected-item ${item.matched ? '' : 'unmatched'}`} key={`${item.original}-${index}`}>
                   <div>
                     <span>{item.original}</span>
-                    <strong>{item.matched ? item.matched_food_name : 'Unmatched food'}</strong>
-                    <p>{item.grams_used || 0}g used for calculation · confidence {item.confidence}</p>
+                    <strong>{item.matched ? item.matched_food : 'Unmatched food'}</strong>
+                    <p>
+                      {item.grams || 0}g used for calculation
+                      {item.source ? ` · source ${item.source}` : ''}
+                    </p>
                   </div>
                   {item.matched ? (
                     <ul>

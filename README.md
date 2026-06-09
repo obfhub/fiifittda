@@ -8,12 +8,18 @@ In the project directory, you can run:
 
 ## AI Macro Tracker
 
-The meal parser uses the server-only Vercel API route `api/parse-meal.js`.
-Add this environment variable in Vercel before using the tracker:
+The macro tracker uses server-only Vercel API routes:
 
-`CLAUDE_API_KEY=your_key_here`
+- `api/analyze-meal.js` parses meal text with Claude, searches real food APIs, and calculates macros.
+- `api/barcode-food.js` is prepared for future barcode lookup through Open Food Facts.
 
-Do not place this key in frontend code. Claude only parses food text into database search items; calories and macros are calculated from `src/data/foodDatabase.js`.
+Add these environment variables in Vercel before using the tracker:
+
+`CLAUDE_API_KEY=your_claude_proxy_key`
+
+`USDA_API_KEY=your_usda_key`
+
+Do not place keys in frontend code. Claude only parses food text into database search items. Calories and macros are calculated on the backend from USDA/Open Food Facts matches only.
 
 ### `npm start`
 
