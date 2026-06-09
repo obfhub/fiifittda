@@ -15,20 +15,51 @@ function getStoredUser() {
   }
 }
 
+function storeServerUser(data) {
+  if (!data?.authenticated || !data?.user) return null;
+
+  const auth = { authenticated: true, expires_at: data.expires_at };
+  localStorage.setItem('fiifit_user', JSON.stringify(data.user));
+  localStorage.setItem('fiifit_auth', JSON.stringify(auth));
+
+  return data.user;
+}
+
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [signedInUser, setSignedInUser] = useState(getStoredUser);
 
   useEffect(() => {
-    const syncStoredUser = () => {
-      setSignedInUser(getStoredUser());
+    let isMounted = true;
+
+    const syncStoredUser = async () => {
+      const storedUser = getStoredUser();
+      if (isMounted) setSignedInUser(storedUser);
+
+      try {
+        const response = await fetch('/api/me', { credentials: 'include' });
+        const data = await response.json();
+
+        if (!isMounted) return;
+
+        if (response.ok && data?.authenticated) {
+          setSignedInUser(storeServerUser(data));
+          return;
+        }
+
+        setSignedInUser(getStoredUser());
+      } catch (error) {
+        if (isMounted) setSignedInUser(getStoredUser());
+      }
     };
 
+    syncStoredUser();
     window.addEventListener('focus', syncStoredUser);
     window.addEventListener('pageshow', syncStoredUser);
     window.addEventListener('storage', syncStoredUser);
 
     return () => {
+      isMounted = false;
       window.removeEventListener('focus', syncStoredUser);
       window.removeEventListener('pageshow', syncStoredUser);
       window.removeEventListener('storage', syncStoredUser);
