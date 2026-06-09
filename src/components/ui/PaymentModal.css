@@ -1,0 +1,243 @@
+.payment-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.payment-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.76);
+  cursor: pointer;
+}
+
+.payment-content {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 430px);
+  max-height: calc(100dvh - 36px);
+  overflow-y: auto;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 14% 0%, rgba(0, 208, 132, 0.13), transparent 34%),
+    linear-gradient(145deg, rgba(34, 37, 36, 0.98), rgba(18, 21, 20, 0.99));
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.55);
+  color: white;
+  animation: payment-enter 0.22s ease both;
+}
+
+.payment-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.68);
+  cursor: pointer;
+}
+
+.payment-header {
+  padding-right: 22px;
+  text-align: center;
+}
+
+.payment-lock {
+  display: inline-grid;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 14px;
+  place-items: center;
+  border: 1px solid rgba(0, 208, 132, 0.28);
+  border-radius: 14px;
+  background: rgba(0, 208, 132, 0.1);
+  color: var(--primary);
+}
+
+.payment-header h2 {
+  color: white;
+  font-size: 24px;
+  font-weight: 850;
+  line-height: 1.15;
+}
+
+.payment-header p {
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 13px;
+}
+
+.payment-plan {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 22px 0;
+  padding: 14px;
+  border: 1px solid rgba(0, 208, 132, 0.2);
+  border-radius: 16px;
+  background: rgba(0, 208, 132, 0.07);
+}
+
+.payment-plan span,
+.payment-plan strong {
+  display: block;
+}
+
+.payment-plan span {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.payment-plan strong {
+  margin-top: 2px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.payment-plan p {
+  color: white;
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.payment-form {
+  display: grid;
+  gap: 14px;
+}
+
+.payment-field label {
+  display: block;
+  margin-bottom: 7px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.payment-field input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 12px;
+  outline: none;
+  background: rgba(8, 10, 9, 0.58);
+  color: white;
+  font: inherit;
+  font-size: 13px;
+  padding: 0 13px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.payment-field input::placeholder {
+  color: rgba(255, 255, 255, 0.28);
+}
+
+.payment-field input:focus {
+  border-color: rgba(0, 208, 132, 0.62);
+  box-shadow: 0 0 0 3px rgba(0, 208, 132, 0.1);
+}
+
+.payment-input-icon {
+  position: relative;
+}
+
+.payment-input-icon input {
+  padding-right: 42px;
+}
+
+.payment-input-icon svg {
+  position: absolute;
+  top: 50%;
+  right: 13px;
+  color: rgba(255, 255, 255, 0.44);
+  transform: translateY(-50%);
+}
+
+.payment-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.coupon-toggle {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  background: transparent;
+  color: var(--primary);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 850;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pay-now-button {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 2px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #071b13;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 950;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pay-now-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(0, 208, 132, 0.22);
+}
+
+.payment-note {
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.44);
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@keyframes payment-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 520px) {
+  .payment-content {
+    padding: 24px 18px;
+  }
+
+  .payment-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .payment-content {
+    animation: none;
+  }
+}

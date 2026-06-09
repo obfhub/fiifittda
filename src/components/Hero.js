@@ -8,13 +8,13 @@ const heroIcons = [
   { icon: 'fa-bottle-water', label: 'Hidratare', className: 'hero-icon-4' }
 ];
 
-export function Hero() {
+export function Hero({ onOpenPayment }) {
   const scrollToTarife = () => {
     document.getElementById('tarife').scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleCheckout = () => {
-    window.location.href = '/checkout';
+    onOpenPayment?.();
   };
 
   return (

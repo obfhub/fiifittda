@@ -87,11 +87,7 @@ function FeatureValue({ value }) {
   return value;
 }
 
-export function Pricing() {
-  const handleCheckout = () => {
-    window.location.href = '/checkout';
-  };
-
+export function Pricing({ onOpenPayment }) {
   return (
     <section id="tarife" className="pricing">
       <div className="pricing-pattern" aria-hidden="true"></div>
@@ -123,8 +119,8 @@ export function Pricing() {
                         <del>{plan.original}</del>
                       </div>
                       <p className="plan-discount">{plan.discount}</p>
-                      <button className="pricing-button" onClick={handleCheckout}>
-                        Înscrie-te acum
+                      <button className="pricing-button" onClick={() => onOpenPayment?.(plan)}>
+                        Pay Now
                       </button>
                     </div>
                   </th>

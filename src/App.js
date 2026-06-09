@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
@@ -13,9 +13,28 @@ import { FAQ } from './components/FAQ';
 import { CTA } from './components/CTA';
 import { Footer } from './components/Footer';
 import { Signup } from './components/Signup';
+import PaymentModal from './components/ui/PaymentModal';
+import Welcome from './components/ui/Welcome';
 
 function App() {
   const isSignupPage = window.location.pathname === '/checkout';
+  const [paymentPlan, setPaymentPlan] = useState(null);
+  const [paymentOpen, setPaymentOpen] = useState(false);
+  const [paymentComplete, setPaymentComplete] = useState(false);
+
+  const openPayment = (plan = null) => {
+    setPaymentPlan(plan);
+    setPaymentOpen(true);
+  };
+
+  const closePayment = () => {
+    setPaymentOpen(false);
+  };
+
+  const completePayment = () => {
+    setPaymentOpen(false);
+    setPaymentComplete(true);
+  };
 
   useEffect(() => {
     if (isSignupPage) return undefined;
@@ -72,17 +91,19 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Hero />
+      <Hero onOpenPayment={openPayment} />
       <Problems />
       <About />
       <Expert />
       <Lessons />
       <MacroTracker />
       <Testimonials />
-      <Pricing />
-      <FAQ />
-      <CTA />
+      <Pricing onOpenPayment={openPayment} />
+      <FAQ onOpenPayment={openPayment} />
+      <CTA onOpenPayment={openPayment} />
       <Footer />
+      <PaymentModal isOpen={paymentOpen} plan={paymentPlan} onClose={closePayment} onPaid={completePayment} />
+      {paymentComplete && <Welcome onContinue={() => setPaymentComplete(false)} />}
     </div>
   );
 }

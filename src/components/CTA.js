@@ -1,9 +1,9 @@
 import React from 'react';
 import './CTA.css';
 
-export function CTA() {
+export function CTA({ onOpenPayment }) {
   const handleCheckout = () => {
-    window.location.href = '/checkout';
+    onOpenPayment?.();
   };
 
   return (

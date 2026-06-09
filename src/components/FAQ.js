@@ -28,11 +28,11 @@ const faqs = [
   }
 ];
 
-export function FAQ() {
+export function FAQ({ onOpenPayment }) {
   const [openIndex, setOpenIndex] = useState(0);
 
   const handleCheckout = () => {
-    window.location.href = '/checkout';
+    onOpenPayment?.();
   };
 
   return (
