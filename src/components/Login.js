@@ -123,7 +123,9 @@ export function Login() {
       localStorage.setItem('fiifit_user', JSON.stringify(data.user));
       localStorage.setItem('fiifit_auth', JSON.stringify(data.auth));
       localStorage.setItem('fiifit_session', JSON.stringify(data.session));
-      window.location.assign('/account');
+      setTimeout(() => {
+        window.location.assign('/account');
+      }, 50);
     } catch (error) {
       setErrors({ form: error.message || 'Nu am putut autentifica.' });
     } finally {

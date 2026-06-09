@@ -1,17 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Account.css';
 
-function readStoredAuth() {
-  try {
-    const user = JSON.parse(localStorage.getItem('fiifit_user') || 'null');
-    const auth = JSON.parse(localStorage.getItem('fiifit_auth') || 'null');
-    const session = JSON.parse(localStorage.getItem('fiifit_session') || 'null');
-    return { user, auth, session };
-  } catch (error) {
-    return { user: null, auth: null, session: null };
-  }
-}
-
 function clearStoredAuth() {
   localStorage.removeItem('fiifit_user');
   localStorage.removeItem('fiifit_auth');
@@ -19,27 +8,55 @@ function clearStoredAuth() {
 }
 
 export function Account() {
-  const [{ user, auth }, setAuth] = useState(() => ({ user: null, auth: null, session: null }));
+  const [{ user, auth }, setAuth] = useState(() => ({ user: null, auth: null }));
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    const storedAuth = readStoredAuth();
-    const expiresAt = Number(storedAuth.auth?.expires_at || storedAuth.session?.expires_at || 0) * 1000;
-    const isExpired = expiresAt && expiresAt < Date.now();
+    let isMounted = true;
 
-    if (!storedAuth.user || !storedAuth.auth?.authenticated || isExpired) {
-      window.location.href = '/login';
-      return;
+    async function checkAuth() {
+      try {
+        const response = await fetch('/api/me', { credentials: 'include' });
+        const data = await response.json();
+
+        if (!response.ok || !data.authenticated) {
+          clearStoredAuth();
+          window.location.href = '/login';
+          return;
+        }
+
+        localStorage.setItem('fiifit_user', JSON.stringify(data.user));
+        localStorage.setItem('fiifit_auth', JSON.stringify({ authenticated: true, expires_at: data.expires_at }));
+
+        if (isMounted) {
+          setAuth({ user: data.user, auth: { authenticated: true, expires_at: data.expires_at } });
+          setIsChecking(false);
+        }
+      } catch (error) {
+        clearStoredAuth();
+        window.location.href = '/login';
+      }
     }
 
-    setAuth(storedAuth);
+    checkAuth();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+    } catch (error) {
+      // Local logout still happens even if the network call fails.
+    }
+
     clearStoredAuth();
     window.location.href = '/login';
   };
 
-  if (!user) {
+  if (isChecking || !user) {
     return (
       <main className="account-page">
         <p>Se verifica sesiunea...</p>

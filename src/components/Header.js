@@ -27,7 +27,13 @@ export function Header() {
     setMobileMenuOpen(false);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+    } catch (error) {
+      // Local logout still happens even if the network call fails.
+    }
+
     localStorage.removeItem('fiifit_user');
     localStorage.removeItem('fiifit_auth');
     localStorage.removeItem('fiifit_session');
