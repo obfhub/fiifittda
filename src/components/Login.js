@@ -66,6 +66,10 @@ function LoginInput({ label, error, type = 'text', ...props }) {
 }
 
 export function Login() {
+  const params = new URLSearchParams(window.location.search);
+  const nextPath = params.get('next') || '/account';
+  const safeNextPath = nextPath.startsWith('/') && !nextPath.startsWith('//') ? nextPath : '/account';
+  const signupPath = `/signup${safeNextPath !== '/account' ? `?next=${encodeURIComponent(safeNextPath)}` : ''}`;
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -124,7 +128,7 @@ export function Login() {
       localStorage.setItem('fiifit_auth', JSON.stringify(data.auth));
       localStorage.setItem('fiifit_session', JSON.stringify(data.session));
       setTimeout(() => {
-        window.location.assign('/account');
+        window.location.assign(safeNextPath);
       }, 50);
     } catch (error) {
       setErrors({ form: error.message || 'Nu am putut autentifica.' });
@@ -212,7 +216,7 @@ export function Login() {
           </p>
 
           <p className="signup-login reveal-item">
-            Nu ai cont? <a href="/signup">Creeaza-ti contul</a>
+            Nu ai cont? <a href={signupPath}>Creeaza-ti contul</a>
           </p>
         </form>
       </section>

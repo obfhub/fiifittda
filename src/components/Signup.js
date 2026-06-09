@@ -66,6 +66,10 @@ function SignupInput({ label, error, type = 'text', ...props }) {
 }
 
 export function Signup() {
+  const params = new URLSearchParams(window.location.search);
+  const nextPath = params.get('next') || '';
+  const safeNextPath = nextPath.startsWith('/') && !nextPath.startsWith('//') ? nextPath : '';
+  const loginPath = `/login${safeNextPath ? `?next=${encodeURIComponent(safeNextPath)}` : ''}`;
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -243,7 +247,7 @@ export function Signup() {
           </button>
 
           <p className="signup-login reveal-item">
-            Ai deja un cont? <a href="/login">Autentifica-te</a>
+            Ai deja un cont? <a href={loginPath}>Autentifica-te</a>
           </p>
         </form>
       </section>

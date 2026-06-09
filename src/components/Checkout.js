@@ -1,5 +1,5 @@
 import { CreditCard, Gift, Lock } from 'lucide-react';
-import React, { useId, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import './Signup.css';
 import './Checkout.css';
 import Welcome from './ui/Welcome';
@@ -42,17 +42,83 @@ function getSelectedPlan() {
   };
 }
 
+function getStoredAuth() {
+  try {
+    const user = JSON.parse(localStorage.getItem('fiifit_user') || 'null');
+    const auth = JSON.parse(localStorage.getItem('fiifit_auth') || 'null');
+    const expiresAt = Number(auth?.expires_at || 0) * 1000;
+
+    if (!user || !auth?.authenticated) return null;
+    if (expiresAt && expiresAt < Date.now()) return null;
+
+    return { user, auth };
+  } catch (error) {
+    return null;
+  }
+}
+
 export function Checkout() {
   const id = useId();
   const [plan] = useState(getSelectedPlan);
   const [couponCode, setCouponCode] = useState('');
   const [showCouponInput, setShowCouponInput] = useState(false);
   const [paid, setPaid] = useState(false);
+  const [isCheckingAccount, setIsCheckingAccount] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function verifyAccount() {
+      if (getStoredAuth()) {
+        if (isMounted) setIsCheckingAccount(false);
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/me', { credentials: 'include' });
+        const data = await response.json();
+
+        if (response.ok && data?.authenticated && data?.user) {
+          localStorage.setItem('fiifit_user', JSON.stringify(data.user));
+          localStorage.setItem('fiifit_auth', JSON.stringify({ authenticated: true, expires_at: data.expires_at }));
+          if (isMounted) setIsCheckingAccount(false);
+          return;
+        }
+      } catch (error) {
+        // Redirect below when the session cannot be verified.
+      }
+
+      const nextPath = `${window.location.pathname}${window.location.search}`;
+      window.location.replace(`/login?next=${encodeURIComponent(nextPath)}`);
+    }
+
+    verifyAccount();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handlePay = (event) => {
     event.preventDefault();
     setPaid(true);
   };
+
+  if (isCheckingAccount) {
+    return (
+      <main className="signup-page checkout-page">
+        <section className="signup-form-side checkout-form-side">
+          <div className="checkout-form">
+            <div className="signup-title reveal-item">
+              <span className="signup-kicker">Verificare cont</span>
+              <h1>Se verifica sesiunea</h1>
+              <p>Ai nevoie de un cont autentificat pentru a cumpara un plan FiiFit.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    );
+  }
 
   if (paid) {
     return <Welcome onContinue={() => { window.location.href = '/'; }} />;

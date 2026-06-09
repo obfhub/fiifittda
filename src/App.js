@@ -19,6 +19,25 @@ import { ResetPassword } from './components/ResetPassword';
 import { Checkout } from './components/Checkout';
 import { Account } from './components/Account';
 
+function getStoredAuth() {
+  try {
+    const user = JSON.parse(localStorage.getItem('fiifit_user') || 'null');
+    const auth = JSON.parse(localStorage.getItem('fiifit_auth') || 'null');
+    const expiresAt = Number(auth?.expires_at || 0) * 1000;
+
+    if (!user || !auth?.authenticated) return null;
+    if (expiresAt && expiresAt < Date.now()) return null;
+
+    return { user, auth };
+  } catch (error) {
+    return null;
+  }
+}
+
+function redirectToLogin(nextPath) {
+  window.location.href = `/login?next=${encodeURIComponent(nextPath)}`;
+}
+
 function App() {
   const currentPath = window.location.pathname;
   const isCheckoutPage = currentPath === '/checkout';
@@ -28,13 +47,34 @@ function App() {
   const isForgotPasswordPage = currentPath === '/forgot-password';
   const isResetPasswordPage = currentPath === '/reset-password';
 
-  const openPayment = (plan = null) => {
+  const openPayment = async (plan = null) => {
     const params = new URLSearchParams();
     if (plan?.duration) params.set('plan', plan.duration);
     if (plan?.price) params.set('price', plan.price);
     if (plan?.description) params.set('description', plan.description);
 
-    window.location.href = `/checkout${params.toString() ? `?${params.toString()}` : ''}`;
+    const checkoutPath = `/checkout${params.toString() ? `?${params.toString()}` : ''}`;
+
+    if (getStoredAuth()) {
+      window.location.href = checkoutPath;
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/me', { credentials: 'include' });
+      const data = await response.json();
+
+      if (response.ok && data?.authenticated && data?.user) {
+        localStorage.setItem('fiifit_user', JSON.stringify(data.user));
+        localStorage.setItem('fiifit_auth', JSON.stringify({ authenticated: true, expires_at: data.expires_at }));
+        window.location.href = checkoutPath;
+        return;
+      }
+    } catch (error) {
+      // Fall through to login when the session cannot be verified.
+    }
+
+    redirectToLogin(checkoutPath);
   };
 
   useEffect(() => {
