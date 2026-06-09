@@ -1,13 +1,19 @@
 import React, { useRef } from 'react';
-import './Marquee.css';
+import { cn } from '@/lib/utils';
 
+/**
+ * Marquee Component
+ * A reusable scrolling marquee component with support for horizontal/vertical
+ * animations, reverse direction, and pause-on-hover functionality
+ */
 export function Marquee({
-  className = '',
+  className,
   reverse = false,
   pauseOnHover = false,
   children,
   vertical = false,
   repeat = 4,
+  autoFill,
   ariaLabel,
   ariaLive = 'off',
   ariaRole = 'marquee',
@@ -15,46 +21,46 @@ export function Marquee({
 }) {
   const marqueeRef = useRef(null);
 
-  const containerClasses = [
-    'marquee-container',
-    vertical ? 'marquee-vertical' : 'marquee-horizontal',
-    pauseOnHover ? 'marquee-pause-on-hover' : '',
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ');
-
-  const trackClasses = [
-    'marquee-track',
-    reverse ? 'marquee-reverse' : '',
-  ]
-    .filter(Boolean)
-    .join(' ');
-
-  const itemClasses = [
-    'marquee-item',
-    vertical ? 'marquee-item-vertical' : 'marquee-item-horizontal',
-  ]
-    .filter(Boolean)
-    .join(' ');
-
   return (
     <div
       {...props}
       ref={marqueeRef}
-      className={containerClasses}
+      data-slot="marquee"
+      className={cn(
+        'group flex overflow-hidden p-2 [--duration:40s] [--gap:1rem] [gap:var(--gap)]',
+        {
+          'flex-row': !vertical,
+          'flex-col': vertical,
+        },
+        className,
+      )}
       aria-label={ariaLabel}
       aria-live={ariaLive}
       role={ariaRole}
       tabIndex={0}
     >
-      <div className={trackClasses}>
-        {Array.from({ length: repeat }, (_, i) => (
-          <div key={i} className={itemClasses}>
-            {children}
-          </div>
-        ))}
-      </div>
+      {React.useMemo(
+        () => (
+          <>
+            {Array.from({ length: repeat }, (_, i) => (
+              <div
+                key={i}
+                className={cn(
+                  !vertical ? 'flex-row [gap:var(--gap)]' : 'flex-col [gap:var(--gap)]',
+                  'flex shrink-0 justify-around',
+                  !vertical && 'animate-marquee flex-row',
+                  vertical && 'animate-marquee-vertical flex-col',
+                  pauseOnHover && 'group-hover:[animation-play-state:paused]',
+                  reverse && '[animation-direction:reverse]',
+                )}
+              >
+                {children}
+              </div>
+            ))}
+          </>
+        ),
+        [repeat, children, vertical, pauseOnHover, reverse],
+      )}
     </div>
   );
 }
