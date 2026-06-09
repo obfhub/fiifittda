@@ -177,6 +177,13 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
 }
 
+.footer-legal .footer-social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
 .footer-social-icon::before {
   content: '';
   position: absolute;
@@ -190,10 +197,10 @@
 .footer-social i {
   position: relative;
   z-index: 1;
-  display: grid;
-  width: 1.1em;
-  height: 1.1em;
-  place-items: center;
+  display: block;
+  width: auto;
+  height: auto;
+  margin: 0;
   color: currentColor;
   line-height: 1;
   text-align: center;
