@@ -1,0 +1,123 @@
+import React, { useEffect, useRef, useState } from 'react';
+import './Footer.css';
+
+const footerSections = [
+  {
+    label: 'Program',
+    links: [
+      { title: 'Despre program', href: '#program' },
+      { title: 'Lecții', href: '#lectii' },
+      { title: 'Transformări', href: '#transformari' },
+      { title: 'Tarife', href: '#tarife' }
+    ]
+  },
+  {
+    label: 'Informații',
+    links: [
+      { title: 'Întrebări frecvente', href: '#faq' },
+      { title: 'Înscrie-te', href: '/checkout' },
+      { title: 'Contact', href: 'mailto:fiifitonline@gmail.com' }
+    ]
+  },
+  {
+    label: 'Contact',
+    links: [
+      {
+        title: 'fiifitonline@gmail.com',
+        href: 'mailto:fiifitonline@gmail.com',
+        icon: 'fa-envelope'
+      },
+      {
+        title: 'Sheridan, WY 82801',
+        href: 'https://maps.google.com/?q=30+N+Gould+St+Sheridan+WY+82801',
+        icon: 'fa-location-dot',
+        external: true
+      }
+    ]
+  }
+];
+
+export function Footer() {
+  const footerRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const footer = footerRef.current;
+    if (!footer) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <footer ref={footerRef} className={`footer ${isVisible ? 'is-visible' : ''}`}>
+      <div className="footer-glow" aria-hidden="true"></div>
+      <div className="footer-highlight" aria-hidden="true"></div>
+
+      <div className="footer-layout">
+        <div className="footer-brand footer-animate" style={{ '--footer-delay': '0s' }}>
+          <a className="footer-logo" href="#home" aria-label="FiiFit.online">
+            <span className="footer-logo-mark">
+              <i className="fas fa-heart-pulse" aria-hidden="true"></i>
+            </span>
+            FiiFit.online
+          </a>
+          <p>
+            Program online de slăbire sănătoasă, cu educație, mișcare și suport real.
+          </p>
+          <p className="footer-mission">
+            Pentru ca fiecare femeie să se simtă confortabil și puternică în corpul ei.
+          </p>
+          <p className="footer-copyright">
+            © {new Date().getFullYear()} Club FiiFit Online.<br />
+            Toate drepturile rezervate.
+          </p>
+        </div>
+
+        <div className="footer-links">
+          {footerSections.map((section, index) => (
+            <div
+              className="footer-column footer-animate"
+              style={{ '--footer-delay': `${0.1 + index * 0.1}s` }}
+              key={section.label}
+            >
+              <h3>{section.label}</h3>
+              <ul>
+                {section.links.map((link) => (
+                  <li key={link.title}>
+                    <a
+                      href={link.href}
+                      target={link.external ? '_blank' : undefined}
+                      rel={link.external ? 'noreferrer' : undefined}
+                    >
+                      {link.icon && <i className={`fas ${link.icon}`} aria-hidden="true"></i>}
+                      {link.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="footer-legal footer-animate" style={{ '--footer-delay': '0.4s' }}>
+        <span>
+          <i className="fas fa-lock" aria-hidden="true"></i>
+          FiiFit Club Online LLC
+        </span>
+        <span>EIN: 37-2077501</span>
+      </div>
+    </footer>
+  );
+}

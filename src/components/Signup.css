@@ -1,0 +1,445 @@
+.signup-page {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  margin-top: -85px;
+  overflow: hidden;
+  background: #101312;
+  color: var(--text);
+}
+
+.signup-back {
+  position: fixed;
+  top: 28px;
+  left: 34px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font-size: 18px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.signup-back i {
+  color: var(--primary);
+  font-size: 14px;
+}
+
+.signup-visual,
+.signup-form-side {
+  width: 50%;
+  min-height: 100vh;
+}
+
+.signup-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  background:
+    radial-gradient(circle at center, rgba(0, 208, 132, 0.12), transparent 38%),
+    #0d100f;
+}
+
+.signup-ripples {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  mask-image: linear-gradient(to bottom, black 65%, transparent);
+}
+
+.signup-ripples span {
+  position: absolute;
+  width: var(--ripple-size);
+  height: var(--ripple-size);
+  border: 1px solid rgba(0, 208, 132, var(--ripple-opacity));
+  border-radius: 50%;
+  animation: signup-ripple 3s ease-in-out infinite;
+  animation-delay: var(--ripple-delay);
+}
+
+.signup-orbit-display {
+  position: relative;
+  display: grid;
+  width: 680px;
+  height: 680px;
+  place-items: center;
+}
+
+.signup-orbit-copy {
+  position: relative;
+  z-index: 3;
+  max-width: 290px;
+  text-align: center;
+}
+
+.signup-orbit-copy span {
+  display: block;
+  background: linear-gradient(180deg, #fff, rgba(255, 255, 255, 0.18));
+  background-clip: text;
+  color: transparent;
+  font-size: 72px;
+  font-weight: 800;
+  letter-spacing: -4px;
+  line-height: 1;
+}
+
+.signup-orbit-copy strong {
+  display: block;
+  margin-top: 16px;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.signup-orbit {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  animation: signup-orbit 20s linear infinite;
+  animation-delay: var(--orbit-delay);
+}
+
+.signup-orbit.reverse {
+  animation-direction: reverse;
+}
+
+.signup-orbit-icon {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 1px solid rgba(0, 208, 132, 0.32);
+  border-radius: 16px;
+  background: rgba(22, 31, 28, 0.94);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.38), 0 0 22px rgba(0, 208, 132, 0.08);
+  color: var(--primary);
+  font-size: 22px;
+  transform: translateY(calc(var(--orbit-radius) * -1));
+}
+
+.signup-orbit-icon.small {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  font-size: 18px;
+}
+
+.signup-form-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 8%;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(0, 208, 132, 0.06), transparent 30%),
+    #151716;
+}
+
+.signup-form {
+  width: 100%;
+  max-width: 410px;
+}
+
+.signup-title {
+  margin-bottom: 24px;
+}
+
+.signup-kicker {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.signup-title h1 {
+  margin: 6px 0 8px;
+  color: white;
+  font-size: 38px;
+  line-height: 1.2;
+}
+
+.signup-title p {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.google-signup {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.025);
+  color: white;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.google-signup:hover {
+  border-color: rgba(0, 208, 132, 0.55);
+  background: rgba(0, 208, 132, 0.06);
+}
+
+.google-mark {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  border-radius: 50%;
+  background: white;
+}
+
+.google-mark svg {
+  width: 16px;
+  height: 16px;
+}
+
+.signup-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 19px 0;
+}
+
+.signup-divider span {
+  height: 1px;
+  flex: 1;
+  border-top: 1px dashed rgba(255, 255, 255, 0.14);
+}
+
+.signup-divider p {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 12px;
+}
+
+.signup-field {
+  margin-bottom: 3px;
+}
+
+.signup-field label {
+  display: block;
+  margin-bottom: 7px;
+  color: rgba(255, 255, 255, 0.83);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.signup-field label span {
+  color: #ff5c68;
+}
+
+.signup-input-glow {
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  padding: 2px;
+  border-radius: 9px;
+  background: radial-gradient(
+    110px circle at var(--mouse-x) var(--mouse-y),
+    var(--primary),
+    rgba(255, 255, 255, 0.11) 80%
+  );
+}
+
+.signup-input-inner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 7px;
+  background: #202321;
+}
+
+.signup-input-inner input {
+  width: 100%;
+  height: 44px;
+  padding: 0 44px 0 13px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: white;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.signup-input-inner input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.signup-input-inner input:focus {
+  box-shadow: inset 0 0 0 1px rgba(0, 208, 132, 0.52);
+}
+
+.password-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.52);
+  cursor: pointer;
+}
+
+.signup-error {
+  display: block;
+  min-height: 19px;
+  padding-top: 3px;
+  color: #ff6672;
+  font-size: 11px;
+}
+
+.signup-submit {
+  position: relative;
+  width: 100%;
+  height: 46px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  box-shadow: 0 10px 28px rgba(0, 208, 132, 0.2);
+  color: #071b13;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  transition: var(--transition);
+}
+
+.signup-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(0, 208, 132, 0.35);
+}
+
+.signup-submit span {
+  margin-left: 7px;
+  font-size: 17px;
+}
+
+.signup-success {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(0, 208, 132, 0.3);
+  border-radius: 7px;
+  background: rgba(0, 208, 132, 0.08);
+  color: var(--primary-light);
+  font-size: 12px;
+}
+
+.signup-login {
+  margin-top: 17px;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 12px;
+  text-align: center;
+}
+
+.signup-login button {
+  border: 0;
+  background: none;
+  color: var(--primary);
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 700;
+}
+
+.reveal-item {
+  opacity: 0;
+  animation: signup-reveal 0.55s ease forwards;
+}
+
+.reveal-item:nth-child(2) { animation-delay: 0.08s; }
+.reveal-item:nth-child(3) { animation-delay: 0.14s; }
+.reveal-item:nth-child(4) { animation-delay: 0.2s; }
+.reveal-item:nth-child(5) { animation-delay: 0.26s; }
+.reveal-item:nth-child(6) { animation-delay: 0.32s; }
+.reveal-item:nth-child(7) { animation-delay: 0.38s; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes signup-ripple {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.94);
+  }
+}
+
+@keyframes signup-orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes signup-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 980px) {
+  .signup-visual {
+    display: none;
+  }
+
+  .signup-form-side {
+    width: 100%;
+    padding: 90px 10%;
+  }
+}
+
+@media (max-width: 520px) {
+  .signup-back {
+    top: 20px;
+    left: 20px;
+  }
+
+  .signup-form-side {
+    padding: 82px 22px 40px;
+  }
+
+  .signup-title h1 {
+    font-size: 31px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signup-orbit,
+  .signup-ripples span,
+  .reveal-item {
+    animation: none;
+    opacity: 1;
+  }
+}

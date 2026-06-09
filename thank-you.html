@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mulțumim! - FiiFit.online</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .thank-you-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--light-bg) 100%);
+            padding: 40px 20px;
+        }
+
+        .thank-you-card {
+            background: linear-gradient(135deg, var(--dark-card) 0%, #2A2A2A 100%);
+            border-radius: 20px;
+            padding: 80px 60px;
+            text-align: center;
+            max-width: 700px;
+            border: 2px solid rgba(255, 184, 77, 0.2);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .thank-you-icon {
+            font-size: 100px;
+            margin-bottom: 30px;
+            display: inline-block;
+            animation: bounce 1.2s ease-out;
+        }
+
+        .thank-you-card h1 {
+            font-size: 52px;
+            color: var(--text);
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .thank-you-card p {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .checklist {
+            background: rgba(255, 184, 77, 0.05);
+            border: 2px solid rgba(255, 184, 77, 0.2);
+            border-radius: 12px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: left;
+        }
+
+        .checklist h3 {
+            color: var(--primary);
+            font-size: 20px;
+            margin-top: 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 184, 77, 0.1);
+            font-size: 16px;
+            color: var(--text);
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary-large {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 16px 40px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .btn-primary-large:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(255, 184, 77, 0.4);
+        }
+
+        .btn-secondary-large {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 14px 38px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .btn-secondary-large:hover {
+            background: var(--primary);
+            color: var(--secondary);
+        }
+
+        .email-notification {
+            background: rgba(74, 222, 128, 0.1);
+            border-left: 4px solid #4ADE80;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            font-size: 16px;
+            color: var(--text);
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .thank-you-card {
+                padding: 50px 30px;
+            }
+
+            .thank-you-card h1 {
+                font-size: 36px;
+            }
+
+            .thank-you-icon {
+                font-size: 80px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-primary-large,
+            .btn-secondary-large {
+                width: 100%;
+            }
+
+            .checklist {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"><a href="index.html">FiiFit.online</a></div>
+                <nav class="nav">
+                    <a href="index.html">Home</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- THANK YOU SECTION -->
+    <div class="thank-you-container">
+        <div class="thank-you-card">
+            <div class="thank-you-icon"><i class="fas fa-check-circle" style="color: #4ADE80;"></i></div>
+            <h1>Mulțumim!</h1>
+            <p>Înregistrarea ta a fost <strong>finalizată cu succes!</strong></p>
+            <p>Ești acum parte a comunității FiiFit.online <i class="fas fa-party-horn" style="color: var(--primary);"></i></p>
+
+            <!-- EMAIL NOTIFICATION -->
+            <div class="email-notification">
+                <i class="fas fa-envelope" style="margin-right: 10px;"></i><strong>Verifică-ți email-ul</strong> (și cartela de spam) pentru:
+                <ul style="margin: 10px 0 0 20px; padding: 0;">
+                    <li><i class="fas fa-link" style="margin-right: 8px;"></i>Link de acces la platformă</li>
+                    <li><i class="fas fa-key" style="margin-right: 8px;"></i>Credențialele tale de login</li>
+                    <li><i class="fas fa-graduation-cap" style="margin-right: 8px;"></i>Ghidul de start rapid</li>
+                </ul>
+            </div>
+
+            <!-- CHECKLIST -->
+            <div class="checklist">
+                <h3><i class="fas fa-list-check" style="margin-right: 10px;"></i>Ce urmează:</h3>
+                <div class="checklist-item">
+                    <div class="checklist-icon"><i class="fas fa-envelope"></i></div>
+                    <span>Deschide email-ul și click pe link-ul de acces</span>
+                </div>
+                <div class="checklist-item">
+                    <div class="checklist-icon"><i class="fas fa-user"></i></div>
+                    <span>Completează profilul tău cu date personale</span>
+                </div>
+                <div class="checklist-item">
+                    <div class="checklist-icon"><i class="fas fa-book-open"></i></div>
+                    <span>Urmărește prima lecție - "Introducere în slăbirea sănătoasă"</span>
+                </div>
+                <div class="checklist-item">
+                    <div class="checklist-icon"><i class="fas fa-handshake"></i></div>
+                    <span>Alătură-te comunității și conectează-te cu alți membri</span>
+                </div>
+            </div>
+
+            <!-- STATS -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0;">
+                <div style="background: rgba(255, 184, 77, 0.05); padding: 20px; border-radius: 12px;">
+                    <div style="font-size: 32px; font-weight: 800; color: var(--primary);">
+                        <i class="fas fa-play-circle" style="margin-right: 8px;"></i>24
+                    </div>
+                    <div style="color: var(--text-light); font-size: 14px;">Lecții Complete</div>
+                </div>
+                <div style="background: rgba(255, 184, 77, 0.05); padding: 20px; border-radius: 12px;">
+                    <div style="font-size: 32px; font-weight: 800; color: var(--primary);">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <div style="color: var(--text-light); font-size: 14px;">Acces pe Viață</div>
+                </div>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="button-group">
+                <a href="index.html" class="btn-primary-large">
+                    <i class="fas fa-home" style="margin-right: 8px;"></i>Înapoi la Homepage
+                </a>
+                <a href="https://www.instagram.com/fiifit" target="_blank" class="btn-secondary-large">
+                    <i class="fab fa-instagram" style="margin-right: 8px;"></i>Urmărește pe Instagram
+                </a>
+            </div>
+
+            <!-- FOOTER TEXT -->
+            <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255, 184, 77, 0.2);">
+                <p style="font-size: 14px; color: var(--text-light);">
+                    <i class="fas fa-question-circle" style="margin-right: 8px;"></i>Ai întrebări? Contactează-ne pe <strong>support@fiifit.online</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer" style="margin-top: 0;">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>FiiFit.online</h4>
+                    <p>Program online de slăbire sănătoasă cu educație și suport.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>📧 contact@fiifit.online</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Linkuri</h4>
+                    <a href="index.html#tarife">Tarife</a>
+                    <a href="index.html#lectii">Lecții</a>
+                    <a href="index.html#transformari">Transformări</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 FiiFit.online. Toate drepturile rezervate.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

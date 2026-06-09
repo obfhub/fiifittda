@@ -1,0 +1,42 @@
+.App {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text);
+  background-color: var(--dark-bg);
+  line-height: 1.7;
+  letter-spacing: 0.3px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  body {
+    padding-top: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 13px;
+  }
+
+  body {
+    padding-top: 62px;
+  }
+}

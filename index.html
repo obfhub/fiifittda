@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FiiFit.online - Program Online de Slăbire cu 24 Lecții</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header sticky">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">FiiFit.online</div>
+                <nav class="nav">
+                    <a href="#home">Home</a>
+                    <a href="#program">Program</a>
+                    <a href="#lectii">Lecții</a>
+                    <a href="#transformari">Transformări</a>
+                    <a href="#tarife">Tarife</a>
+                    <a href="contact.html">Contact</a>
+                </nav>
+                <button class="btn-cta" onclick="window.location.href='checkout.html'">Înscrie-te acum</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1><span style="color: var(--primary);">Primăvara ta,</span> corpul tău!</h1>
+            <p>Începe transformarea acum cu FiiFit Online - Peste 6 ani de experiență și 4500+ femei transformate.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="window.location.href='checkout.html'">
+                    <i class="fas fa-rocket" style="margin-right: 10px;"></i>Înscrie-te acum
+                </button>
+                <button class="btn btn-secondary" onclick="document.getElementById('tarife').scrollIntoView({behavior: 'smooth'})">
+                    <i class="fas fa-list" style="margin-right: 10px;"></i>Vezi tarifele
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEME SECTION -->
+    <section class="problems">
+        <div class="container">
+            <h2>Ți se pare familiar?</h2>
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <img src="mirror.jpg" alt="Oglindă - Nu te mai recunoști" class="problem-image">
+                    <h3><i class="fas fa-mirror" style="margin-right: 10px; color: var(--primary);"></i>Nu te mai recunoști în oglindă?</h3>
+                </div>
+                <div class="problem-card">
+                    <img src="slabire.fara.infometare.jpg" alt="Corpul s-a schimbat" class="problem-image">
+                    <h3><i class="fas fa-body" style="margin-right: 10px; color: var(--primary);"></i>Corpul s-a schimbat. Tonusul a dispărut.</h3>
+                </div>
+                <div class="problem-card">
+                    <img src="dieta.webp" alt="Hainele - Ascunzi, nu-ți plac" class="problem-image">
+                    <h3><i class="fas fa-shirt" style="margin-right: 10px; color: var(--primary);"></i>Îți alegi hainele ca să ascunzi, nu ca să-ți placă.</h3>
+                </div>
+                <div class="problem-card">
+                    <img src="motivatie.jpg" alt="Greutate - Kg în plus" class="problem-image">
+                    <h3><i class="fas fa-weight-scale" style="margin-right: 10px; color: var(--primary);"></i>Ai 5, 10 sau 15 kg în plus... și nu mai pleacă.</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATISTICI - 6 ANI DE TRANSFORMĂRI -->
+    <section class="stats">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 50px; font-size: 36px;">
+                <i class="fas fa-trophy" style="margin-right: 15px;"></i>6 ani de transformări incredibile!
+            </h2>
+            <p style="text-align: center; font-size: 18px; margin-bottom: 60px; opacity: 0.95;">
+                Peste 4500 de femei și-au schimbat viața alături de FiiFit Online
+            </p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">1040+</div>
+                    <div class="stat-label">Antrenamente online</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">250+</div>
+                    <div class="stat-label">Live-uri educaționale</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1250+</div>
+                    <div class="stat-label">Consultații</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4500+</div>
+                    <div class="stat-label">Participante</div>
+                </div>
+            </div>
+            <div class="stats-grid" style="margin-top: 40px;">
+                <div class="stat-card">
+                    <div class="stat-number">40+</div>
+                    <div class="stat-label">Țări</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50.000+</div>
+                    <div class="stat-label">Kilograme slăbite</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">81%</div>
+                    <div class="stat-label">Ajung la scop</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">97%</div>
+                    <div class="stat-label">Se simt mai energice</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DESPRE PROGRAM -->
+    <section id="program" class="about">
+        <div class="container">
+            <h2>Despre FiiFit.online</h2>
+            <p>FiiFit.online este un program online de slăbire sănătoasă, bazat pe educație, obiceiuri alimentare, exerciții simple și motivație. Nu este o dietă extremă. Este o transformare durabilă.</p>
+            <p style="text-align: center; font-size: 18px; color: var(--text-light); margin: 30px 0;">
+                <i class="fas fa-quote-left" style="margin-right: 10px;"></i>
+                Dorim ca fiecare femeie să se simtă confortabil în corpul ei
+                <i class="fas fa-quote-right" style="margin-left: 10px;"></i>
+            </p>
+            <div class="about-features">
+                <div class="feature">
+                    <h3><i class="fas fa-book" style="margin-right: 12px; color: var(--primary);"></i>Educație</h3>
+                    <p>Înveți cum funcționează corpul și alimentația</p>
+                </div>
+                <div class="feature">
+                    <h3><i class="fas fa-dumbbell" style="margin-right: 12px; color: var(--primary);"></i>Exerciții Simple</h3>
+                    <p>Antrenamente pentru acasă, fără echipament</p>
+                </div>
+                <div class="feature">
+                    <h3><i class="fas fa-heart-pulse" style="margin-right: 12px; color: var(--primary);"></i>Motivație</h3>
+                    <p>Suport zilnic și comunitate puternică</p>
+                </div>
+                <div class="feature">
+                    <h3><i class="fas fa-trophy" style="margin-right: 12px; color: var(--primary);"></i>Rezultate</h3>
+                    <p>Transformări reale de la oameni reali</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERTA - TANYA GONCEAR -->
+    <section style="background: linear-gradient(135deg, var(--dark-card) 0%, #2A2A2A 100%); padding: 80px 0; border-top: 2px solid rgba(0, 208, 132, 0.2); border-bottom: 2px solid rgba(0, 208, 132, 0.2);">
+        <div class="container">
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <h2 style="margin-bottom: 10px;"><i class="fas fa-star" style="margin-right: 12px; color: var(--primary);"></i>Experta Clubului</h2>
+                <h3 style="font-size: 32px; color: var(--primary); margin-bottom: 30px;">Tanya Goncear</h3>
+                <p style="font-size: 18px; color: var(--text-light); line-height: 1.8; margin-bottom: 30px;">
+                    Chimistă, nutriționistă și cofondatoare Fiifit Online
+                </p>
+                <p style="font-size: 16px; color: var(--text); line-height: 1.8; margin-bottom: 20px;">
+                    Tatiana Goncear este chimistă și nutriționistă și de peste 6 ani ajută femeile să își schimbe stilul de viață și să ajungă la o greutate în care se simt bine în propriul corp.
+                </p>
+                <div style="background: rgba(0, 208, 132, 0.05); padding: 30px; border-radius: 12px; border-left: 4px solid var(--primary); margin: 30px 0;">
+                    <p style="font-size: 16px; color: var(--text); line-height: 1.8;">
+                        <strong>Experiența ei nu este doar profesională, ci și personală.</strong> Tatiana a slăbit 58 de kilograme, iar acest proces i-a oferit o înțelegere profundă a dificultăților prin care trece o femeie care se confruntă cu kilograme în plus — de la lupta cu obiceiurile alimentare până la provocările emoționale care apar pe parcurs.
+                    </p>
+                </div>
+                <p style="font-size: 16px; color: var(--text); line-height: 1.8;">
+                    Această experiență a stat la baza programelor create în Fiifit Online, unde transformarea nu se bazează pe diete restrictive sau soluții rapide. Prin această abordare, femeile nu doar slăbesc, ci învață cum să își mențină rezultatele și să își construiască un stil de viață echilibrat pe termen lung.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- LECȚII -->
+    <section id="lectii" class="lectii">
+        <div class="container">
+            <h2>Cele 24 de Lecții</h2>
+            <div class="lectii-grid">
+                <div class="lectie-card"><span>1</span> Introducere în slăbirea sănătoasă</div>
+                <div class="lectie-card"><span>2</span> Cum funcționează caloriile</div>
+                <div class="lectie-card"><span>3</span> Alimentația echilibrată</div>
+                <div class="lectie-card"><span>4</span> Greșeli frecvente în slăbire</div>
+                <div class="lectie-card"><span>5</span> Cum citești etichetele produselor</div>
+                <div class="lectie-card"><span>6</span> Proteine, carbohidrați și grăsimi</div>
+                <div class="lectie-card"><span>7</span> Controlul poftelor</div>
+                <div class="lectie-card"><span>8</span> Organizarea meselor</div>
+                <div class="lectie-card"><span>9</span> Hidratarea corectă</div>
+                <div class="lectie-card"><span>10</span> Mișcare pentru începători</div>
+                <div class="lectie-card"><span>11</span> Antrenamente acasă</div>
+                <div class="lectie-card"><span>12</span> Motivație și disciplină</div>
+                <div class="lectie-card"><span>13</span> Cum treci peste stagnare</div>
+                <div class="lectie-card"><span>14</span> Somnul și slăbirea</div>
+                <div class="lectie-card"><span>15</span> Stresul și alimentația</div>
+                <div class="lectie-card"><span>16</span> Mâncatul emoțional</div>
+                <div class="lectie-card"><span>17</span> Planificarea săptămânii</div>
+                <div class="lectie-card"><span>18</span> Mese sănătoase rapide</div>
+                <div class="lectie-card"><span>19</span> Cum mănânci în oraș</div>
+                <div class="lectie-card"><span>20</span> Cum eviți efectul yo-yo</div>
+                <div class="lectie-card"><span>21</span> Monitorizarea progresului</div>
+                <div class="lectie-card"><span>22</span> Menținerea rezultatului</div>
+                <div class="lectie-card"><span>23</span> Construirea unui stil de viață</div>
+                <div class="lectie-card"><span>24</span> Transformarea finală</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRANSFORMĂRI - POVEȘTILE LOR, TRANSFORMAREA TA -->
+    <section id="transformari" class="testimonials">
+        <div class="container">
+            <h2><i class="fas fa-heart" style="margin-right: 15px; color: var(--primary);"></i>Transformări Reale</h2>
+            <p style="text-align: center; font-size: 18px; color: var(--text-light); margin-bottom: 50px;">
+                ✨ Fii următoarea femeie care a reușit! ✨<br>
+                Poveștile lor, transformarea ta
+            </p>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <h3>Natalia</h3>
+                    <p class="weight">-21 kg</p>
+                    <p class="quote">"Înainte evitam oglinzile. Acum mă uit și zâmbesc. N-a fost ușor, dar nici greu. A fost clar, blând, constant. Nu e un program - e o transformare cu suflet"</p>
+                </div>
+                <div class="testimonial-card">
+                    <h3>Cristina</h3>
+                    <p class="weight">-31 kg</p>
+                    <p class="quote">"E primul program la care nu am renunțat. Pentru că n-a fost despre perfecțiune. Ci despre consecvență, sprijin și încredere. Am slăbit 31 kg fără să simt că sacrific ceva"</p>
+                </div>
+                <div class="testimonial-card">
+                    <h3>Galina</h3>
+                    <p class="weight">-40 kg</p>
+                    <p class="quote">"Am început fără să cred că voi ajunge până la capăt. Dar pașii mici, mesajele zilnice și grupul m-au ținut pe drum. 40 kg în minus, dar cel mai important - am recâștigat respectul pentru mine"</p>
+                </div>
+                <div class="testimonial-card">
+                    <h3>Tanya Goncear</h3>
+                    <p class="weight">-58 kg</p>
+                    <p class="quote">"Am trăit ani de zile în rușine și haine largi. Când am decis să mă pun pe primul loc, mi-am promis că nu voi renunța. Acum sunt aici pentru tine - ca să reușești și tu."</p>
+                </div>
+                <div class="testimonial-card">
+                    <h3>Irina</h3>
+                    <p class="weight">-12 kg</p>
+                    <p class="quote">"Nu am avut mult de dat jos, dar voiam să ies din haos. Am găsit ordine, claritate și un ritm care mă liniștește. Acum am o rutină care chiar îmi place."</p>
+                </div>
+                <div class="testimonial-card">
+                    <h3>Olga</h3>
+                    <p class="weight">-4 kg</p>
+                    <p class="quote">"Am slăbit 4 kg într-o singură lună! Rezultatul se vede nu doar pe cântar, ci și în oglindă. Corpul s-a tonifiat vizibil, iar eu am căpătat încredere că pot mai mult."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TARIFE -->
+    <section id="tarife" class="pricing">
+        <div class="container">
+            <h2>Alege Plănul Tău</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>3 Luni</h3>
+                    <p class="pricing-description">120 zile pentru stilul tău de viață sănătos</p>
+                    <p class="price-original">250€</p>
+                    <p class="price">175€</p>
+                    <p class="price-discount">+1 lună cadou</p>
+                    <ul>
+                        <li>✓ 2 antrenamente săptămânale live și 1 antrenament înregistrat</li>
+                        <li>✓ Înțelniri săptămânale cu Tanya, Motivația și cunoștințe despre transformarea corporală</li>
+                        <li>✓ 3 lecții de Bazele Nutriției. Devii propriul tău nutriționist</li>
+                        <li>✓ Acces la comunitate</li>
+                        <li>✓ Suport zilnic în chat</li>
+                        <li>✓ Acces la biblioteca de exerciții</li>
+                        <li>✓ Meniu PDF pe 7 zile FiiFit Online</li>
+                        <li>✓ Curs complet: "Devino nutriționistul familiei tale" (22 lecții)</li>
+                        <li>✓ Webinar "Slăbește inteligent, armonie în alimentație"</li>
+                        <li>✓ Acces pe platforme: Instagram, Facebook, Telegram</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="window.location.href='checkout.html'">ÎNSCRIE-TE ACUM</button>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="badge">CEL MAI POPULAR</div>
+                    <h3>6 Luni</h3>
+                    <p class="pricing-description">180 zile pentru stilul tău de viață sănătos</p>
+                    <p class="price-original">369€</p>
+                    <p class="price">275€</p>
+                    <p class="price-discount">-25%</p>
+                    <ul>
+                        <li>✓ 2 antrenamente săptămânale live și 1 antrenament înregistrat</li>
+                        <li>✓ Înțelniri săptămânale cu Tanya, Motivația și cunoștințe despre transformarea corporală</li>
+                        <li>✓ 3 lecții de Bazele Nutriției. Devii propriul tău nutriționist</li>
+                        <li>✓ Acces la comunitate</li>
+                        <li>✓ Suport zilnic în chat</li>
+                        <li>✓ Acces la biblioteca de exerciții</li>
+                        <li>✓ Meniu PDF pe 7 zile FiiFit Online</li>
+                        <li>✓ Curs complet: "Devino nutriționistul familiei tale" (22 lecții)</li>
+                        <li>✓ Webinar "Slăbește inteligent, armonie în alimentație"</li>
+                        <li>✓ Acces pe platforme: Instagram, Facebook, Telegram</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="window.location.href='checkout.html'">ÎNSCRIE-TE ACUM</button>
+                </div>
+                <div class="pricing-card">
+                    <h3>12 Luni</h3>
+                    <p class="pricing-description">365 zile pentru stilul tău de viață sănătos</p>
+                    <p class="price-original">499€</p>
+                    <p class="price">365€</p>
+                    <p class="price-discount">-27%</p>
+                    <ul>
+                        <li>✓ 2 antrenamente săptămânale live și 1 antrenament înregistrat</li>
+                        <li>✓ Înțelniri săptămânale cu Tanya, Motivația și cunoștințe despre transformarea corporală</li>
+                        <li>✓ 3 lecții de Bazele Nutriției. Devii propriul tău nutriționist</li>
+                        <li>✓ Acces la comunitate</li>
+                        <li>✓ Suport zilnic în chat</li>
+                        <li>✓ Acces la biblioteca de exerciții</li>
+                        <li>✓ Meniu PDF pe 7 zile FiiFit Online</li>
+                        <li>✓ Curs complet: "Devino nutriționistul familiei tale" (22 lecții)</li>
+                        <li>✓ Webinar "Slăbește inteligent, armonie în alimentație"</li>
+                        <li>✓ Acces pe platforme: Instagram, Facebook, Telegram</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="window.location.href='checkout.html'">ÎNSCRIE-TE ACUM</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PODCAST SECTION -->
+    <section style="background: linear-gradient(135deg, var(--dark-card) 0%, #2A2A2A 100%); padding: 80px 0; border-top: 2px solid rgba(0, 208, 132, 0.2);">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 50px;">
+                <i class="fas fa-podcast" style="margin-right: 15px; color: var(--primary);"></i>Podcast Audio
+            </h2>
+            <div style="max-width: 700px; margin: 0 auto; background: rgba(0, 208, 132, 0.05); padding: 40px; border-radius: 16px; border: 2px solid rgba(0, 208, 132, 0.2);">
+                <h3 style="text-align: center; color: var(--text); margin-bottom: 15px;">
+                    <i class="fas fa-microphone" style="margin-right: 10px; color: var(--primary);"></i>În culisele Fiifit Online
+                </h3>
+                <p style="text-align: center; color: var(--text-light); font-size: 15px; margin-bottom: 25px;">
+                    Ascultă ce se întâmplă în spatele proiectului - sincer, cu umor și la obiect
+                </p>
+                <div style="text-align: center; margin-bottom: 25px;">
+                    <button class="btn btn-primary" style="display: inline-block;">
+                        <i class="fas fa-play" style="margin-right: 8px;"></i>Ascultă podcastul
+                    </button>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px; margin-top: 25px;">
+                    <p style="color: var(--text-light); font-size: 13px; margin-bottom: 10px; font-weight: 600;">
+                        <i class="fas fa-list" style="margin-right: 8px; color: var(--primary);"></i>Episoade cu Tanya Goncear:
+                    </p>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="padding: 8px 0; color: var(--text); font-size: 14px;">
+                            <i class="fas fa-play-circle" style="margin-right: 8px; color: var(--primary);"></i>Despre slăbit, genetică și susținere
+                        </li>
+                        <li style="padding: 8px 0; color: var(--text); font-size: 14px;">
+                            <i class="fas fa-play-circle" style="margin-right: 8px; color: var(--primary);"></i>Mâncat compulsiv, ispite și unde te oprești
+                        </li>
+                        <li style="padding: 8px 0; color: var(--text); font-size: 14px;">
+                            <i class="fas fa-play-circle" style="margin-right: 8px; color: var(--primary);"></i>Despre programul de slăbit în doar 6 minute
+                        </li>
+                        <li style="padding: 8px 0; color: var(--text); font-size: 14px;">
+                            <i class="fas fa-play-circle" style="margin-right: 8px; color: var(--primary);"></i>De la obezitate la formă fizică de invidiat
+                        </li>
+                        <li style="padding: 8px 0; color: var(--text); font-size: 14px;">
+                            <i class="fas fa-play-circle" style="margin-right: 8px; color: var(--primary);"></i>Slăbit fără dietă restrictivă - Metoda unică
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PARTNERSHIP SECTION -->
+    <section style="background: linear-gradient(135deg, #2A2A2A 0%, var(--primary-dark) 50%, var(--primary) 100%); padding: 80px 0; text-align: center; color: white;">
+        <div class="container">
+            <h2 style="margin-bottom: 20px; color: white;">
+                <i class="fas fa-handshake" style="margin-right: 15px;"></i>Program de Parteneriat
+            </h2>
+            <p style="font-size: 18px; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Devino promotor FiiFit Online și primește <strong>10% comision</strong> din fiecare client adus prin tine.
+            </p>
+            <p style="font-size: 15px; margin-bottom: 30px; opacity: 0.9;">
+                Suntem deschiși la orice tip de parteneriat - condiții speciale se discută individual la cerere.
+            </p>
+            <button class="btn btn-primary" style="background: white; color: var(--primary);">
+                <i class="fas fa-star" style="margin-right: 8px;"></i>Devino Partener
+            </button>
+            <p style="font-size: 13px; margin-top: 20px; opacity: 0.85;">
+                * 10% comision din fiecare client adus prin tine
+            </p>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="container">
+            <h2>Întrebări Frecvente</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3>Pentru cine este programul?</h3>
+                    <p>Pentru oricine dorește să slăbească în mod sănătos și durabil, fără diete extreme.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Cât durează programul?</h3>
+                    <p>Programul are 24 lecții pe care le poți urma în ritmul tău. Majoritatea membrilor finalizează în 3-6 luni.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Am nevoie de sală?</h3>
+                    <p>Nu! Antrenamentele sunt pentru acasă, fără echipament. Doar corpul tău și voința de schimbare.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Cum primesc acces?</h3>
+                    <p>După cumpărare, vei primi link-ul de acces instantaneu. Poți accesa programul de pe orice dispozitiv.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Plata este sigură?</h3>
+                    <p>Da! Folosim procesatoare de plată securizate și criptate. Datele tale sunt protejate.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Pot urma programul de acasă?</h3>
+                    <p>Absolut! Totul este online. Ai nevoie doar de internet și de determinare.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section id="payment" class="cta-final">
+        <div class="container">
+            <h2>Cel mai bun proiect la care vei lucra vreodată ești TU</h2>
+            <p>Începe transformarea cu FiiFit.online și fă primul pas spre un corp mai sănătos.</p>
+            <button class="btn btn-large" onclick="alert('Redirecționează către payment gateway')">Înscrie-te acum</button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-heart" style="margin-right: 10px; color: var(--primary);"></i>Club International FiiFit</h4>
+                    <p>Program online de slăbire sănătoasă cu educație și suport.</p>
+                    <p style="margin-top: 15px; font-size: 13px; color: rgba(255, 255, 255, 0.7);">
+                        <i class="fas fa-quote-left"></i> Dorim ca fiecare femeie să se simtă confortabil în corpul ei
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4><i class="fas fa-envelope" style="margin-right: 10px; color: var(--primary);"></i>Contact</h4>
+                    <p>
+                        <i class="fas fa-envelope" style="margin-right: 8px;"></i>
+                        <a href="mailto:fiifitonline@gmail.com" style="color: var(--primary); text-decoration: none;">fiifitonline@gmail.com</a>
+                    </p>
+                    <p style="margin-top: 10px;">
+                        <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>
+                        <span style="color: rgba(255, 255, 255, 0.8);">30 N GOULD ST STEN<br>SHERIDAN, WY 82801</span>
+                    </p>
+                    <p style="margin-top: 10px; font-size: 13px;">
+                        <i class="fas fa-id-card" style="margin-right: 8px;"></i>
+                        <span style="color: rgba(255, 255, 255, 0.7);">EIN: 37-2077501</span>
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4><i class="fas fa-link" style="margin-right: 10px; color: var(--primary);"></i>Linkuri</h4>
+                    <a href="#tarife"><i class="fas fa-tag" style="margin-right: 6px;"></i>Tarife</a>
+                    <a href="#program"><i class="fas fa-info-circle" style="margin-right: 6px;"></i>Program</a>
+                    <a href="#transformari"><i class="fas fa-heart" style="margin-right: 6px;"></i>Transformări</a>
+                    <a href="contact.html"><i class="fas fa-envelope" style="margin-right: 6px;"></i>Contact</a>
+                </div>
+                <div class="footer-section">
+                    <h4><i class="fas fa-share-alt" style="margin-right: 10px; color: var(--primary);"></i>Urmărește-ne</h4>
+                    <div style="display: flex; gap: 12px; margin-top: 15px;">
+                        <a href="https://instagram.com/fiifit" target="_blank" style="color: var(--primary); font-size: 20px; transition: all 0.3s;">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://facebook.com/fiifit" target="_blank" style="color: var(--primary); font-size: 20px; transition: all 0.3s;">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://t.me/fiifit" target="_blank" style="color: var(--primary); font-size: 20px; transition: all 0.3s;">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="https://youtube.com/@fiifit" target="_blank" style="color: var(--primary); font-size: 20px; transition: all 0.3s;">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p style="margin-bottom: 10px;">&copy; 2026 Club Fiifit Online. Toate drepturile rezervate.</p>
+                <p style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">
+                    <i class="fas fa-lock" style="margin-right: 6px;"></i>Fiifit club online LLC
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
