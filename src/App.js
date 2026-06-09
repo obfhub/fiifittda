@@ -6,6 +6,7 @@ import { Problems } from './components/Problems';
 import { About } from './components/About';
 import { Expert } from './components/Expert';
 import { Lessons } from './components/Lessons';
+import { MacroTracker } from './components/MacroTracker';
 import { Testimonials } from './components/Testimonials';
 import { Pricing } from './components/Pricing';
 import { FAQ } from './components/FAQ';
@@ -76,6 +77,7 @@ function App() {
       <About />
       <Expert />
       <Lessons />
+      <MacroTracker />
       <Testimonials />
       <Pricing />
       <FAQ />

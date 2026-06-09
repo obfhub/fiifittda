@@ -6,6 +6,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+## AI Macro Tracker
+
+The meal parser uses the server-only Vercel API route `api/parse-meal.js`.
+Add this environment variable in Vercel before using the tracker:
+
+`CLAUDE_API_KEY=your_key_here`
+
+Do not place this key in frontend code. Claude only parses food text into database search items; calories and macros are calculated from `src/data/foodDatabase.js`.
+
 ### `npm start`
 
 Runs the app in the development mode.\

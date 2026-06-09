@@ -1,0 +1,337 @@
+.macro-tracker {
+  position: relative;
+  padding: 105px 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 14%, rgba(0, 208, 132, 0.1), transparent 28%),
+    linear-gradient(180deg, var(--dark-bg), #121715 54%, var(--dark-bg));
+}
+
+.macro-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+  gap: 38px;
+  align-items: stretch;
+}
+
+.macro-copy,
+.macro-panel,
+.detected-foods {
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(34, 37, 36, 0.94), rgba(18, 21, 20, 0.98));
+  box-shadow: 0 20px 54px rgba(0, 0, 0, 0.24);
+}
+
+.macro-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 38px;
+}
+
+.macro-eyebrow {
+  margin-bottom: 12px;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.macro-copy h2 {
+  max-width: 11ch;
+  margin-bottom: 18px;
+  color: white;
+  font-size: clamp(38px, 5vw, 58px);
+  font-weight: 850;
+  letter-spacing: -2px;
+  line-height: 1.02;
+}
+
+.macro-copy p {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.macro-guardrail {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 28px;
+  padding: 15px;
+  border: 1px solid rgba(0, 208, 132, 0.18);
+  border-radius: 16px;
+  background: rgba(0, 208, 132, 0.07);
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.macro-guardrail i {
+  color: var(--primary);
+}
+
+.macro-panel {
+  padding: 30px;
+}
+
+.macro-panel label {
+  display: block;
+  margin-bottom: 12px;
+  color: white;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.macro-panel textarea {
+  width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  outline: none;
+  background: rgba(15, 15, 15, 0.82);
+  color: white;
+  font: inherit;
+  line-height: 1.6;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.macro-panel textarea:focus {
+  border-color: rgba(0, 208, 132, 0.55);
+  box-shadow: 0 0 0 4px rgba(0, 208, 132, 0.1);
+}
+
+.macro-panel textarea::placeholder {
+  color: rgba(255, 255, 255, 0.34);
+}
+
+.macro-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.macro-actions button {
+  min-height: 46px;
+  padding: 0 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.macro-actions button:first-child {
+  border: 0;
+  background: var(--primary);
+  color: #071b13;
+}
+
+.macro-actions button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.macro-example {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: white;
+}
+
+.macro-error {
+  margin-top: 14px;
+  color: #ffb4a8;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.macro-disclaimer {
+  margin-top: 16px;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.macro-results {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.macro-total-card {
+  padding: 22px;
+  border: 1px solid rgba(0, 208, 132, 0.18);
+  border-radius: 18px;
+  background: rgba(0, 208, 132, 0.07);
+}
+
+.macro-total-card span,
+.macro-total-card small {
+  display: block;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.macro-total-card strong {
+  display: block;
+  margin: 6px 0;
+  color: white;
+  font-size: 34px;
+  line-height: 1;
+}
+
+.detected-foods {
+  margin-top: 22px;
+  padding: 28px;
+}
+
+.detected-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+
+.detected-heading h3 {
+  color: white;
+  font-size: 24px;
+}
+
+.detected-heading p {
+  max-width: 420px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.detected-list {
+  display: grid;
+  gap: 10px;
+}
+
+.detected-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.detected-item.unmatched {
+  border-color: rgba(255, 180, 168, 0.28);
+}
+
+.detected-item span {
+  display: block;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.detected-item strong {
+  display: block;
+  margin-top: 3px;
+  color: white;
+  font-size: 16px;
+}
+
+.detected-item p {
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 12px;
+}
+
+.detected-item ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+  list-style: none;
+}
+
+.detected-item li {
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: rgba(0, 208, 132, 0.08);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.unmatched-warning {
+  color: #ffb4a8 !important;
+  font-weight: 800;
+}
+
+@media (max-width: 850px) {
+  .macro-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .macro-copy h2 {
+    max-width: 100%;
+  }
+
+  .macro-results {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .detected-heading,
+  .detected-item {
+    grid-template-columns: 1fr;
+  }
+
+  .detected-heading {
+    display: grid;
+  }
+
+  .detected-item ul {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 520px) {
+  .macro-tracker {
+    padding: 72px 0;
+  }
+
+  .macro-copy,
+  .macro-panel,
+  .detected-foods {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .macro-copy h2 {
+    font-size: 34px;
+    letter-spacing: -1px;
+  }
+
+  .macro-actions {
+    flex-direction: column;
+  }
+
+  .macro-actions button,
+  .macro-results {
+    width: 100%;
+  }
+
+  .macro-total-card {
+    padding: 18px;
+  }
+
+  .macro-total-card strong {
+    font-size: 28px;
+  }
+}

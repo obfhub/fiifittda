@@ -32,6 +32,7 @@ export function Header() {
             <a onClick={() => scrollToSection('home')} href="#home">Home</a>
             <a onClick={() => scrollToSection('program')} href="#program">Program</a>
             <a onClick={() => scrollToSection('lectii')} href="#lectii">Lecții</a>
+            <a onClick={() => scrollToSection('macro-tracker')} href="#macro-tracker">Tracker</a>
             <a onClick={() => scrollToSection('transformari')} href="#transformari">Transformări</a>
             <a onClick={() => scrollToSection('tarife')} href="#tarife">Tarife</a>
             <a href="mailto:fiifitonline@gmail.com">Contact</a>
