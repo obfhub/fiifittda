@@ -210,6 +210,10 @@ export function Login() {
           </button>
 
           <p className="signup-login reveal-item">
+            Ai uitat parola? <a href="/forgot-password">Reseteaza parola</a>
+          </p>
+
+          <p className="signup-login reveal-item">
             Nu ai cont? <a href="/signup">Creeaza-ti contul</a>
           </p>
         </form>

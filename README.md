@@ -35,6 +35,22 @@ Add these environment variables in Vercel before using account creation:
 
 Keep `SUPABASE_SERVICE_ROLE_KEY` server-only. Do not add it to frontend code or expose it with a `REACT_APP_` prefix. The login page at `/login` uses `api/login-account.js` and stores the returned session in browser local storage.
 
+Password reset uses `api/forgot-password.js`, `api/reset-password.js`, and real SMTP through Nodemailer. Add these environment variables in Vercel:
+
+`SMTP_HOST=smtp.gmail.com`
+
+`SMTP_PORT=587`
+
+`SMTP_SECURE=false`
+
+`SMTP_USER=your_gmail_address`
+
+`SMTP_PASSWORD=your_gmail_app_password`
+
+Optional:
+
+`SITE_URL=https://your-production-domain`
+
 ### `npm start`
 
 Runs the app in the development mode.\
