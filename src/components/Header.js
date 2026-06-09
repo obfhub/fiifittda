@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import './Header.css';
 
+function getStoredUser() {
+  try {
+    return JSON.parse(localStorage.getItem('fiifit_user') || 'null');
+  } catch (error) {
+    return null;
+  }
+}
+
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [signedInUser, setSignedInUser] = useState(getStoredUser);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -12,13 +21,20 @@ export function Header() {
     setMobileMenuOpen(false);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('fiifit_user');
+    localStorage.removeItem('fiifit_session');
+    setSignedInUser(null);
+    setMobileMenuOpen(false);
+  };
+
   return (
     <header className="header sticky">
       <div className="container">
         <div className="header-content">
           <div className="logo">FiiFit.online</div>
-          
-          <button 
+
+          <button
             className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
@@ -31,11 +47,19 @@ export function Header() {
           <nav className={`nav ${mobileMenuOpen ? 'open' : ''}`}>
             <a onClick={() => scrollToSection('home')} href="#home">Home</a>
             <a onClick={() => scrollToSection('program')} href="#program">Program</a>
-            <a onClick={() => scrollToSection('lectii')} href="#lectii">Lecții</a>
+            <a onClick={() => scrollToSection('lectii')} href="#lectii">Lectii</a>
             <a onClick={() => scrollToSection('macro-tracker')} href="#macro-tracker">Tracker</a>
-            <a onClick={() => scrollToSection('transformari')} href="#transformari">Transformări</a>
+            <a onClick={() => scrollToSection('transformari')} href="#transformari">Transformari</a>
             <a onClick={() => scrollToSection('tarife')} href="#tarife">Tarife</a>
             <a href="mailto:fiifitonline@gmail.com">Contact</a>
+            {signedInUser ? (
+              <>
+                <a className="nav-account-link" href="/account">Cont</a>
+                <button className="nav-auth-button" type="button" onClick={handleLogout}>Logout</button>
+              </>
+            ) : (
+              <a className="nav-account-link" href="/login">Login</a>
+            )}
           </nav>
         </div>
       </div>

@@ -72,13 +72,11 @@ export function Login() {
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
 
   const updateField = (event) => {
     const { name, value } = event.target;
     setFormData((current) => ({ ...current, [name]: value }));
     setErrors((current) => ({ ...current, [name]: '', form: '' }));
-    setLoggedIn(false);
   };
 
   const handleSubmit = async (event) => {
@@ -95,7 +93,6 @@ export function Login() {
     }
 
     setErrors(nextErrors);
-    setLoggedIn(false);
 
     if (Object.keys(nextErrors).length > 0) return;
 
@@ -120,8 +117,7 @@ export function Login() {
 
       localStorage.setItem('fiifit_user', JSON.stringify(data.user));
       localStorage.setItem('fiifit_session', JSON.stringify(data.session));
-      setLoggedIn(true);
-      setFormData((current) => ({ ...current, password: '' }));
+      window.location.href = '/account';
     } catch (error) {
       setErrors({ form: error.message || 'Nu am putut autentifica.' });
     } finally {
@@ -192,12 +188,6 @@ export function Login() {
             autoComplete="current-password"
             disabled={isSubmitting}
           />
-
-          {loggedIn && (
-            <p className="signup-success" role="status">
-              Te-ai autentificat cu succes.
-            </p>
-          )}
 
           {errors.form && (
             <p className="signup-form-error reveal-item" role="alert">

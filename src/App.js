@@ -17,12 +17,14 @@ import { Login } from './components/Login';
 import { ForgotPassword } from './components/ForgotPassword';
 import { ResetPassword } from './components/ResetPassword';
 import { Checkout } from './components/Checkout';
+import { Account } from './components/Account';
 
 function App() {
   const currentPath = window.location.pathname;
   const isCheckoutPage = currentPath === '/checkout';
   const isSignupPage = currentPath === '/signup';
   const isLoginPage = currentPath === '/login';
+  const isAccountPage = currentPath === '/account';
   const isForgotPasswordPage = currentPath === '/forgot-password';
   const isResetPasswordPage = currentPath === '/reset-password';
 
@@ -36,7 +38,7 @@ function App() {
   };
 
   useEffect(() => {
-    if (isCheckoutPage || isSignupPage || isLoginPage || isForgotPasswordPage || isResetPasswordPage) return undefined;
+    if (isCheckoutPage || isSignupPage || isLoginPage || isAccountPage || isForgotPasswordPage || isResetPasswordPage) return undefined;
 
     // Initialize animations
     const observerOptions = {
@@ -81,7 +83,7 @@ function App() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isCheckoutPage, isSignupPage, isLoginPage, isForgotPasswordPage, isResetPasswordPage]);
+  }, [isCheckoutPage, isSignupPage, isLoginPage, isAccountPage, isForgotPasswordPage, isResetPasswordPage]);
 
   if (isCheckoutPage) {
     return <Checkout />;
@@ -93,6 +95,10 @@ function App() {
 
   if (isLoginPage) {
     return <Login />;
+  }
+
+  if (isAccountPage) {
+    return <Account />;
   }
 
   if (isForgotPasswordPage) {

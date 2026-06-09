@@ -49,6 +49,29 @@
   color: var(--primary);
 }
 
+.nav .nav-account-link {
+  color: var(--primary);
+}
+
+.nav-auth-button {
+  min-height: 34px;
+  padding: 0 13px;
+  border: 1px solid rgba(0, 208, 132, 0.35);
+  border-radius: 999px;
+  background: rgba(0, 208, 132, 0.08);
+  color: var(--primary);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  transition: var(--transition);
+}
+
+.nav-auth-button:hover {
+  background: var(--primary);
+  color: #071b13;
+}
+
 .nav a::after {
   content: '';
   position: absolute;
@@ -156,6 +179,12 @@
 
   .nav a:hover {
     background: rgba(0, 208, 132, 0.1);
+  }
+
+  .nav-auth-button {
+    width: calc(100% - 40px);
+    min-height: 44px;
+    margin: 12px 20px 0;
   }
 
 }
