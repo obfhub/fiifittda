@@ -54,14 +54,10 @@ export function Header() {
     };
 
     syncStoredUser();
-    window.addEventListener('focus', syncStoredUser);
-    window.addEventListener('pageshow', syncStoredUser);
     window.addEventListener('storage', syncStoredUser);
 
     return () => {
       isMounted = false;
-      window.removeEventListener('focus', syncStoredUser);
-      window.removeEventListener('pageshow', syncStoredUser);
       window.removeEventListener('storage', syncStoredUser);
     };
   }, []);
