@@ -39,6 +39,47 @@ function redirectToLogin(nextPath) {
   window.location.href = `/login?next=${encodeURIComponent(nextPath)}`;
 }
 
+function detectDeviceType() {
+  const ua = navigator.userAgent.toLowerCase();
+  if (/ipad|android(?!.*mobile)/.test(ua)) return 'tablet';
+  if (/mobile|android|iphone|ipod|windows phone/.test(ua)) return 'mobile';
+  return 'desktop';
+}
+
+function getOrCreateSessionId() {
+  let sessionId = sessionStorage.getItem('fiifit_session_id');
+  if (!sessionId) {
+    sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    sessionStorage.setItem('fiifit_session_id', sessionId);
+  }
+  return sessionId;
+}
+
+function trackPageView(path) {
+  // Pages to skip tracking (internal, admin, high-volume)
+  const skipPages = ['/admin', '/tracker', '/account', '/checkout'];
+  if (skipPages.some(page => path === page)) {
+    return;
+  }
+
+  try {
+    const sessionId = getOrCreateSessionId();
+    const data = {
+      session_id: sessionId,
+      page_path: path,
+      page_title: document.title,
+      device_type: detectDeviceType(),
+      referrer: document.referrer || null
+    };
+
+    // Use sendBeacon for non-blocking tracking (survives page unload)
+    navigator.sendBeacon('/api/track-page', JSON.stringify(data));
+  } catch (error) {
+    // Silently fail - tracking should never block user experience
+    console.debug('Page tracking failed:', error);
+  }
+}
+
 function App() {
   const currentPath = window.location.pathname;
   const isCheckoutPage = currentPath === '/checkout';
@@ -79,6 +120,11 @@ function App() {
 
     redirectToLogin(checkoutPath);
   };
+
+  useEffect(() => {
+    // Track page view for analytics
+    trackPageView(currentPath);
+  }, [currentPath]);
 
   useEffect(() => {
     if (isCheckoutPage || isSignupPage || isLoginPage || isAccountPage || isTrackerPage || isAdminPage || isForgotPasswordPage || isResetPasswordPage) return undefined;
