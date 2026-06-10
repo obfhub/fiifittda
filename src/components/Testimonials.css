@@ -37,10 +37,9 @@
 }
 
 .testimonials-demo {
-  --testimonial-plane-transform: translateX(-54px) translateY(78px) translateZ(-72px) rotateX(20deg) rotateY(-10deg) rotateZ(20deg);
-  height: clamp(390px, 42vw, 500px);
-  min-height: 390px;
-  max-width: 1120px;
+  height: 384px;
+  min-height: 384px;
+  max-width: 800px;
   margin: 0 auto;
   border-color: rgba(255, 255, 255, 0.11);
   border-radius: 18px;
@@ -125,9 +124,8 @@
   }
 
   .testimonials-demo {
-    --testimonial-plane-transform: translateX(-84px) translateY(62px) translateZ(-72px) rotateX(20deg) rotateY(-10deg) rotateZ(20deg);
     min-height: 360px;
-    height: 380px;
+    height: 360px;
     max-width: calc(100vw - 28px);
   }
 
