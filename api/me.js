@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const { createClient } = require('@supabase/supabase-js');
 
 const AUTH_COOKIE_NAME = 'fiifit_auth';
 
@@ -41,6 +42,39 @@ function readAuthCookie(req) {
   }
 }
 
+function getSupabaseAdminClient() {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!supabaseUrl || !serviceRoleKey) return null;
+
+  return createClient(supabaseUrl, serviceRoleKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  });
+}
+
+async function enrichUserFromSupabase(user) {
+  const supabase = getSupabaseAdminClient();
+  if (!supabase || !user?.id) return user;
+
+  const { data, error } = await supabase.auth.admin.getUserById(user.id);
+  if (error || !data?.user) return user;
+
+  const metadata = data.user.user_metadata || {};
+
+  return {
+    id: data.user.id,
+    email: data.user.email || user.email,
+    name: metadata.full_name || metadata.name || user.name || '',
+    membership: metadata.membership || null,
+    provider: metadata.provider || 'email',
+    telegram_username: metadata.telegram_username || ''
+  };
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
@@ -53,9 +87,11 @@ module.exports = async function handler(req, res) {
     return res.status(401).json({ authenticated: false });
   }
 
+  const user = await enrichUserFromSupabase(auth.user);
+
   return res.status(200).json({
     authenticated: true,
-    user: auth.user,
+    user,
     expires_at: auth.expires_at
   });
 };

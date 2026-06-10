@@ -89,6 +89,10 @@ export function getMemberships() {
 }
 
 export function getUserMembership(user) {
+  if (user?.membership?.status === 'active') {
+    return user.membership;
+  }
+
   const key = getMembershipKey(user);
   if (!key) return null;
 
