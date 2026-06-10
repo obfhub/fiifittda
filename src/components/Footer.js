@@ -160,7 +160,6 @@ export function Footer() {
             </a>
           ))}
         </div>
-        <span>EIN: 37-2077501</span>
       </div>
     </footer>
   );
