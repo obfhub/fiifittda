@@ -8,6 +8,34 @@ function formatDate(value) {
   return new Date(value).toLocaleString();
 }
 
+function AnalyticsBar({ item, total }) {
+  const percent = total ? Math.round((item.count / total) * 100) : 0;
+
+  return (
+    <div className="admin-analytics-bar">
+      <div>
+        <span>{item.label}</span>
+        <strong>{item.count}</strong>
+      </div>
+      <div className="admin-bar-track" aria-hidden="true">
+        <span style={{ width: `${percent}%` }}></span>
+      </div>
+    </div>
+  );
+}
+
+function MiniUser({ user, label }) {
+  return (
+    <article className="admin-mini-user">
+      <div className="admin-avatar small">{(user.name || user.email || '?').slice(0, 1).toUpperCase()}</div>
+      <div>
+        <strong>{user.name || user.email || 'Fara nume'}</strong>
+        <span>{label}</span>
+      </div>
+    </article>
+  );
+}
+
 export function Admin() {
   const [dashboard, setDashboard] = useState(null);
   const [selectedPlans, setSelectedPlans] = useState({});
@@ -162,18 +190,74 @@ export function Admin() {
               </article>
             </section>
 
-            <section className="admin-config-grid">
-              <article className={dashboard.config.supabase ? 'ok' : 'bad'}>
-                <span>Supabase</span>
-                <strong>{dashboard.config.supabase ? 'Configurat' : 'Lipseste'}</strong>
+            <section className="admin-analytics-grid">
+              <article className="admin-analytics-card primary">
+                <span>Conversie plan</span>
+                <strong>{dashboard.analytics.conversionRate}%</strong>
+                <p>{dashboard.stats.activePlans} din {dashboard.stats.users} utilizatori au plan activ.</p>
               </article>
-              <article className={dashboard.config.telegramBot ? 'ok' : 'bad'}>
-                <span>Telegram bot</span>
-                <strong>{dashboard.config.telegramBot ? 'Configurat' : 'Lipseste'}</strong>
+
+              <article className="admin-analytics-card">
+                <span>Ultimele 7 zile</span>
+                <strong>{dashboard.analytics.recentSignups}</strong>
+                <p>conturi noi</p>
+                <small>{dashboard.analytics.recentlyActive} utilizatori activi recent</small>
               </article>
-              <article className={dashboard.telegram.available ? 'ok' : 'bad'}>
-                <span>Webhook table</span>
-                <strong>{dashboard.telegram.available ? `${dashboard.telegram.used} logari` : 'Lipseste tabelul'}</strong>
+
+              <article className="admin-analytics-card">
+                <span>Telegram flow</span>
+                <strong>{dashboard.analytics.telegramCompletionRate}%</strong>
+                <p>{dashboard.telegram.used} login-uri finalizate din {dashboard.telegram.total} coduri.</p>
+              </article>
+
+              <article className="admin-distribution-card">
+                <span>Mix planuri</span>
+                {dashboard.analytics.planMix.map((item) => (
+                  <AnalyticsBar item={item} total={dashboard.stats.activePlans} key={item.label} />
+                ))}
+              </article>
+
+              <article className="admin-distribution-card">
+                <span>Surse conturi</span>
+                {dashboard.analytics.providerMix.map((item) => (
+                  <AnalyticsBar item={item} total={dashboard.stats.users} key={item.label} />
+                ))}
+              </article>
+
+              <article className="admin-ops-card">
+                <span>Sanatate sistem</span>
+                {dashboard.analytics.operations.map((item) => (
+                  <div className={item.status === 'OK' ? 'ok' : 'bad'} key={item.label}>
+                    <strong>{item.label}</strong>
+                    <small>{item.status} · {item.detail}</small>
+                  </div>
+                ))}
+              </article>
+            </section>
+
+            <section className="admin-activity-grid">
+              <article>
+                <div className="admin-activity-heading">
+                  <span>Conturi noi</span>
+                  <strong>Recent</strong>
+                </div>
+                {dashboard.analytics.newestUsers.map((user) => (
+                  <MiniUser user={user} label={formatDate(user.created_at)} key={user.id} />
+                ))}
+              </article>
+
+              <article>
+                <div className="admin-activity-heading">
+                  <span>Activitate</span>
+                  <strong>Ultimele login-uri</strong>
+                </div>
+                {dashboard.analytics.activeRecently.length > 0 ? (
+                  dashboard.analytics.activeRecently.map((user) => (
+                    <MiniUser user={user} label={formatDate(user.last_sign_in_at)} key={user.id} />
+                  ))
+                ) : (
+                  <p className="admin-empty-state">Nu exista login-uri recente inca.</p>
+                )}
               </article>
             </section>
 

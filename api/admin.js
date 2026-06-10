@@ -168,6 +168,63 @@ function normalizeUser(user) {
   };
 }
 
+function isWithinDays(value, days) {
+  if (!value) return false;
+  return Date.now() - new Date(value).getTime() <= days * 24 * 60 * 60 * 1000;
+}
+
+function calculateAnalytics(users, telegramStats) {
+  const activeUsers = users.filter((user) => user.membership?.status === 'active');
+  const telegramUsers = users.filter((user) => user.provider === 'telegram' || user.telegram_username);
+  const planMix = Object.keys(plans).map((duration) => ({
+    label: duration,
+    count: activeUsers.filter((user) => user.membership?.plan?.duration === duration).length
+  }));
+  const recentSignups = users.filter((user) => isWithinDays(user.created_at, 7)).length;
+  const recentlyActive = users.filter((user) => isWithinDays(user.last_sign_in_at, 7)).length;
+  const conversionRate = users.length ? Math.round((activeUsers.length / users.length) * 100) : 0;
+  const telegramCompletionRate = telegramStats.total ? Math.round((telegramStats.used / telegramStats.total) * 100) : 0;
+  const newestUsers = users
+    .slice()
+    .sort((left, right) => new Date(right.created_at) - new Date(left.created_at))
+    .slice(0, 5);
+  const activeRecently = users
+    .filter((user) => user.last_sign_in_at)
+    .sort((left, right) => new Date(right.last_sign_in_at) - new Date(left.last_sign_in_at))
+    .slice(0, 5);
+
+  return {
+    conversionRate,
+    recentSignups,
+    recentlyActive,
+    planMix,
+    providerMix: [
+      { label: 'Telegram', count: telegramUsers.length },
+      { label: 'Email', count: users.length - telegramUsers.length }
+    ],
+    telegramCompletionRate,
+    newestUsers,
+    activeRecently,
+    operations: [
+      {
+        label: 'Supabase',
+        status: Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) ? 'OK' : 'Lipseste',
+        detail: 'Auth si metadata utilizatori'
+      },
+      {
+        label: 'Telegram bot',
+        status: Boolean(process.env.TELEGRAM_BOT_USERNAME && process.env.TELEGRAM_BOT_TOKEN) ? 'OK' : 'Lipseste',
+        detail: 'Deep-link login si webhook'
+      },
+      {
+        label: 'Webhook table',
+        status: telegramStats.available ? 'OK' : 'Lipseste',
+        detail: telegramStats.available ? `${telegramStats.used}/${telegramStats.total} coduri folosite` : 'Creeaza tabelul telegram_login_codes'
+      }
+    ]
+  };
+}
+
 async function handleDashboard(req, res, supabase, adminUser) {
   const [users, telegramStats] = await Promise.all([
     listAllUsers(supabase),
@@ -180,6 +237,7 @@ async function handleDashboard(req, res, supabase, adminUser) {
 
   const activePlans = normalizedUsers.filter((user) => user.membership?.status === 'active').length;
   const telegramUsers = normalizedUsers.filter((user) => user.provider === 'telegram' || user.telegram_username).length;
+  const analytics = calculateAnalytics(normalizedUsers, telegramStats);
 
   return res.status(200).json({
     admin: {
@@ -194,6 +252,7 @@ async function handleDashboard(req, res, supabase, adminUser) {
     },
     users: normalizedUsers,
     telegram: telegramStats,
+    analytics,
     config: {
       telegramBot: Boolean(process.env.TELEGRAM_BOT_USERNAME && process.env.TELEGRAM_BOT_TOKEN),
       supabase: Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY)

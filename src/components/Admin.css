@@ -107,7 +107,8 @@
 }
 
 .admin-stats-grid,
-.admin-config-grid {
+.admin-analytics-grid,
+.admin-activity-grid {
   display: grid;
   gap: 14px;
   margin-top: 16px;
@@ -117,12 +118,19 @@
   grid-template-columns: repeat(4, 1fr);
 }
 
-.admin-config-grid {
+.admin-analytics-grid {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.admin-activity-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .admin-stats-grid article,
-.admin-config-grid article {
+.admin-analytics-card,
+.admin-distribution-card,
+.admin-ops-card,
+.admin-activity-grid article {
   min-height: 126px;
   padding: 22px;
   border: 1px solid rgba(255, 255, 255, 0.09);
@@ -131,7 +139,10 @@
 }
 
 .admin-stats-grid span,
-.admin-config-grid span {
+.admin-analytics-card > span,
+.admin-distribution-card > span,
+.admin-ops-card > span,
+.admin-activity-heading span {
   display: block;
   color: rgba(255, 255, 255, 0.54);
   font-size: 12px;
@@ -141,7 +152,7 @@
 }
 
 .admin-stats-grid strong,
-.admin-config-grid strong {
+.admin-analytics-card > strong {
   display: block;
   margin-top: 14px;
   color: white;
@@ -149,12 +160,137 @@
   line-height: 1;
 }
 
-.admin-config-grid article.ok {
-  border-color: rgba(0, 208, 132, 0.28);
+.admin-analytics-card.primary {
+  border-color: rgba(0, 208, 132, 0.32);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(0, 208, 132, 0.16), transparent 38%),
+    rgba(255, 255, 255, 0.04);
 }
 
-.admin-config-grid article.bad {
+.admin-analytics-card p,
+.admin-analytics-card small {
+  display: block;
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.admin-analytics-card small {
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.admin-analytics-bar {
+  margin-top: 16px;
+}
+
+.admin-analytics-bar div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.admin-analytics-bar span {
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.admin-analytics-bar strong {
+  color: white;
+  font-size: 18px;
+}
+
+.admin-bar-track {
+  height: 8px;
+  margin-top: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.admin-bar-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primary), #72ffd1);
+}
+
+.admin-ops-card div {
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.admin-ops-card div.ok {
+  border-color: rgba(0, 208, 132, 0.24);
+}
+
+.admin-ops-card div.bad {
   border-color: rgba(255, 102, 114, 0.28);
+}
+
+.admin-ops-card strong {
+  display: block;
+  color: white;
+  font-size: 14px;
+}
+
+.admin-ops-card small {
+  display: block;
+  margin-top: 5px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.admin-activity-heading {
+  display: flex;
+  margin-bottom: 14px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.admin-activity-heading strong {
+  color: white;
+  font-size: 16px;
+}
+
+.admin-mini-user {
+  display: flex;
+  min-height: 58px;
+  margin-top: 10px;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-avatar.small {
+  width: 38px;
+  height: 38px;
+  flex-basis: 38px;
+  border-radius: 13px;
+  font-size: 15px;
+}
+
+.admin-mini-user strong {
+  display: block;
+  color: white;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.admin-mini-user span,
+.admin-empty-state {
+  display: block;
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 12px;
+  line-height: 1.45;
 }
 
 .admin-users-section {
@@ -293,7 +429,8 @@
 
 @media (max-width: 980px) {
   .admin-stats-grid,
-  .admin-config-grid {
+  .admin-analytics-grid,
+  .admin-activity-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -324,7 +461,8 @@
   }
 
   .admin-stats-grid,
-  .admin-config-grid {
+  .admin-analytics-grid,
+  .admin-activity-grid {
     grid-template-columns: 1fr;
   }
 
