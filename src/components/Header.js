@@ -108,15 +108,11 @@ export function Header() {
             <a onClick={() => scrollToSection('home')} href="#home">Home</a>
             <a onClick={() => scrollToSection('program')} href="#program">Program</a>
             <a onClick={() => scrollToSection('lectii')} href="#lectii">Lectii</a>
-            <a href="/tracker" onClick={() => setMobileMenuOpen(false)}>Tracker</a>
             <a onClick={() => scrollToSection('transformari')} href="#transformari">Transformari</a>
             <a onClick={() => scrollToSection('tarife')} href="#tarife">Tarife</a>
             <a href="mailto:fiifitonline@gmail.com">Contact</a>
             {signedInUser ? (
-              <>
-                <a className="nav-account-link" href="/account">Cont</a>
-                <button className="nav-auth-button" type="button" onClick={handleLogout}>Logout</button>
-              </>
+              <a className="nav-account-link" href="/account">Cont</a>
             ) : (
               <a className="nav-account-link" href="/login">Login</a>
             )}
