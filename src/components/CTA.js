@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './CTA.css';
 
 const podcasts = [
@@ -45,19 +45,34 @@ const podcasts = [
 ];
 
 export function CTA() {
+  const carouselRef = useRef(null);
+
+  const scrollCarousel = (direction) => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    carousel.scrollBy({
+      left: direction * carousel.clientWidth * 0.86,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <section id="podcasturi" className="podcasts-section">
       <div className="container">
         <div className="podcasts-heading">
           <span className="podcasts-eyebrow">Podcasturi si emisiuni TV</span>
-          <h2>Tanya Goncear in conversatii reale</h2>
-          <p>
-            Interviuri despre slabit, motivatie, obiceiuri, presiune sociala si ce
-            inseamna o transformare care ramane.
-          </p>
+          <div className="podcast-controls" aria-label="Navigare podcasturi">
+            <button type="button" onClick={() => scrollCarousel(-1)} aria-label="Podcast anterior">
+              <i className="fas fa-arrow-left" aria-hidden="true"></i>
+            </button>
+            <button type="button" onClick={() => scrollCarousel(1)} aria-label="Podcast urmator">
+              <i className="fas fa-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
         </div>
 
-        <div className="podcasts-grid">
+        <div className="podcasts-carousel" ref={carouselRef}>
           {podcasts.map((podcast) => (
             <article className="podcast-card" key={podcast.id}>
               <div className="podcast-frame">
