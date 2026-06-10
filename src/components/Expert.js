@@ -1,12 +1,6 @@
 import React from 'react';
 import './Expert.css';
 
-const highlights = [
-  { value: '-58 kg', label: 'transformare personala' },
-  { value: '6+ ani', label: 'experienta cu femei reale' },
-  { value: '4500+', label: 'participante in comunitate' }
-];
-
 export function Expert() {
   return (
     <section className="expert-section">
@@ -32,14 +26,6 @@ export function Expert() {
             <strong>Tanya Goncear</strong>
             <span>Experta clubului FiiFit Online</span>
           </figcaption>
-          <div className="expert-stats" aria-label="Rezultate FiiFit">
-            {highlights.map((item) => (
-              <div key={item.value}>
-                <strong>{item.value}</strong>
-                <span>{item.label}</span>
-              </div>
-            ))}
-          </div>
         </figure>
       </div>
     </section>
