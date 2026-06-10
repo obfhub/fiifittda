@@ -4,7 +4,8 @@ import {
   getStoredAuth,
   getUserMembership,
   memberVideos,
-  personalizedPlan
+  personalizedPlan,
+  saveUserMembership
 } from '../utils/membership';
 
 const availablePlans = [
@@ -27,16 +28,6 @@ const availablePlans = [
     note: 'Transformare completa'
   }
 ];
-
-function getCheckoutUrl(plan) {
-  const params = new URLSearchParams({
-    plan: plan.duration,
-    price: plan.price,
-    description: plan.description
-  });
-
-  return `/checkout?${params.toString()}`;
-}
 
 function clearStoredAuth() {
   localStorage.removeItem('fiifit_user');
@@ -118,6 +109,14 @@ export function Account() {
     window.location.href = '/login';
   };
 
+  const handleActivatePlan = (plan) => {
+    const nextMembership = saveUserMembership(user, plan);
+    if (nextMembership) {
+      setMembership(nextMembership);
+      window.history.replaceState({}, '', '/account');
+    }
+  };
+
   if (isChecking || !user) {
     return (
       <main className="account-page">
@@ -193,8 +192,8 @@ export function Account() {
               <span>Activeaza accesul</span>
               <h2>Alege planul tau</h2>
               <p>
-                Dupa checkout, planul apare aici si se deblocheaza trackerul, lectiile
-                video si planul personalizat.
+                Pentru test, activezi accesul direct fara plata. Mai tarziu putem lega
+                acelasi pas de Stripe.
               </p>
             </div>
 
@@ -205,7 +204,9 @@ export function Account() {
                   <h3>{plan.duration}</h3>
                   <p>{plan.description}</p>
                   <strong>{plan.price}</strong>
-                  <a href={getCheckoutUrl(plan)}>Ia planul</a>
+                  <button type="button" onClick={() => handleActivatePlan(plan)}>
+                    Activeaza planul
+                  </button>
                 </article>
               ))}
             </div>
