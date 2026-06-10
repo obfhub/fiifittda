@@ -35,7 +35,7 @@ Add these environment variables in Vercel before using account creation:
 
 Keep `SUPABASE_SERVICE_ROLE_KEY` server-only. Do not add it to frontend code or expose it with a `REACT_APP_` prefix. The login page at `/login` uses `api/login-account.js` and stores the returned session in browser local storage.
 
-The admin page is available at `/admin`. It uses `api/admin-dashboard.js` and `api/admin-update-user.js` to list Supabase users and grant or revoke plans. Add your admin email in Vercel:
+The admin page is available at `/admin`. It uses `api/admin.js` to list Supabase users and grant or revoke plans. Add your admin email in Vercel:
 
 `ADMIN_EMAILS=you@example.com`
 

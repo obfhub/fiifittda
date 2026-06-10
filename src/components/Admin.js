@@ -22,7 +22,7 @@ export function Admin() {
     setError('');
 
     try {
-      const response = await fetch('/api/admin-dashboard', { credentials: 'include' });
+      const response = await fetch('/api/admin', { credentials: 'include' });
       const data = await response.json();
 
       if (response.status === 401) {
@@ -74,7 +74,7 @@ export function Admin() {
     setError('');
 
     try {
-      const response = await fetch('/api/admin-update-user', {
+      const response = await fetch('/api/admin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
