@@ -99,7 +99,7 @@ function DemoOne() {
         className="flex flex-row items-center gap-4"
         style={{
           transform:
-            'translateX(-100px) translateY(0px) translateZ(-100px) rotateX(20deg) rotateY(-10deg) rotateZ(20deg)',
+            'var(--testimonial-plane-transform, translateX(-100px) translateY(0px) translateZ(-100px) rotateX(20deg) rotateY(-10deg) rotateZ(20deg))',
         }}
       >
         {/* Vertical Marquee (downwards) */}
