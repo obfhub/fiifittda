@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import './Header.css';
 
 function getStoredUser() {
@@ -26,8 +27,15 @@ function storeServerUser(data) {
 }
 
 export function Header() {
+  const { i18n, t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const [signedInUser, setSignedInUser] = useState(getStoredUser);
+
+  const getLanguageFlag = (lng) => {
+    const flags = { ro: '🇷🇴', en: '🇬🇧', ru: '🇷🇺' };
+    return flags[lng] || '🌐';
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -70,6 +78,12 @@ export function Header() {
     setMobileMenuOpen(false);
   };
 
+  const handleLanguageChange = (lng) => {
+    i18n.changeLanguage(lng);
+    localStorage.setItem('fiifit_language', lng);
+    setLanguageDropdownOpen(false);
+  };
+
   return (
     <header className="header sticky">
       <div className="container">
@@ -87,16 +101,51 @@ export function Header() {
           </button>
 
           <nav className={`nav ${mobileMenuOpen ? 'open' : ''}`}>
-            <a onClick={() => scrollToSection('home')} href="#home">Home</a>
-            <a onClick={() => scrollToSection('program')} href="#program">Program</a>
-            <a onClick={() => scrollToSection('lectii')} href="#lectii">Lectii</a>
-            <a onClick={() => scrollToSection('transformari')} href="#transformari">Transformari</a>
-            <a onClick={() => scrollToSection('tarife')} href="#tarife">Tarife</a>
-            <a href="mailto:fiifitonline@gmail.com">Contact</a>
+            <a onClick={() => scrollToSection('home')} href="#home">{t('header.home')}</a>
+            <a onClick={() => scrollToSection('program')} href="#program">{t('header.program')}</a>
+            <a onClick={() => scrollToSection('lectii')} href="#lectii">{t('header.lessons')}</a>
+            <a onClick={() => scrollToSection('transformari')} href="#transformari">{t('header.transformations')}</a>
+            <a onClick={() => scrollToSection('tarife')} href="#tarife">{t('header.pricing')}</a>
+            <a href="mailto:fiifitonline@gmail.com">{t('header.contact')}</a>
+
+            <div className={`language-dropdown ${languageDropdownOpen ? 'open' : ''}`}>
+              <button
+                className="language-dropdown-button"
+                onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
+                aria-label="Select language"
+              >
+                <span className="language-flag">{getLanguageFlag(i18n.language)}</span>
+                <span className="language-code">{i18n.language.toUpperCase()}</span>
+              </button>
+              <div className="language-dropdown-menu">
+                <button
+                  className={`language-option ${i18n.language === 'ro' ? 'active' : ''}`}
+                  onClick={() => handleLanguageChange('ro')}
+                >
+                  <span>🇷🇴</span>
+                  <span>RO</span>
+                </button>
+                <button
+                  className={`language-option ${i18n.language === 'en' ? 'active' : ''}`}
+                  onClick={() => handleLanguageChange('en')}
+                >
+                  <span>🇬🇧</span>
+                  <span>EN</span>
+                </button>
+                <button
+                  className={`language-option ${i18n.language === 'ru' ? 'active' : ''}`}
+                  onClick={() => handleLanguageChange('ru')}
+                >
+                  <span>🇷🇺</span>
+                  <span>RU</span>
+                </button>
+              </div>
+            </div>
+
             {signedInUser ? (
-              <a className="nav-account-link" href="/account">Cont</a>
+              <a className="nav-account-link" href="/account">{t('header.account')}</a>
             ) : (
-              <a className="nav-account-link" href="/login">Login</a>
+              <a className="nav-account-link" href="/login">{t('header.login')}</a>
             )}
           </nav>
         </div>

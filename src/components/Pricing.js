@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Pricing.css';
 
 const plans = [
@@ -116,6 +116,8 @@ function FeatureValue({ value }) {
 }
 
 export function Pricing({ onOpenPayment }) {
+  const [expandedPlan, setExpandedPlan] = useState(null);
+
   return (
     <section id="tarife" className="pricing">
       <div className="pricing-pattern" aria-hidden="true"></div>
@@ -130,6 +132,51 @@ export function Pricing({ onOpenPayment }) {
         </div>
 
         <div className="pricing-table-wrap">
+          <div className="pricing-cards-container">
+            {plans.map((plan, index) => (
+              <div key={plan.duration} className={`pricing-plan ${plan.featured ? 'featured' : ''}`}>
+                {plan.featured && <span className="popular-label">Recomandat</span>}
+                <div className="plan-title-row">
+                  <span className="plan-icon">
+                    <i className={`fas ${plan.icon}`} aria-hidden="true"></i>
+                  </span>
+                  <h3>{plan.duration}</h3>
+                  <span className="plan-badge">{plan.badge}</span>
+                </div>
+                <p className="plan-description">{plan.description}</p>
+                <div className="plan-price">
+                  <strong>{plan.price}</strong>
+                  <del>{plan.original}</del>
+                </div>
+                <p className="plan-discount">{plan.discount}</p>
+                <button className="pricing-button" onClick={() => onOpenPayment?.(plan)}>
+                  Alege planul
+                </button>
+
+                <button
+                  className="pricing-details-toggle"
+                  onClick={() => setExpandedPlan(expandedPlan === index ? null : index)}
+                >
+                  <i className={`fas fa-chevron-down ${expandedPlan === index ? 'open' : ''}`}></i>
+                  Afiseaza detalii
+                </button>
+
+                {expandedPlan === index && (
+                  <div className="pricing-details">
+                    {features.map((feature) => (
+                      <div key={feature.label} className="pricing-detail-item">
+                        <span className="detail-label">{feature.label}</span>
+                        <div className="detail-value">
+                          <FeatureValue value={feature.values[index]} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
           <table className="pricing-table">
             <thead>
               <tr>

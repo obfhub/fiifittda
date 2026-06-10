@@ -309,6 +309,92 @@
   }
 }
 
+/* Details Toggle Button */
+.pricing-details-toggle {
+  display: none;
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 12px;
+  border: 1px solid rgba(0, 208, 132, 0.35);
+  border-radius: 8px;
+  background: rgba(0, 208, 132, 0.05);
+  color: var(--primary);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.pricing-details-toggle:hover {
+  background: rgba(0, 208, 132, 0.12);
+}
+
+.pricing-details-toggle i {
+  font-size: 10px;
+  transition: transform 0.3s ease;
+}
+
+.pricing-details-toggle i.open {
+  transform: rotate(180deg);
+}
+
+/* Expanded Details Section */
+.pricing-details {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(0, 208, 132, 0.2);
+  max-height: 400px;
+  overflow-y: auto;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 400px;
+  }
+}
+
+.pricing-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 12px;
+  color: var(--text-light);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pricing-detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  flex: 1;
+  padding-right: 8px;
+  font-weight: 500;
+}
+
+.detail-value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pricing-cards-container {
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+}
+
 @media (max-width: 480px) {
   .pricing {
     padding: 52px 0;
@@ -335,30 +421,11 @@
     box-shadow: none;
   }
 
+  .pricing-cards-container {
+    display: flex;
+  }
+
   .pricing-table {
-    display: block;
-    width: 100%;
-    min-width: 0;
-    border-collapse: separate;
-  }
-
-  .pricing-table thead,
-  .pricing-table thead tr,
-  .pricing-table thead th {
-    display: block;
-    width: 100%;
-  }
-
-  .pricing-table thead th {
-    padding: 0;
-    background: transparent;
-  }
-
-  .pricing-table thead th + th {
-    margin-top: 14px;
-  }
-
-  .pricing-table tbody {
     display: none;
   }
 
@@ -418,6 +485,10 @@
     min-height: 58px;
     border-radius: 14px;
     font-size: 15px;
+  }
+
+  .pricing-details-toggle {
+    display: flex;
   }
 
   .popular-label {
