@@ -173,131 +173,6 @@ function isWithinDays(value, days) {
   return Date.now() - new Date(value).getTime() <= days * 24 * 60 * 60 * 1000;
 }
 
-async function getWebsiteStats(supabase) {
-  try {
-    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
-
-    // Get all page views in last 30 days
-    const { data: pageViews, error: pvError } = await supabase
-      .from('page_views')
-      .select('*')
-      .gte('created_at', thirtyDaysAgo);
-
-    // Get all sessions in last 30 days
-    const { data: sessions, error: sessError } = await supabase
-      .from('sessions')
-      .select('*')
-      .gte('first_page_at', thirtyDaysAgo);
-
-    if (pvError || sessError) {
-      // Fall back to mock data if tables don't exist yet
-      return getMockWebsiteStats();
-    }
-
-    const pv = pageViews || [];
-    const sess = sessions || [];
-
-    // Calculate total views
-    const totalViews = pv.length;
-
-    // Calculate unique visitors
-    const uniqueVisitors = new Set(sess.map(s => s.session_id)).size;
-
-    // Calculate bounce rate (sessions with only 1 page view)
-    const bounceSessions = sess.filter(s => s.page_count === 1).length;
-    const bounceRate = sess.length > 0 ? Math.round((bounceSessions / sess.length) * 100 * 10) / 10 : 0;
-
-    // Calculate average session duration (in minutes)
-    const durations = sess
-      .filter(s => s.last_page_at && s.first_page_at)
-      .map(s => (new Date(s.last_page_at) - new Date(s.first_page_at)) / 1000 / 60);
-    const avgSessionDuration = durations.length > 0
-      ? Math.round((durations.reduce((a, b) => a + b, 0) / durations.length) * 10) / 10
-      : 0;
-
-    // Get top pages
-    const pageMap = {};
-    pv.forEach(view => {
-      if (!pageMap[view.page_path]) {
-        pageMap[view.page_path] = { path: view.page_path, title: view.page_title || view.page_path, views: 0 };
-      }
-      pageMap[view.page_path].views += 1;
-    });
-
-    const topPages = Object.values(pageMap)
-      .sort((a, b) => b.views - a.views)
-      .slice(0, 5)
-      .map((page, index, arr) => ({
-        ...page,
-        percentage: totalViews > 0 ? Math.round((page.views / totalViews) * 100 * 10) / 10 : 0
-      }));
-
-    // Get top referrers
-    const referrerMap = {};
-    pv.forEach(view => {
-      const referrer = view.referrer || 'Direct';
-      const domain = referrer === 'Direct' ? 'direct' : (new URL(referrer).hostname || referrer);
-      const source = referrer === 'Direct' ? 'Direct' : domain.replace('www.', '');
-
-      if (!referrerMap[source]) {
-        referrerMap[source] = { source, domain, count: 0 };
-      }
-      referrerMap[source].count += 1;
-    });
-
-    const topReferrers = Object.values(referrerMap)
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 5)
-      .map(ref => ({
-        ...ref,
-        percentage: totalViews > 0 ? Math.round((ref.count / totalViews) * 100 * 10) / 10 : 0
-      }));
-
-    // Get device stats
-    const deviceMap = {};
-    sess.forEach(session => {
-      const device = session.device_type || 'Unknown';
-      if (!deviceMap[device]) {
-        deviceMap[device] = { type: device, count: 0 };
-      }
-      deviceMap[device].count += 1;
-    });
-
-    const deviceStats = Object.values(deviceMap)
-      .sort((a, b) => b.count - a.count)
-      .map(device => ({
-        ...device,
-        percentage: uniqueVisitors > 0 ? Math.round((device.count / uniqueVisitors) * 100 * 10) / 10 : 0
-      }));
-
-    return {
-      totalViews,
-      uniqueVisitors,
-      bounceRate,
-      avgSessionDuration,
-      topPages,
-      topReferrers,
-      deviceStats
-    };
-  } catch (error) {
-    console.error('Error fetching website stats:', error);
-    // Fall back to mock data on any error
-    return getMockWebsiteStats();
-  }
-}
-
-function getMockWebsiteStats() {
-  // Mock website stats - returned when tables don't exist or query fails
-  return {
-    totalViews: 0,
-    uniqueVisitors: 0,
-    bounceRate: 0,
-    avgSessionDuration: 0,
-    topPages: [],
-    topReferrers: [],
-    deviceStats: []
-  };
-}
 
 function calculateAnalytics(users, telegramStats) {
   const activeUsers = users.filter((user) => user.membership?.status === 'active');
@@ -352,10 +227,9 @@ function calculateAnalytics(users, telegramStats) {
 }
 
 async function handleDashboard(req, res, supabase, adminUser) {
-  const [users, telegramStats, websiteStats] = await Promise.all([
+  const [users, telegramStats] = await Promise.all([
     listAllUsers(supabase),
-    getTelegramLoginStats(supabase),
-    getWebsiteStats(supabase)
+    getTelegramLoginStats(supabase)
   ]);
 
   const normalizedUsers = users
@@ -380,7 +254,6 @@ async function handleDashboard(req, res, supabase, adminUser) {
     users: normalizedUsers,
     telegram: telegramStats,
     analytics,
-    website: websiteStats,
     config: {
       telegramBot: Boolean(process.env.TELEGRAM_BOT_USERNAME && process.env.TELEGRAM_BOT_TOKEN),
       supabase: Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY)
