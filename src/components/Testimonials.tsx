@@ -140,15 +140,24 @@ export function Testimonials() {
   return (
     <section id="transformari" className="testimonials">
       <div className="container">
-        <h2>
-          <i className="fas fa-heart" aria-hidden="true"></i>
-          Transformari Reale
-        </h2>
-        <p className="testimonials-intro">
-          <span>Fii urmatoarea femeie care a reusit!</span>
-          Povestile lor, transformarea ta
-        </p>
-        <DemoOne />
+        <div className="testimonials-layout">
+          <div className="testimonials-copy">
+            <span className="testimonials-kicker">Rezultate reale</span>
+            <h2>
+              <i className="fas fa-heart" aria-hidden="true"></i>
+              Povesti care se misca.
+            </h2>
+            <p className="testimonials-intro">
+              Femei care au intrat in program pentru claritate, rutina si sprijin. Rezultatele lor nu sunt promisiuni goale, ci pasi repetati zi dupa zi.
+            </p>
+            <div className="testimonials-stats" aria-label="Rezultate FiiFit">
+              <span><strong>4500+</strong> participante</span>
+              <span><strong>-58 kg</strong> transformare</span>
+              <span><strong>24</strong> lectii ghidate</span>
+            </div>
+          </div>
+          <DemoOne />
+        </div>
       </div>
     </section>
   );
