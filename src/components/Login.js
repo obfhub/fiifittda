@@ -70,6 +70,7 @@ export function Login() {
   const nextPath = params.get('next') || '/account';
   const safeNextPath = nextPath.startsWith('/') && !nextPath.startsWith('//') ? nextPath : '/account';
   const signupPath = `/signup${safeNextPath !== '/account' ? `?next=${encodeURIComponent(safeNextPath)}` : ''}`;
+  const telegramPath = `/api/telegram-start?next=${encodeURIComponent(safeNextPath)}`;
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -174,6 +175,19 @@ export function Login() {
             <span className="signup-kicker">Acces membru</span>
             <h1>Autentifica-te</h1>
             <p>Intra in contul tau FiiFit si continua programul de transformare.</p>
+          </div>
+
+          <a className="telegram-signup reveal-item" href={telegramPath}>
+            <span className="telegram-mark" aria-hidden="true">
+              <i className="fab fa-telegram-plane"></i>
+            </span>
+            Conecteaza-te cu Telegram
+          </a>
+
+          <div className="signup-divider reveal-item">
+            <span></span>
+            <p>sau</p>
+            <span></span>
           </div>
 
           <LoginInput

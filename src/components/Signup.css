@@ -172,7 +172,8 @@
   line-height: 1.7;
 }
 
-.google-signup {
+.google-signup,
+.telegram-signup {
   position: relative;
   display: flex;
   width: 100%;
@@ -187,12 +188,19 @@
   cursor: pointer;
   font-family: inherit;
   font-weight: 600;
+  text-decoration: none;
   transition: var(--transition);
 }
 
-.google-signup:hover {
+.google-signup:hover,
+.telegram-signup:hover {
   border-color: rgba(0, 208, 132, 0.55);
   background: rgba(0, 208, 132, 0.06);
+}
+
+.telegram-signup {
+  margin-top: 10px;
+  background: rgba(36, 161, 222, 0.08);
 }
 
 .google-mark {
@@ -207,6 +215,17 @@
 .google-mark svg {
   width: 16px;
   height: 16px;
+}
+
+.telegram-mark {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  border-radius: 50%;
+  background: #24a1de;
+  color: white;
+  font-size: 14px;
 }
 
 .signup-divider {

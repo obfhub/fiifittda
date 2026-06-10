@@ -51,6 +51,18 @@ Optional:
 
 `SITE_URL=https://your-production-domain`
 
+Telegram login uses Telegram OIDC through `api/telegram-start.js` and `api/telegram-callback.js`. Add these environment variables in Vercel:
+
+`TELEGRAM_CLIENT_ID=your_telegram_client_id`
+
+`TELEGRAM_CLIENT_SECRET=your_telegram_client_secret`
+
+Optional, but recommended in production:
+
+`TELEGRAM_REDIRECT_URI=https://fiifittda.vercel.app/api/telegram-callback`
+
+In BotFather or Telegram's app settings, add the same redirect URL and allowed domain. Keep `TELEGRAM_CLIENT_SECRET` server-only.
+
 ### `npm start`
 
 Runs the app in the development mode.\
