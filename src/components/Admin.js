@@ -261,6 +261,111 @@ export function Admin() {
               </article>
             </section>
 
+            {dashboard.website && (
+              <section className="admin-website-section">
+                <div className="admin-section-heading">
+                  <div>
+                    <span>Analytics</span>
+                    <h2>Website Views</h2>
+                  </div>
+                </div>
+
+                <div className="admin-website-grid">
+                  <article className="admin-website-card">
+                    <span>Total Views</span>
+                    <strong>{dashboard.website.totalViews}</strong>
+                    <p>pagini vizualizate</p>
+                  </article>
+
+                  <article className="admin-website-card">
+                    <span>Vizitatori Unici</span>
+                    <strong>{dashboard.website.uniqueVisitors}</strong>
+                    <p>sesiuni diferite</p>
+                  </article>
+
+                  <article className="admin-website-card">
+                    <span>Rata de Bounce</span>
+                    <strong>{dashboard.website.bounceRate}%</strong>
+                    <p>vizitatori care au iesit imediat</p>
+                  </article>
+
+                  <article className="admin-website-card">
+                    <span>Timp Mediu pe Site</span>
+                    <strong>{dashboard.website.avgSessionDuration}</strong>
+                    <p>minute in medie</p>
+                  </article>
+                </div>
+
+                <div className="admin-website-grid-pages">
+                  <article className="admin-pages-card">
+                    <span>Pagini Populare</span>
+                    <div className="admin-pages-list">
+                      {dashboard.website.topPages && dashboard.website.topPages.length > 0 ? (
+                        dashboard.website.topPages.map((page, index) => (
+                          <div className="admin-page-item" key={index}>
+                            <div className="admin-page-info">
+                              <strong>{page.title || page.path}</strong>
+                              <small>{page.path}</small>
+                            </div>
+                            <div className="admin-page-stats">
+                              <span className="admin-page-views">{page.views} vizualizari</span>
+                              <span className="admin-page-percentage">{page.percentage}%</span>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="admin-empty-state">Nu exista date de pagini inca.</p>
+                      )}
+                    </div>
+                  </article>
+
+                  <article className="admin-pages-card">
+                    <span>Referrer-uri Top</span>
+                    <div className="admin-pages-list">
+                      {dashboard.website.topReferrers && dashboard.website.topReferrers.length > 0 ? (
+                        dashboard.website.topReferrers.map((referrer, index) => (
+                          <div className="admin-page-item" key={index}>
+                            <div className="admin-page-info">
+                              <strong>{referrer.source || 'Direct'}</strong>
+                              <small>{referrer.domain || 'fiifit.online'}</small>
+                            </div>
+                            <div className="admin-page-stats">
+                              <span className="admin-page-views">{referrer.count} vizite</span>
+                              <span className="admin-page-percentage">{referrer.percentage}%</span>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="admin-empty-state">Nu exista date de referrer-uri inca.</p>
+                      )}
+                    </div>
+                  </article>
+                </div>
+
+                {dashboard.website.deviceStats && (
+                  <article className="admin-device-card">
+                    <span>Dispozitive</span>
+                    <div className="admin-device-list">
+                      {dashboard.website.deviceStats.map((device, index) => (
+                        <div className="admin-device-item" key={index}>
+                          <div className="admin-device-info">
+                            <strong>{device.type}</strong>
+                            <small>{device.count} utilizatori</small>
+                          </div>
+                          <div className="admin-device-stats">
+                            <div className="admin-device-bar-track">
+                              <span style={{ width: `${device.percentage}%` }}></span>
+                            </div>
+                            <span>{device.percentage}%</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </article>
+                )}
+              </section>
+            )}
+
             <section className="admin-users-section">
               <div className="admin-section-heading">
                 <div>

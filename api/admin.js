@@ -173,6 +173,97 @@ function isWithinDays(value, days) {
   return Date.now() - new Date(value).getTime() <= days * 24 * 60 * 60 * 1000;
 }
 
+function getWebsiteStats() {
+  // Mock website stats - in production, integrate with Google Analytics, Plausible, Mixpanel, or custom tracking
+  return {
+    totalViews: 12847,
+    uniqueVisitors: 3254,
+    bounceRate: 34.2,
+    avgSessionDuration: 4.5,
+    topPages: [
+      {
+        path: '/',
+        title: 'Homepage',
+        views: 3847,
+        percentage: 29.9
+      },
+      {
+        path: '/pricing',
+        title: 'Pricing',
+        views: 2156,
+        percentage: 16.8
+      },
+      {
+        path: '/tracker',
+        title: 'Macro Tracker',
+        views: 1934,
+        percentage: 15.1
+      },
+      {
+        path: '/account',
+        title: 'Account',
+        views: 1247,
+        percentage: 9.7
+      },
+      {
+        path: '/lessons',
+        title: 'Lessons',
+        views: 856,
+        percentage: 6.7
+      }
+    ],
+    topReferrers: [
+      {
+        source: 'Direct',
+        domain: 'fiifit.online',
+        count: 5234,
+        percentage: 40.7
+      },
+      {
+        source: 'Google',
+        domain: 'google.com',
+        count: 2847,
+        percentage: 22.1
+      },
+      {
+        source: 'Facebook',
+        domain: 'facebook.com',
+        count: 1956,
+        percentage: 15.2
+      },
+      {
+        source: 'Instagram',
+        domain: 'instagram.com',
+        count: 1324,
+        percentage: 10.3
+      },
+      {
+        source: 'Telegram',
+        domain: 'telegram.org',
+        count: 486,
+        percentage: 3.8
+      }
+    ],
+    deviceStats: [
+      {
+        type: 'Mobile',
+        count: 8547,
+        percentage: 66.5
+      },
+      {
+        type: 'Desktop',
+        count: 3624,
+        percentage: 28.2
+      },
+      {
+        type: 'Tablet',
+        count: 676,
+        percentage: 5.3
+      }
+    ]
+  };
+}
+
 function calculateAnalytics(users, telegramStats) {
   const activeUsers = users.filter((user) => user.membership?.status === 'active');
   const telegramUsers = users.filter((user) => user.provider === 'telegram' || user.telegram_username);
@@ -238,6 +329,7 @@ async function handleDashboard(req, res, supabase, adminUser) {
   const activePlans = normalizedUsers.filter((user) => user.membership?.status === 'active').length;
   const telegramUsers = normalizedUsers.filter((user) => user.provider === 'telegram' || user.telegram_username).length;
   const analytics = calculateAnalytics(normalizedUsers, telegramStats);
+  const websiteStats = getWebsiteStats();
 
   return res.status(200).json({
     admin: {
@@ -253,6 +345,7 @@ async function handleDashboard(req, res, supabase, adminUser) {
     users: normalizedUsers,
     telegram: telegramStats,
     analytics,
+    website: websiteStats,
     config: {
       telegramBot: Boolean(process.env.TELEGRAM_BOT_USERNAME && process.env.TELEGRAM_BOT_TOKEN),
       supabase: Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY)
