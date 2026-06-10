@@ -26,16 +26,13 @@ export function Expert() {
           </p>
         </div>
 
-        <div className="expert-card">
-          <div className="expert-card-icon">
-            <i className="fas fa-star" aria-hidden="true"></i>
-          </div>
-          <h3>Ce face programul diferit</h3>
-          <p>
-            Ai antrenamente live, lectii scurte, meniu PDF, comunitate si intalniri cu
-            Tanya ca sa nu ramai singura intre motivatie si rezultat.
-          </p>
-          <div className="expert-stats">
+        <figure className="expert-photo-card">
+          <img src="/assets/img/tanya-goncear-2026.png" alt="Tanya Goncear" />
+          <figcaption>
+            <strong>Tanya Goncear</strong>
+            <span>Experta clubului FiiFit Online</span>
+          </figcaption>
+          <div className="expert-stats" aria-label="Rezultate FiiFit">
             {highlights.map((item) => (
               <div key={item.value}>
                 <strong>{item.value}</strong>
@@ -43,7 +40,7 @@ export function Expert() {
               </div>
             ))}
           </div>
-        </div>
+        </figure>
       </div>
     </section>
   );
