@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import './CTA.css';
 
 const podcasts = [
@@ -47,15 +47,49 @@ const podcasts = [
 export function CTA() {
   const carouselRef = useRef(null);
 
-  const scrollCarousel = (direction) => {
+  const getCardStep = useCallback(() => {
     const carousel = carouselRef.current;
-    if (!carousel) return;
+    const firstCard = carousel?.querySelector('.podcast-card');
+    if (!carousel || !firstCard) return 0;
 
-    carousel.scrollBy({
-      left: direction * carousel.clientWidth * 0.86,
+    const styles = window.getComputedStyle(carousel);
+    const gap = Number.parseFloat(styles.columnGap || styles.gap || '0') || 0;
+
+    return firstCard.getBoundingClientRect().width + gap;
+  }, []);
+
+  const scrollCarousel = useCallback((direction) => {
+    const carousel = carouselRef.current;
+    const step = getCardStep();
+    if (!carousel || !step) return;
+
+    const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+    const atEnd = carousel.scrollLeft >= maxScrollLeft - step * 0.5;
+    const atStart = carousel.scrollLeft <= step * 0.5;
+    let nextLeft = carousel.scrollLeft + direction * step;
+
+    if (direction > 0 && atEnd) nextLeft = 0;
+    if (direction < 0 && atStart) nextLeft = maxScrollLeft;
+
+    carousel.scrollTo({
+      left: nextLeft,
       behavior: 'smooth'
     });
-  };
+  }, [getCardStep]);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return undefined;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return undefined;
+
+    const timer = window.setInterval(() => {
+      scrollCarousel(1);
+    }, 1000);
+
+    return () => window.clearInterval(timer);
+  }, [scrollCarousel]);
 
   return (
     <section id="podcasturi" className="podcasts-section">
