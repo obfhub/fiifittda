@@ -144,7 +144,6 @@ export function Testimonials() {
           <div className="testimonials-copy">
             <span className="testimonials-kicker">Rezultate reale</span>
             <h2>
-              <i className="fas fa-heart" aria-hidden="true"></i>
               Povesti care se misca.
             </h2>
             <p className="testimonials-intro">
