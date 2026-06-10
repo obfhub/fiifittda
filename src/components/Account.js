@@ -7,6 +7,37 @@ import {
   personalizedPlan
 } from '../utils/membership';
 
+const availablePlans = [
+  {
+    duration: '3 Luni',
+    price: '175 EUR',
+    description: '120 zile pentru stilul tau de viata sanatos',
+    note: '+1 luna cadou'
+  },
+  {
+    duration: '6 Luni',
+    price: '275 EUR',
+    description: '180 zile pentru stilul tau de viata sanatos',
+    note: 'Cel mai popular'
+  },
+  {
+    duration: '12 Luni',
+    price: '365 EUR',
+    description: '365 zile pentru stilul tau de viata sanatos',
+    note: 'Transformare completa'
+  }
+];
+
+function getCheckoutUrl(plan) {
+  const params = new URLSearchParams({
+    plan: plan.duration,
+    price: plan.price,
+    description: plan.description
+  });
+
+  return `/checkout?${params.toString()}`;
+}
+
 function clearStoredAuth() {
   localStorage.removeItem('fiifit_user');
   localStorage.removeItem('fiifit_auth');
@@ -156,6 +187,31 @@ export function Account() {
           </article>
         </div>
 
+        {!membership && (
+          <section id="account-plans" className="account-plan-picker">
+            <div className="account-section-heading">
+              <span>Activeaza accesul</span>
+              <h2>Alege planul tau</h2>
+              <p>
+                Dupa checkout, planul apare aici si se deblocheaza trackerul, lectiile
+                video si planul personalizat.
+              </p>
+            </div>
+
+            <div className="account-plan-options">
+              {availablePlans.map((plan) => (
+                <article className={plan.duration === '6 Luni' ? 'featured' : ''} key={plan.duration}>
+                  <span>{plan.note}</span>
+                  <h3>{plan.duration}</h3>
+                  <p>{plan.description}</p>
+                  <strong>{plan.price}</strong>
+                  <a href={getCheckoutUrl(plan)}>Ia planul</a>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
         <section className={`account-member-section ${!membership ? 'locked' : ''}`}>
           <div className="account-section-heading">
             <span>Video-uri</span>
@@ -208,7 +264,7 @@ export function Account() {
               <a href="/#lectii" className="account-secondary-action">Vezi lectiile publice</a>
             </>
           ) : (
-            <a href="/#tarife">Alege un plan</a>
+            <a href="#account-plans">Alege un plan</a>
           )}
           <button type="button" onClick={handleLogout}>Logout</button>
         </div>

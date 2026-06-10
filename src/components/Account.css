@@ -145,6 +145,82 @@
   font-weight: 800;
 }
 
+.account-plan-picker {
+  margin-top: 18px;
+  padding: 28px;
+  border: 1px solid rgba(0, 208, 132, 0.2);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 88% 0%, rgba(0, 208, 132, 0.13), transparent 36%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.account-plan-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.account-plan-options article {
+  display: flex;
+  min-height: 245px;
+  padding: 22px;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(34, 37, 36, 0.82), rgba(14, 17, 16, 0.92));
+}
+
+.account-plan-options article.featured {
+  border-color: rgba(0, 208, 132, 0.5);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(0, 208, 132, 0.18), transparent 42%),
+    linear-gradient(145deg, rgba(34, 37, 36, 0.9), rgba(14, 17, 16, 0.94));
+}
+
+.account-plan-options span {
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+}
+
+.account-plan-options h3 {
+  margin-top: 12px;
+  color: white;
+  font-size: 25px;
+}
+
+.account-plan-options p {
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.account-plan-options strong {
+  display: block;
+  margin-top: auto;
+  color: white;
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+.account-plan-options a {
+  display: inline-flex;
+  min-height: 44px;
+  margin-top: 16px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #071b13;
+  font-size: 13px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
 .account-member-section {
   margin-top: 18px;
   padding: 28px;
@@ -330,6 +406,7 @@
   }
 
   .account-video-grid,
+  .account-plan-options,
   .personal-plan-list {
     grid-template-columns: 1fr;
   }
@@ -367,6 +444,10 @@
   }
 
   .account-member-section {
+    padding: 20px;
+  }
+
+  .account-plan-picker {
     padding: 20px;
   }
 
