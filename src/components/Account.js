@@ -1,5 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './Account.css';
+import {
+  getStoredAuth,
+  getUserMembership,
+  memberVideos,
+  personalizedPlan
+} from '../utils/membership';
 
 function clearStoredAuth() {
   localStorage.removeItem('fiifit_user');
@@ -7,39 +13,28 @@ function clearStoredAuth() {
   localStorage.removeItem('fiifit_session');
 }
 
-function getStoredAuth() {
-  try {
-    const user = JSON.parse(localStorage.getItem('fiifit_user') || 'null');
-    const auth = JSON.parse(localStorage.getItem('fiifit_auth') || 'null');
-    const expiresAt = Number(auth?.expires_at || 0) * 1000;
-
-    if (!user || !auth?.authenticated) return null;
-    if (expiresAt && expiresAt < Date.now()) return null;
-
-    return { user, auth };
-  } catch (error) {
-    return null;
-  }
-}
-
 export function Account() {
-  const [{ user, auth }, setAuth] = useState(() => getStoredAuth() || { user: null, auth: null });
+  const storedAuth = useMemo(() => getStoredAuth(), []);
+  const [{ user, auth }, setAuth] = useState(() => storedAuth || { user: null, auth: null });
+  const [membership, setMembership] = useState(() => (storedAuth?.user ? getUserMembership(storedAuth.user) : null));
   const [isChecking, setIsChecking] = useState(true);
+  const isLockedFromTracker = new URLSearchParams(window.location.search).get('locked') === 'tracker';
 
   useEffect(() => {
     let isMounted = true;
 
     async function checkAuth() {
-      const storedAuth = getStoredAuth();
+      const fallbackAuth = getStoredAuth();
 
       try {
         const response = await fetch('/api/me', { credentials: 'include' });
         const data = await response.json();
 
         if (!response.ok || !data.authenticated) {
-          if (storedAuth) {
+          if (fallbackAuth) {
             if (isMounted) {
-              setAuth(storedAuth);
+              setAuth(fallbackAuth);
+              setMembership(getUserMembership(fallbackAuth.user));
               setIsChecking(false);
             }
             return;
@@ -50,17 +45,20 @@ export function Account() {
           return;
         }
 
+        const nextAuth = { authenticated: true, expires_at: data.expires_at };
         localStorage.setItem('fiifit_user', JSON.stringify(data.user));
-        localStorage.setItem('fiifit_auth', JSON.stringify({ authenticated: true, expires_at: data.expires_at }));
+        localStorage.setItem('fiifit_auth', JSON.stringify(nextAuth));
 
         if (isMounted) {
-          setAuth({ user: data.user, auth: { authenticated: true, expires_at: data.expires_at } });
+          setAuth({ user: data.user, auth: nextAuth });
+          setMembership(getUserMembership(data.user));
           setIsChecking(false);
         }
       } catch (error) {
-        if (storedAuth) {
+        if (fallbackAuth) {
           if (isMounted) {
-            setAuth(storedAuth);
+            setAuth(fallbackAuth);
+            setMembership(getUserMembership(fallbackAuth.user));
             setIsChecking(false);
           }
           return;
@@ -105,13 +103,42 @@ export function Account() {
       </a>
 
       <section className="account-shell">
+        {isLockedFromTracker && !membership && (
+          <div className="account-alert">
+            <i className="fas fa-lock" aria-hidden="true"></i>
+            Trackerul este disponibil doar dupa activarea unui plan.
+          </div>
+        )}
+
         <div className="account-hero">
-          <span className="account-kicker">Cont activ</span>
+          <span className="account-kicker">{membership ? 'Membru activ' : 'Cont creat'}</span>
           <h1>Bine ai venit, {user.name || user.email}</h1>
-          <p>Esti autentificat in contul tau FiiFit. De aici poti continua catre program si iti poti gestiona accesul.</p>
+          <p>
+            Aici vezi planul tau, lectiile video, planul personalizat si instrumentele
+            incluse in programul FiiFit.
+          </p>
         </div>
 
         <div className="account-grid">
+          <article className="account-card account-plan-card">
+            <span>
+              <i className="fas fa-crown" aria-hidden="true"></i>
+            </span>
+            <h2>Planul tau</h2>
+            {membership ? (
+              <>
+                <strong>{membership.plan.duration}</strong>
+                <p>{membership.plan.description}</p>
+                <small>Activat pe {new Date(membership.startedAt).toLocaleDateString()}</small>
+              </>
+            ) : (
+              <>
+                <strong>Nu ai plan activ</strong>
+                <p>Alege un abonament ca sa deblochezi lectiile, trackerul si planul personalizat.</p>
+              </>
+            )}
+          </article>
+
           <article className="account-card">
             <span>
               <i className="fas fa-user-check" aria-hidden="true"></i>
@@ -127,18 +154,62 @@ export function Account() {
             <h2>Sesiune</h2>
             <p>Autentificat pana la {new Date(Number(auth?.expires_at || 0) * 1000).toLocaleString()}.</p>
           </article>
-
-          <article className="account-card">
-            <span>
-              <i className="fas fa-dumbbell" aria-hidden="true"></i>
-            </span>
-            <h2>Program</h2>
-            <p>Zona de lectii pentru membri poate fi legata aici.</p>
-          </article>
         </div>
 
+        <section className={`account-member-section ${!membership ? 'locked' : ''}`}>
+          <div className="account-section-heading">
+            <span>Video-uri</span>
+            <h2>Lectiile tale</h2>
+            <p>{membership ? `${memberVideos.length} lectii de start disponibile.` : 'Activeaza un plan pentru acces la lectii.'}</p>
+          </div>
+
+          <div className="account-video-grid">
+            {memberVideos.map((video, index) => (
+              <article className="account-video-card" key={video.title}>
+                <div className="video-play">
+                  <i className={`fas ${membership ? 'fa-play' : 'fa-lock'}`} aria-hidden="true"></i>
+                </div>
+                <span>{String(index + 1).padStart(2, '0')} / {video.type}</span>
+                <h3>{video.title}</h3>
+                <p>{video.duration}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className={`account-member-section ${!membership ? 'locked' : ''}`}>
+          <div className="account-section-heading">
+            <span>Plan personalizat</span>
+            <h2>Saptamana ta FiiFit</h2>
+            <p>
+              {membership
+                ? 'Un ghid simplu pentru antrenamente, mese, tracker si mentinerea ritmului.'
+                : 'Planul saptamanal apare aici dupa activarea abonamentului.'}
+            </p>
+          </div>
+
+          <div className="personal-plan-list">
+            {personalizedPlan.map((item) => (
+              <article key={item.day}>
+                <strong>{item.day}</strong>
+                <div>
+                  <h3>{item.focus}</h3>
+                  <p>{item.action}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <div className="account-actions">
-          <a href="/#lectii">Mergi la lectii</a>
+          {membership ? (
+            <>
+              <a href="/tracker">Deschide trackerul</a>
+              <a href="/#lectii" className="account-secondary-action">Vezi lectiile publice</a>
+            </>
+          ) : (
+            <a href="/#tarife">Alege un plan</a>
+          )}
           <button type="button" onClick={handleLogout}>Logout</button>
         </div>
       </section>

@@ -45,7 +45,7 @@
   color: white;
   font-size: clamp(38px, 5vw, 58px);
   font-weight: 850;
-  letter-spacing: -2px;
+  letter-spacing: 0;
   line-height: 1.02;
 }
 
@@ -457,7 +457,7 @@
 
   .macro-copy h2 {
     font-size: 34px;
-    letter-spacing: -1px;
+    letter-spacing: 0;
   }
 
   .macro-actions {

@@ -1,0 +1,95 @@
+.tracker-page {
+  min-height: 100vh;
+  margin-top: -85px;
+  padding: 112px 0 0;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(0, 208, 132, 0.14), transparent 34%),
+    linear-gradient(180deg, #101312, #090b0a 70%);
+  color: white;
+}
+
+.tracker-back {
+  position: fixed;
+  top: 28px;
+  left: 34px;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font-size: 18px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.tracker-back i {
+  color: var(--primary);
+  font-size: 14px;
+}
+
+.tracker-member-hero,
+.tracker-loading {
+  width: min(100% - 44px, 980px);
+  margin: 0 auto 26px;
+  padding: 30px;
+  border: 1px solid rgba(0, 208, 132, 0.18);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 92% 0%, rgba(0, 208, 132, 0.16), transparent 36%),
+    rgba(255, 255, 255, 0.035);
+  box-shadow: 0 22px 62px rgba(0, 0, 0, 0.24);
+}
+
+.tracker-member-hero span,
+.tracker-loading span {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.tracker-member-hero h1,
+.tracker-loading h1 {
+  margin-top: 10px;
+  color: white;
+  font-size: clamp(38px, 5vw, 62px);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.02;
+}
+
+.tracker-member-hero p,
+.tracker-loading p {
+  max-width: 680px;
+  margin-top: 14px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.tracker-page .macro-tracker {
+  padding-top: 30px;
+}
+
+.tracker-page .macro-copy h2 {
+  letter-spacing: 0;
+}
+
+@media (max-width: 520px) {
+  .tracker-page {
+    padding-top: 92px;
+  }
+
+  .tracker-back {
+    top: 20px;
+    left: 20px;
+    font-size: 16px;
+  }
+
+  .tracker-member-hero,
+  .tracker-loading {
+    width: calc(100% - 32px);
+    padding: 22px;
+  }
+}

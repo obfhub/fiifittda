@@ -3,6 +3,7 @@ import React, { useEffect, useId, useState } from 'react';
 import './Signup.css';
 import './Checkout.css';
 import Welcome from './ui/Welcome';
+import { saveUserMembership } from '../utils/membership';
 
 const orbitIcons = [
   { icon: 'fa-credit-card', label: 'Plata sigura', radius: 105, delay: 0, size: 'small' },
@@ -101,6 +102,10 @@ export function Checkout() {
 
   const handlePay = (event) => {
     event.preventDefault();
+    const authState = getStoredAuth();
+    if (authState?.user) {
+      saveUserMembership(authState.user, plan);
+    }
     setPaid(true);
   };
 
@@ -121,7 +126,7 @@ export function Checkout() {
   }
 
   if (paid) {
-    return <Welcome onContinue={() => { window.location.href = '/'; }} />;
+    return <Welcome onContinue={() => { window.location.href = '/account'; }} />;
   }
 
   return (
@@ -224,7 +229,7 @@ export function Checkout() {
           )}
 
           <button className="checkout-submit reveal-item" type="submit">
-            Pay Now
+            Activeaza planul
           </button>
 
           <p className="checkout-note reveal-item">Prin plata confirmi accesul la programul FiiFit.online.</p>

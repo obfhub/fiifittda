@@ -6,7 +6,6 @@ import { Problems } from './components/Problems';
 import { About } from './components/About';
 import { Expert } from './components/Expert';
 import { Lessons } from './components/Lessons';
-import { MacroTracker } from './components/MacroTracker';
 import { Testimonials } from './components/Testimonials';
 import { Pricing } from './components/Pricing';
 import { FAQ } from './components/FAQ';
@@ -18,6 +17,7 @@ import { ForgotPassword } from './components/ForgotPassword';
 import { ResetPassword } from './components/ResetPassword';
 import { Checkout } from './components/Checkout';
 import { Account } from './components/Account';
+import { TrackerPage } from './components/TrackerPage';
 
 function getStoredAuth() {
   try {
@@ -44,6 +44,7 @@ function App() {
   const isSignupPage = currentPath === '/signup';
   const isLoginPage = currentPath === '/login';
   const isAccountPage = currentPath === '/account';
+  const isTrackerPage = currentPath === '/tracker';
   const isForgotPasswordPage = currentPath === '/forgot-password';
   const isResetPasswordPage = currentPath === '/reset-password';
 
@@ -78,7 +79,7 @@ function App() {
   };
 
   useEffect(() => {
-    if (isCheckoutPage || isSignupPage || isLoginPage || isAccountPage || isForgotPasswordPage || isResetPasswordPage) return undefined;
+    if (isCheckoutPage || isSignupPage || isLoginPage || isAccountPage || isTrackerPage || isForgotPasswordPage || isResetPasswordPage) return undefined;
 
     // Initialize animations
     const observerOptions = {
@@ -123,7 +124,7 @@ function App() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isCheckoutPage, isSignupPage, isLoginPage, isAccountPage, isForgotPasswordPage, isResetPasswordPage]);
+  }, [isCheckoutPage, isSignupPage, isLoginPage, isAccountPage, isTrackerPage, isForgotPasswordPage, isResetPasswordPage]);
 
   if (isCheckoutPage) {
     return <Checkout />;
@@ -139,6 +140,10 @@ function App() {
 
   if (isAccountPage) {
     return <Account />;
+  }
+
+  if (isTrackerPage) {
+    return <TrackerPage />;
   }
 
   if (isForgotPasswordPage) {
@@ -157,7 +162,6 @@ function App() {
       <About />
       <Expert />
       <Lessons />
-      <MacroTracker />
       <Testimonials />
       <Pricing onOpenPayment={openPayment} />
       <FAQ onOpenPayment={openPayment} />
