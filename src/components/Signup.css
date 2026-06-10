@@ -172,8 +172,7 @@
   line-height: 1.7;
 }
 
-.google-signup,
-.telegram-signup {
+.google-signup {
   position: relative;
   display: flex;
   width: 100%;
@@ -188,19 +187,12 @@
   cursor: pointer;
   font-family: inherit;
   font-weight: 600;
-  text-decoration: none;
   transition: var(--transition);
 }
 
-.google-signup:hover,
-.telegram-signup:hover {
+.google-signup:hover {
   border-color: rgba(0, 208, 132, 0.55);
   background: rgba(0, 208, 132, 0.06);
-}
-
-.telegram-signup {
-  margin-top: 10px;
-  background: rgba(36, 161, 222, 0.08);
 }
 
 .google-mark {
@@ -217,15 +209,47 @@
   height: 16px;
 }
 
-.telegram-mark {
+.telegram-widget-shell {
   display: grid;
-  width: 25px;
-  height: 25px;
-  place-items: center;
-  border-radius: 50%;
-  background: #24a1de;
-  color: white;
-  font-size: 14px;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.telegram-widget-label {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.telegram-widget-frame {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid rgba(36, 161, 222, 0.28);
+  border-radius: 8px;
+  background: rgba(36, 161, 222, 0.08);
+}
+
+.telegram-widget-error {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 102, 114, 0.32);
+  border-radius: 7px;
+  background: rgba(255, 102, 114, 0.08);
+  color: #ff8c96;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.telegram-session-page {
+  justify-content: center;
+}
+
+.telegram-session-panel {
+  width: 100%;
 }
 
 .signup-divider {

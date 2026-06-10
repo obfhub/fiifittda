@@ -18,6 +18,7 @@ import { ResetPassword } from './components/ResetPassword';
 import { Checkout } from './components/Checkout';
 import { Account } from './components/Account';
 import { TrackerPage } from './components/TrackerPage';
+import { TelegramSession } from './components/TelegramSession';
 
 function getStoredAuth() {
   try {
@@ -45,6 +46,7 @@ function App() {
   const isLoginPage = currentPath === '/login';
   const isAccountPage = currentPath === '/account';
   const isTrackerPage = currentPath === '/tracker';
+  const isTelegramSessionPage = currentPath === '/telegram-session';
   const isForgotPasswordPage = currentPath === '/forgot-password';
   const isResetPasswordPage = currentPath === '/reset-password';
 
@@ -79,7 +81,7 @@ function App() {
   };
 
   useEffect(() => {
-    if (isCheckoutPage || isSignupPage || isLoginPage || isAccountPage || isTrackerPage || isForgotPasswordPage || isResetPasswordPage) return undefined;
+    if (isCheckoutPage || isSignupPage || isLoginPage || isAccountPage || isTrackerPage || isTelegramSessionPage || isForgotPasswordPage || isResetPasswordPage) return undefined;
 
     // Initialize animations
     const observerOptions = {
@@ -124,7 +126,7 @@ function App() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isCheckoutPage, isSignupPage, isLoginPage, isAccountPage, isTrackerPage, isForgotPasswordPage, isResetPasswordPage]);
+  }, [isCheckoutPage, isSignupPage, isLoginPage, isAccountPage, isTrackerPage, isTelegramSessionPage, isForgotPasswordPage, isResetPasswordPage]);
 
   if (isCheckoutPage) {
     return <Checkout />;
@@ -144,6 +146,10 @@ function App() {
 
   if (isTrackerPage) {
     return <TrackerPage />;
+  }
+
+  if (isTelegramSessionPage) {
+    return <TelegramSession />;
   }
 
   if (isForgotPasswordPage) {

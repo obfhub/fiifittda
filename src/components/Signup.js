@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Signup.css';
+import { TelegramLoginWidget } from './TelegramLoginWidget';
 
 const orbitIcons = [
   { icon: 'fa-apple-whole', label: 'Nutritie', radius: 105, delay: 0, size: 'small' },
@@ -71,7 +72,6 @@ export function Signup() {
   const safeNextPath = nextPath.startsWith('/') && !nextPath.startsWith('//') ? nextPath : '';
   const redirectPath = safeNextPath || '/account';
   const loginPath = `/login${safeNextPath ? `?next=${encodeURIComponent(safeNextPath)}` : ''}`;
-  const telegramPath = `/api/telegram-start?next=${encodeURIComponent(redirectPath)}`;
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -210,12 +210,7 @@ export function Signup() {
             Continua cu Google
           </button>
 
-          <a className="telegram-signup reveal-item" href={telegramPath}>
-            <span className="telegram-mark" aria-hidden="true">
-              <i className="fab fa-telegram-plane"></i>
-            </span>
-            Conecteaza-te cu Telegram
-          </a>
+          <TelegramLoginWidget nextPath={redirectPath} />
 
           <div className="signup-divider reveal-item">
             <span></span>
