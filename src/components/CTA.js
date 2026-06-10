@@ -86,7 +86,7 @@ export function CTA() {
 
     const timer = window.setInterval(() => {
       scrollCarousel(1);
-    }, 1000);
+    }, 2000);
 
     return () => window.clearInterval(timer);
   }, [scrollCarousel]);
