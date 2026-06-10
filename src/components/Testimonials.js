@@ -1,5 +1,5 @@
 import React from 'react';
-import { Marquee } from './Marquee.jsx';
+import { Marquee } from './Marquee.tsx';
 import './Testimonials.css';
 
 const testimonials = [

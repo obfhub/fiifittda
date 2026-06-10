@@ -1,11 +1,53 @@
-import React, { useRef } from 'react';
-import { cn } from '../lib/utils';
+import React, { ComponentPropsWithoutRef, useRef } from 'react';
+import { cn } from '@/lib/utils';
 
-/**
- * Marquee Component
- * A reusable scrolling marquee component with support for horizontal/vertical
- * animations, reverse direction, and pause-on-hover functionality
- */
+interface MarqueeProps extends ComponentPropsWithoutRef<'div'> {
+  /**
+   * Optional CSS class name to apply custom styles
+   */
+  className?: string;
+  /**
+   * Whether to reverse the animation direction
+   * @default false
+   */
+  reverse?: boolean;
+  /**
+   * Whether to pause the animation on hover
+   * @default false
+   */
+  pauseOnHover?: boolean;
+  /**
+   * Content to be displayed in the marquee
+   */
+  children: React.ReactNode;
+  /**
+   * Whether to animate vertically instead of horizontally
+   * @default false
+   */
+  vertical?: boolean;
+  /**
+   * Number of times to repeat the content
+   * @default 4
+   */
+  repeat?: number;
+  /**
+   * If true, automatically repeats children enough to fill the visible area
+   */
+  autoFill?: boolean;
+  /**
+   * ARIA label for accessibility
+   */
+  ariaLabel?: string;
+  /**
+   * ARIA live region politeness
+   */
+  ariaLive?: 'off' | 'polite' | 'assertive';
+  /**
+   * ARIA role
+   */
+  ariaRole?: string;
+}
+
 export function Marquee({
   className,
   reverse = false,
@@ -13,13 +55,12 @@ export function Marquee({
   children,
   vertical = false,
   repeat = 4,
-  autoFill,
   ariaLabel,
   ariaLive = 'off',
   ariaRole = 'marquee',
   ...props
-}) {
-  const marqueeRef = useRef(null);
+}: MarqueeProps) {
+  const marqueeRef = useRef<HTMLDivElement>(null);
 
   return (
     <div
