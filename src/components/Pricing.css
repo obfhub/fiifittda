@@ -272,12 +272,13 @@
 
 @media (max-width: 768px) {
   .pricing {
-    padding: 70px 0;
+    padding: 58px 0;
   }
 
   .pricing h2 {
-    font-size: 32px;
+    font-size: 38px;
     letter-spacing: 0;
+    line-height: 1.08;
   }
 
   .pricing-heading {
@@ -310,63 +311,122 @@
 
 @media (max-width: 480px) {
   .pricing {
-    padding: 60px 0;
+    padding: 52px 0;
   }
 
   .pricing h2 {
-    font-size: 28px;
+    font-size: 34px;
     letter-spacing: 0;
   }
 
   .pricing-heading {
-    margin-bottom: 28px;
+    margin-bottom: 24px;
   }
 
   .pricing-heading p {
-    font-size: 13px;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .pricing-table-wrap {
+    overflow: visible;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
   }
 
   .pricing-table {
-    min-width: 100%;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    border-collapse: separate;
+  }
+
+  .pricing-table thead,
+  .pricing-table thead tr,
+  .pricing-table thead th {
+    display: block;
+    width: 100%;
   }
 
   .pricing-table thead th {
-    padding: 12px 8px;
-    font-size: 12px;
+    padding: 0;
+    background: transparent;
   }
 
-  .pricing-table tbody td {
-    padding: 10px 8px;
-    font-size: 12px;
+  .pricing-table thead th + th {
+    margin-top: 14px;
+  }
+
+  .pricing-table tbody {
+    display: none;
+  }
+
+  .pricing-scroll-hint {
+    display: none;
   }
 
   .pricing-plan {
-    padding: 18px 14px;
-    min-height: auto;
+    min-height: 0;
+    padding: 20px;
+    border-radius: 18px;
   }
 
   .plan-title-row {
-    gap: 6px;
-    min-height: 28px;
+    gap: 10px;
+    min-height: 34px;
   }
 
   .plan-icon {
-    width: 26px;
-    height: 26px;
-    font-size: 11px;
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
   }
 
   .pricing-plan h3 {
-    font-size: 14px;
+    font-size: 24px;
+    line-height: 1.05;
   }
 
   .plan-description {
-    font-size: 12px;
-    margin-top: 10px;
+    font-size: 15px;
+    line-height: 1.55;
+    margin-top: 16px;
+  }
+
+  .plan-price {
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .plan-price strong {
+    font-size: clamp(54px, 18vw, 70px);
+    line-height: 0.95;
+    overflow-wrap: anywhere;
+  }
+
+  .plan-price del {
+    font-size: 18px;
+  }
+
+  .plan-discount {
+    margin: 12px 0 18px;
+    font-size: 17px;
+  }
+
+  .pricing-button {
+    min-height: 58px;
+    border-radius: 14px;
+    font-size: 15px;
   }
 
   .popular-label {
-    font-size: 8px;
-    padding: 4px 10px;
+    font-size: 10px;
+    padding: 7px 13px;
+  }
+
+  .pricing-note {
+    margin-top: 16px;
+    font-size: 12px;
   }
 }

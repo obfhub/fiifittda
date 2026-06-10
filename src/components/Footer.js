@@ -6,16 +6,16 @@ const footerSections = [
     label: 'Program',
     links: [
       { title: 'Despre program', href: '#program' },
-      { title: 'Lecții', href: '#lectii' },
-      { title: 'Transformări', href: '#transformari' },
+      { title: 'Lectii', href: '#lectii' },
+      { title: 'Transformari', href: '#transformari' },
       { title: 'Tarife', href: '#tarife' }
     ]
   },
   {
-    label: 'Informații',
+    label: 'Informatii',
     links: [
-      { title: 'Întrebări frecvente', href: '#faq' },
-      { title: 'Înscrie-te', href: '/checkout' },
+      { title: 'Intrebari frecvente', href: '#faq' },
+      { title: 'Contul meu', href: '/account' },
       { title: 'Contact', href: 'mailto:fiifitonline@gmail.com' }
     ]
   },
@@ -100,10 +100,10 @@ export function Footer() {
             FiiFit.online
           </a>
           <p>
-            Program online de slăbire sănătoasă, cu educație, mișcare și suport real.
+            Program online de slabire sanatoasa, cu educatie, miscare si suport real.
           </p>
           <p className="footer-mission">
-            Pentru ca fiecare femeie să se simtă confortabil și puternică în corpul ei.
+            Pentru ca fiecare femeie sa se simta confortabil si puternica in corpul ei.
           </p>
           <p className="footer-copyright">
             © {new Date().getFullYear()} Club FiiFit Online.<br />
