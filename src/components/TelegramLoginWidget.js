@@ -1,67 +1,122 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 export function TelegramLoginWidget({ nextPath = '/account' }) {
-  const containerRef = useRef(null);
-  const [error, setError] = useState('');
+  const pollTimerRef = useRef(null);
+  const [loginState, setLoginState] = useState({
+    code: '',
+    telegramUrl: '',
+    status: 'idle',
+    message: 'Deschide Telegram si apasa Start pentru conectare.'
+  });
 
-  useEffect(() => {
-    let isMounted = true;
-    const container = containerRef.current;
+  useEffect(() => () => {
+    if (pollTimerRef.current) window.clearInterval(pollTimerRef.current);
+  }, []);
 
-    if (!container) return undefined;
+  const finishLogin = (data) => {
+    if (pollTimerRef.current) window.clearInterval(pollTimerRef.current);
 
-    const loadWidget = async () => {
+    localStorage.setItem('fiifit_user', JSON.stringify(data.user));
+    localStorage.setItem('fiifit_auth', JSON.stringify(data.auth));
+    localStorage.removeItem('fiifit_session');
+    window.location.assign(data.next || nextPath);
+  };
+
+  const pollLoginStatus = (code) => {
+    if (pollTimerRef.current) window.clearInterval(pollTimerRef.current);
+
+    pollTimerRef.current = window.setInterval(async () => {
       try {
-        const response = await fetch('/api/telegram-config');
-        const config = await response.json();
+        const response = await fetch('/api/telegram-login-status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ code })
+        });
+        const data = await response.json();
 
-        if (!response.ok || !config?.botUsername) {
-          throw new Error(config?.error || 'Telegram login is not configured.');
+        if (data?.status === 'authenticated') {
+          finishLogin(data);
+          return;
         }
 
-        if (!isMounted || !containerRef.current) return;
-
-        const redirectUrl = new URL(config.redirectUri || '/api/telegram-callback', window.location.origin);
-        redirectUrl.searchParams.set('next', nextPath);
-        containerRef.current.innerHTML = '';
-
-        const script = document.createElement('script');
-        script.async = true;
-        script.src = 'https://telegram.org/js/telegram-widget.js?22';
-        script.setAttribute('data-telegram-login', config.botUsername);
-        script.setAttribute('data-size', 'large');
-        script.setAttribute('data-radius', '8');
-        script.setAttribute('data-auth-url', redirectUrl.toString());
-        script.setAttribute('data-request-access', 'write');
-
-        containerRef.current.appendChild(script);
-      } catch (widgetError) {
-        if (isMounted) {
-          setError(widgetError.message || 'Telegram login is not available.');
+        if (!response.ok || data?.status === 'expired') {
+          throw new Error(data?.error || 'Telegram login a expirat. Incearca din nou.');
         }
+
+        setLoginState((current) => ({
+          ...current,
+          status: 'pending',
+          message: 'Astept confirmarea din Telegram...'
+        }));
+      } catch (error) {
+        if (pollTimerRef.current) window.clearInterval(pollTimerRef.current);
+        setLoginState((current) => ({
+          ...current,
+          status: 'error',
+          message: error.message || 'Telegram login nu este disponibil.'
+        }));
       }
-    };
+    }, 1800);
+  };
 
-    loadWidget();
+  const startTelegramLogin = async () => {
+    try {
+      setLoginState((current) => ({
+        ...current,
+        status: 'loading',
+        message: 'Pregatim linkul Telegram...'
+      }));
 
-    return () => {
-      isMounted = false;
-      if (container) container.innerHTML = '';
-    };
-  }, [nextPath]);
+      const response = await fetch('/api/telegram-login-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ next: nextPath })
+      });
+      const data = await response.json();
 
-  if (error) {
-    return (
-      <p className="telegram-widget-error reveal-item" role="alert">
-        {error}
-      </p>
-    );
-  }
+      if (!response.ok || !data?.code || !data?.telegramUrl) {
+        throw new Error(data?.error || 'Nu am putut porni login-ul Telegram.');
+      }
+
+      setLoginState({
+        code: data.code,
+        telegramUrl: data.telegramUrl,
+        status: 'pending',
+        message: 'Apasa Start in Telegram. Te conectam automat dupa confirmare.'
+      });
+      pollLoginStatus(data.code);
+      window.open(data.telegramUrl, '_blank', 'noopener,noreferrer');
+    } catch (error) {
+      setLoginState((current) => ({
+        ...current,
+        status: 'error',
+        message: error.message || 'Telegram login nu este disponibil.'
+      }));
+    }
+  };
 
   return (
     <div className="telegram-widget-shell reveal-item">
-      <span className="telegram-widget-label">Conecteaza-te cu Telegram</span>
-      <div ref={containerRef} className="telegram-widget-frame" />
+      <button
+        className="telegram-deeplink-button"
+        type="button"
+        onClick={startTelegramLogin}
+        disabled={loginState.status === 'loading'}
+      >
+        <span className="telegram-deeplink-icon" aria-hidden="true">
+          <i className="fab fa-telegram-plane"></i>
+        </span>
+        {loginState.status === 'loading' ? 'Se pregateste...' : 'Conecteaza-te cu Telegram'}
+      </button>
+      <p className={`telegram-widget-message ${loginState.status === 'error' ? 'error' : ''}`} role="status">
+        {loginState.message}
+      </p>
+      {loginState.telegramUrl && (
+        <a className="telegram-widget-fallback" href={loginState.telegramUrl} target="_blank" rel="noreferrer">
+          Redeschide Telegram
+        </a>
+      )}
     </div>
   );
 }

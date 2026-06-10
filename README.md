@@ -51,17 +51,33 @@ Optional:
 
 `SITE_URL=https://your-production-domain`
 
-Telegram login uses the legacy Telegram Login Widget through `api/telegram-config.js` and `api/telegram-callback.js`. Add these environment variables in Vercel:
+Telegram login uses a bot deep-link flow through `api/telegram-login-code.js`, `api/telegram-bot-webhook.js`, and `api/telegram-login-status.js`. Add these environment variables in Vercel:
 
 `TELEGRAM_BOT_USERNAME=your_bot_username_without_or_with_at`
 
 `TELEGRAM_BOT_TOKEN=your_bot_token_from_botfather`
 
-Optional, but recommended in production:
+Create this Supabase table in the SQL editor:
 
-`TELEGRAM_REDIRECT_URI=/api/telegram-callback`
+```sql
+create table if not exists telegram_login_codes (
+  code text primary key,
+  telegram_id text,
+  telegram_username text,
+  first_name text,
+  last_name text,
+  next_path text default '/account',
+  created_at timestamptz default now(),
+  confirmed_at timestamptz,
+  used_at timestamptz
+);
+```
 
-In BotFather, set the allowed domain to `fiifittda.vercel.app`. Keep `TELEGRAM_BOT_TOKEN` server-only.
+Set the Telegram webhook once:
+
+`https://api.telegram.org/botYOUR_TELEGRAM_BOT_TOKEN/setWebhook?url=https://fiifittda.vercel.app/api/telegram-bot-webhook`
+
+Keep `TELEGRAM_BOT_TOKEN` server-only. The login button opens `https://t.me/YOUR_BOT_USERNAME?start=login_CODE`, then the site waits for the webhook confirmation.
 
 ### `npm start`
 
