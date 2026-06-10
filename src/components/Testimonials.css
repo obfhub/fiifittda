@@ -41,12 +41,10 @@
   min-height: 384px;
   max-width: 800px;
   margin: 0 auto;
-  border-color: rgba(255, 255, 255, 0.11);
-  border-radius: 18px;
-  background:
-    radial-gradient(circle at 52% 55%, rgba(0, 208, 132, 0.08), transparent 42%),
-    #090b0a;
-  box-shadow: 0 38px 90px rgba(0, 0, 0, 0.42);
+  border-color: transparent;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .testimonial-card {
@@ -98,8 +96,8 @@
 }
 
 .testimonials-demo .from-background {
-  --tw-gradient-from: rgba(9, 11, 10, 0.88);
-  --tw-gradient-to: rgba(9, 11, 10, 0);
+  --tw-gradient-from: #0b0d0c;
+  --tw-gradient-to: rgba(11, 13, 12, 0);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
