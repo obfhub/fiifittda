@@ -4,27 +4,27 @@ import './FAQ.css';
 const faqs = [
   {
     question: 'Pentru cine este programul?',
-    answer: 'Pentru oricine dorește să slăbească în mod sănătos și durabil, fără diete extreme.'
+    answer: 'Pentru femei care vor sa slabeasca sanatos, sa inteleaga mancarea si sa isi construiasca o rutina fara diete extreme.'
   },
   {
-    question: 'Cât durează programul?',
-    answer: 'Programul are 24 lecții pe care le poți urma în ritmul tău. Majoritatea membrilor finalizează în 3-6 luni.'
+    question: 'Cat dureaza programul?',
+    answer: 'Ai 24 de lectii si acces in functie de planul ales: 3 luni + 1 cadou, 6 luni sau 12 luni. Poti avansa in ritmul tau.'
   },
   {
-    question: 'Am nevoie de sală?',
-    answer: 'Nu! Antrenamentele sunt pentru acasă, fără echipament. Doar corpul tău și voința de schimbare.'
+    question: 'Am nevoie de sala sau echipament?',
+    answer: 'Nu. Antrenamentele sunt gandite pentru acasa, cu variante pentru incepatoare si explicatii clare.'
+  },
+  {
+    question: 'Ce primesc in fiecare varianta?',
+    answer: 'Primesti antrenamente live, intalniri cu Tanya, lectii de nutritie, chat de suport, biblioteca de exercitii, meniu PDF si acces la comunitate.'
+  },
+  {
+    question: 'Trebuie sa imi fac cont?',
+    answer: 'Da. Contul pastreaza accesul la lectii, plan si zona ta de membru. Dupa signup ramai autentificata si poti continua spre checkout.'
   },
   {
     question: 'Cum primesc acces?',
-    answer: 'După cumpărare, vei primi link-ul de acces instantaneu. Poți accesa programul de pe orice dispozitiv.'
-  },
-  {
-    question: 'Plata este sigură?',
-    answer: 'Da! Folosim procesatoare de plată securizate și criptate. Datele tale sunt protejate.'
-  },
-  {
-    question: 'Pot urma programul de acasă?',
-    answer: 'Absolut! Totul este online. Ai nevoie doar de internet și de determinare.'
+    answer: 'Dupa confirmarea inscrierii, accesul este pregatit in contul tau si primesti detaliile importante pe email.'
   }
 ];
 
@@ -41,9 +41,9 @@ export function FAQ({ onOpenPayment }) {
         <div className="faq-layout">
           <aside className="faq-intro">
             <span>FAQ</span>
-            <h2>Întrebări Frecvente</h2>
+            <h2>Intrebari frecvente</h2>
             <p>
-              Răspunsuri rapide despre acces, durată, antrenamente și cum începi
+              Raspunsuri rapide despre acces, abonamente, antrenamente si cum incepi
               programul FiiFit.
             </p>
 
@@ -51,10 +51,10 @@ export function FAQ({ onOpenPayment }) {
               <div className="faq-help-icon">
                 <i className="fas fa-message" aria-hidden="true"></i>
               </div>
-              <h3>Mai ai o întrebare?</h3>
-              <p>Scrie-ne sau înscrie-te și primești toate detaliile de acces.</p>
+              <h3>Mai ai o intrebare?</h3>
+              <p>Scrie-ne sau alege un plan si primesti toate detaliile de acces.</p>
               <div className="faq-actions">
-                <button onClick={handleCheckout}>Începe acum</button>
+                <button onClick={handleCheckout}>Alege planul</button>
                 <a href="mailto:fiifitonline@gmail.com">Contact</a>
               </div>
             </div>

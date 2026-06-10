@@ -164,7 +164,7 @@
   color: white;
   font-size: clamp(48px, 6.4vw, 82px);
   font-weight: 850;
-  letter-spacing: -3px;
+  letter-spacing: 0;
   line-height: 1.02;
 }
 
@@ -288,7 +288,7 @@
 
   .hero h1 {
     font-size: clamp(36px, 10vw, 48px);
-    letter-spacing: -1.5px;
+    letter-spacing: 0;
   }
 
   .hero-content > p {
@@ -347,7 +347,7 @@
 
   .hero h1 {
     font-size: 32px;
-    letter-spacing: -0.8px;
+    letter-spacing: 0;
     margin-bottom: 16px;
   }
 
@@ -384,7 +384,7 @@
 @media (max-width: 375px) {
   .hero h1 {
     font-size: 28px;
-    letter-spacing: -0.5px;
+    letter-spacing: 0;
   }
 
   .hero-content > p {

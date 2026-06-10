@@ -1,63 +1,169 @@
 .expert-section {
-  background: linear-gradient(135deg, var(--dark-card) 0%, #2A2A2A 100%);
-  padding: 80px 0;
-  border-top: 2px solid rgba(0, 208, 132, 0.2);
-  border-bottom: 2px solid rgba(0, 208, 132, 0.2);
+  position: relative;
+  padding: 96px 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(0, 208, 132, 0.18);
+  border-bottom: 1px solid rgba(0, 208, 132, 0.18);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(0, 208, 132, 0.14), transparent 28%),
+    linear-gradient(135deg, #101312 0%, #18201c 56%, #0d100f 100%);
+}
+
+.expert-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 100% 64px;
+  mask-image: linear-gradient(90deg, transparent, black 22%, black 78%, transparent);
+  pointer-events: none;
+}
+
+.expert-layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(330px, 0.78fr);
+  gap: 54px;
+  align-items: center;
+}
+
+.expert-eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.expert-copy h2 {
+  margin-bottom: 12px;
+  color: white;
+  font-size: clamp(38px, 5vw, 68px);
+  font-weight: 850;
+  letter-spacing: 0;
+  line-height: 1.02;
+}
+
+.expert-role {
+  margin-bottom: 26px;
+  color: var(--primary-light);
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.expert-copy p:not(.expert-role) {
+  max-width: 690px;
+  margin-bottom: 18px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.expert-card {
+  padding: 34px;
+  border: 1px solid rgba(0, 208, 132, 0.24);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(0, 208, 132, 0.16), transparent 42%),
+    rgba(255, 255, 255, 0.04);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.28);
+}
+
+.expert-card-icon {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 22px;
+  place-items: center;
+  border-radius: 16px;
+  background: rgba(0, 208, 132, 0.14);
+  color: var(--primary);
+}
+
+.expert-card h3 {
+  margin-bottom: 12px;
+  color: white;
+  font-size: 26px;
+  letter-spacing: 0;
+}
+
+.expert-card p {
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.expert-stats {
+  display: grid;
+  margin-top: 28px;
+  gap: 12px;
+}
+
+.expert-stats div {
+  display: flex;
+  min-height: 64px;
+  padding: 14px 16px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.expert-stats strong {
+  color: var(--primary);
+  font-size: 24px;
+  white-space: nowrap;
+}
+
+.expert-stats span {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 13px;
+  text-align: right;
 }
 
 @media (max-width: 900px) {
   .expert-section {
-    padding: 70px 0;
+    padding: 76px 0;
   }
 
-  .expert-section h2 {
-    font-size: 32px;
-    letter-spacing: -1px;
-  }
-
-  .expert-section h3 {
-    font-size: 20px;
-  }
-
-  .expert-section p {
-    font-size: 15px;
+  .expert-layout {
+    grid-template-columns: 1fr;
+    gap: 34px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 520px) {
   .expert-section {
     padding: 60px 0;
   }
 
-  .expert-section h2 {
-    font-size: 28px;
-    letter-spacing: -0.8px;
+  .expert-card {
+    padding: 24px;
+    border-radius: 18px;
   }
 
-  .expert-section h3 {
-    font-size: 18px;
-  }
-
-  .expert-section p {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .expert-section {
-    padding: 50px 0;
-  }
-
-  .expert-section h2 {
-    font-size: 24px;
-    letter-spacing: -0.5px;
-  }
-
-  .expert-section h3 {
+  .expert-role {
     font-size: 16px;
   }
 
-  .expert-section p {
-    font-size: 13px;
+  .expert-copy p:not(.expert-role),
+  .expert-card p {
+    font-size: 14px;
+  }
+
+  .expert-stats div {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .expert-stats span {
+    text-align: left;
   }
 }

@@ -42,6 +42,7 @@
   font-size: 44px;
   font-weight: 800;
   line-height: 1.2;
+  letter-spacing: 0;
 }
 
 .pricing-heading p {
@@ -260,6 +261,15 @@
   font-size: 12px;
 }
 
+.pricing-note {
+  max-width: 640px;
+  margin: 18px auto 0;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   .pricing {
     padding: 70px 0;
@@ -267,7 +277,7 @@
 
   .pricing h2 {
     font-size: 32px;
-    letter-spacing: -1px;
+    letter-spacing: 0;
   }
 
   .pricing-heading {
@@ -305,7 +315,7 @@
 
   .pricing h2 {
     font-size: 28px;
-    letter-spacing: -0.5px;
+    letter-spacing: 0;
   }
 
   .pricing-heading {

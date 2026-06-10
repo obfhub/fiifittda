@@ -5,29 +5,29 @@ const plans = [
   {
     duration: '3 Luni',
     badge: 'Start',
-    description: '120 zile de acces',
-    original: '250€',
-    price: '175€',
-    discount: '+1 lună cadou',
+    description: '120 zile pentru stilul tau de viata sanatos',
+    original: '250 EUR',
+    price: '175 EUR',
+    discount: '+1 luna cadou',
     icon: 'fa-shield-alt'
   },
   {
     duration: '6 Luni',
     badge: 'Cel mai popular',
-    description: '180 zile de acces',
-    original: '369€',
-    price: '275€',
-    discount: 'Economisești 25%',
+    description: '180 zile pentru stilul tau de viata sanatos',
+    original: '369 EUR',
+    price: '275 EUR',
+    discount: 'Economisesti 25%',
     icon: 'fa-users',
     featured: true
   },
   {
     duration: '12 Luni',
     badge: 'Transformare',
-    description: '365 zile de acces',
-    original: '499€',
-    price: '365€',
-    discount: 'Economisești 27%',
+    description: '365 zile pentru stilul tau de viata sanatos',
+    original: '499 EUR',
+    price: '365 EUR',
+    discount: 'Economisesti 27%',
     icon: 'fa-rocket'
   }
 ];
@@ -38,23 +38,43 @@ const features = [
     values: ['3 luni + 1 cadou', '6 luni', '12 luni']
   },
   {
-    label: 'Antrenamente live săptămânale',
-    values: ['2 + 1 înregistrat', '2 + 1 înregistrat', '2 + 1 înregistrat']
+    label: 'Antrenamente live saptamanale',
+    values: ['2 live + 1 inregistrat', '2 live + 1 inregistrat', '2 live + 1 inregistrat']
   },
   {
-    label: 'Întâlniri săptămânale cu Tanya',
+    label: 'Intalniri saptamanale cu Tanya',
     values: [true, true, true]
   },
   {
-    label: 'Lecții Bazele Nutriției',
-    values: ['3 lecții', '3 lecții', '3 lecții']
-  },
-  {
-    label: 'Comunitate și suport zilnic în chat',
+    label: '14 live-uri educationale: FAQ si studii de caz',
     values: [true, true, true]
   },
   {
-    label: 'Biblioteca de exerciții',
+    label: '24 lectii pentru nutritie, rutina si mentinere',
+    values: [true, true, true]
+  },
+  {
+    label: 'Lectii Bazele Nutritiei',
+    values: ['3 lectii', '3 lectii', '3 lectii']
+  },
+  {
+    label: 'Comunitate si suport zilnic in chat',
+    values: [true, true, true]
+  },
+  {
+    label: 'Biblioteca de exercitii',
+    values: [true, true, true]
+  },
+  {
+    label: 'Sedinte de consiliere psiho-emotionala in grup',
+    values: [true, true, true]
+  },
+  {
+    label: 'Sesiuni live despre nutritie personalizata',
+    values: ['2 sesiuni', '2 sesiuni', '2 sesiuni']
+  },
+  {
+    label: 'Video: Indexul glicemic al alimentelor',
     values: [true, true, true]
   },
   {
@@ -62,15 +82,23 @@ const features = [
     values: [true, true, true]
   },
   {
-    label: 'Curs „Nutriționistul familiei tale”',
-    values: ['22 lecții', '22 lecții', '22 lecții']
-  },
-  {
-    label: 'Webinar „Slăbește inteligent”',
+    label: 'Monitorizare zilnica a alimentatiei',
     values: [true, true, true]
   },
   {
-    label: 'Instagram, Facebook și Telegram',
+    label: 'Mini-curs "De la intentii la actiuni"',
+    values: [true, true, true]
+  },
+  {
+    label: 'Curs "Nutritionistul familiei tale"',
+    values: ['22 lectii', '22 lectii', '22 lectii']
+  },
+  {
+    label: 'Webinar "Slabeste inteligent"',
+    values: [true, true, true]
+  },
+  {
+    label: 'Instagram, Facebook si Telegram',
     values: [true, true, true]
   }
 ];
@@ -93,9 +121,12 @@ export function Pricing({ onOpenPayment }) {
       <div className="pricing-pattern" aria-hidden="true"></div>
       <div className="container">
         <div className="pricing-heading">
-          <span className="pricing-eyebrow">Investește în tine</span>
-          <h2>Alege Planul Tău</h2>
-          <p>Același program complet, cu timpul de care ai nevoie pentru transformarea ta.</p>
+          <span className="pricing-eyebrow">Alege durata potrivita</span>
+          <h2>Abonamente FiiFit Online</h2>
+          <p>
+            Toate variantele includ acelasi program complet: antrenamente, lectii,
+            comunitate, suport si resurse pentru rezultate pe termen lung.
+          </p>
         </div>
 
         <div className="pricing-table-wrap">
@@ -120,7 +151,7 @@ export function Pricing({ onOpenPayment }) {
                       </div>
                       <p className="plan-discount">{plan.discount}</p>
                       <button className="pricing-button" onClick={() => onOpenPayment?.(plan)}>
-                        Pay Now
+                        Alege planul
                       </button>
                     </div>
                   </th>
@@ -145,9 +176,12 @@ export function Pricing({ onOpenPayment }) {
             </tbody>
           </table>
         </div>
+        <p className="pricing-note">
+          Ai nevoie de cont pentru checkout. Accesul este pregatit in cont dupa confirmarea inscrierii.
+        </p>
         <p className="pricing-scroll-hint">
           <i className="fas fa-arrows-alt-h" aria-hidden="true"></i>
-          Glisează pentru a compara planurile
+          Gliseaza pentru a compara planurile
         </p>
       </div>
     </section>

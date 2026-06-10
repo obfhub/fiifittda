@@ -9,9 +9,13 @@ export function CTA({ onOpenPayment }) {
   return (
     <section id="payment" className="cta-final">
       <div className="container">
-        <h2>Cel mai bun proiect la care vei lucra vreodată ești TU</h2>
-        <p>Începe transformarea cu FiiFit.online și fă primul pas spre un corp mai sănătos.</p>
-        <button className="btn btn-large" onClick={handleCheckout}>Înscrie-te acum</button>
+        <span className="cta-eyebrow">Pregatita sa incepi?</span>
+        <h2>Cel mai important proiect esti tu.</h2>
+        <p>
+          Alege planul FiiFit si intra intr-un program cu structura, suport si
+          pasi clari pentru un corp mai sanatos.
+        </p>
+        <button className="btn btn-large" onClick={handleCheckout}>Alege planul</button>
       </div>
     </section>
   );

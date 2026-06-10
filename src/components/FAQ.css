@@ -32,7 +32,7 @@
   color: white;
   font-size: clamp(38px, 4.5vw, 58px);
   font-weight: 850;
-  letter-spacing: -2px;
+  letter-spacing: 0;
   line-height: 1.05;
 }
 
@@ -206,7 +206,7 @@
 
   .faq h2 {
     font-size: clamp(32px, 5vw, 48px);
-    letter-spacing: -1.5px;
+    letter-spacing: 0;
   }
 
   .faq-intro {
@@ -234,7 +234,7 @@
 
   .faq h2 {
     font-size: 32px;
-    letter-spacing: -0.8px;
+    letter-spacing: 0;
   }
 
   .faq-intro > span {

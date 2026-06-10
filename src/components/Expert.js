@@ -1,30 +1,48 @@
 import React from 'react';
 import './Expert.css';
 
+const highlights = [
+  { value: '-58 kg', label: 'transformare personala' },
+  { value: '6+ ani', label: 'experienta cu femei reale' },
+  { value: '4500+', label: 'participante in comunitate' }
+];
+
 export function Expert() {
   return (
     <section className="expert-section">
-      <div className="container">
-        <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
-          <h2 style={{ marginBottom: '10px' }}>
-            <i className="fas fa-star" style={{ marginRight: '12px', color: 'var(--primary)' }}></i>
-            Experta Clubului
-          </h2>
-          <h3 style={{ fontSize: '32px', color: 'var(--primary)', marginBottom: '30px' }}>Tanya Goncear</h3>
-          <p style={{ fontSize: '18px', color: 'var(--text-light)', lineHeight: '1.8', marginBottom: '30px' }}>
-            Chimistă, nutriționistă și cofondatoare Fiifit Online
+      <div className="container expert-layout">
+        <div className="expert-copy">
+          <span className="expert-eyebrow">Ghidaj real, nu diete extreme</span>
+          <h2>Tanya Goncear</h2>
+          <p className="expert-role">Chimista, nutritionista si cofondatoare FiiFit Online.</p>
+          <p>
+            Tanya a trecut prin propria transformare si intelege cat de greu este sa
+            construiesti disciplina cand ai familie, munca, emotii si obiceiuri vechi.
+            De aceea programul FiiFit combina educatia cu pasi simpli, repetabili.
           </p>
-          <p style={{ fontSize: '16px', color: 'var(--text)', lineHeight: '1.8', marginBottom: '20px' }}>
-            Tatiana Goncear este chimistă și nutriționistă și de peste 6 ani ajută femeile să își schimbe stilul de viață și să ajungă la o greutate în care se simt bine în propriul corp.
+          <p>
+            Scopul nu este perfectiunea. Scopul este sa inveti ce mananci, cum te misti
+            si cum iti pastrezi rezultatele fara sa revii la haos dupa cateva saptamani.
           </p>
-          <div style={{ background: 'rgba(0, 208, 132, 0.05)', padding: '30px', borderRadius: '12px', borderLeft: '4px solid var(--primary)', margin: '30px 0' }}>
-            <p style={{ fontSize: '16px', color: 'var(--text)', lineHeight: '1.8' }}>
-              <strong>Experiența ei nu este doar profesională, ci și personală.</strong> Tatiana a slăbit 58 de kilograme, iar acest proces i-a oferit o înțelegere profundă a dificultăților prin care trece o femeie care se confruntă cu kilograme în plus — de la lupta cu obiceiurile alimentare până la provocările emoționale care apar pe parcurs.
-            </p>
+        </div>
+
+        <div className="expert-card">
+          <div className="expert-card-icon">
+            <i className="fas fa-star" aria-hidden="true"></i>
           </div>
-          <p style={{ fontSize: '16px', color: 'var(--text)', lineHeight: '1.8' }}>
-            Această experiență a stat la baza programelor create în Fiifit Online, unde transformarea nu se bazează pe diete restrictive sau soluții rapide. Prin această abordare, femeile nu doar slăbesc, ci învață cum să își mențină rezultatele și să își construiască un stil de viață echilibrat pe termen lung.
+          <h3>Ce face programul diferit</h3>
+          <p>
+            Ai antrenamente live, lectii scurte, meniu PDF, comunitate si intalniri cu
+            Tanya ca sa nu ramai singura intre motivatie si rezultat.
           </p>
+          <div className="expert-stats">
+            {highlights.map((item) => (
+              <div key={item.value}>
+                <strong>{item.value}</strong>
+                <span>{item.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
