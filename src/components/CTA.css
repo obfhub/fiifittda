@@ -1,131 +1,138 @@
-.cta-final {
-  padding: 120px 0;
-  background: linear-gradient(135deg, #2A2A2A 0%, #00A565 50%, #00D084 100%);
-  text-align: center;
-  color: white;
+.podcasts-section {
   position: relative;
+  padding: 110px 0;
   overflow: hidden;
+  border-top: 1px solid rgba(0, 208, 132, 0.18);
+  background:
+    radial-gradient(circle at 82% 0%, rgba(0, 208, 132, 0.16), transparent 32%),
+    linear-gradient(180deg, #101312 0%, #080a09 100%);
+  color: white;
 }
 
-.cta-final::before {
+.podcasts-section::before {
   content: '';
   position: absolute;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-  border-radius: 50%;
-  bottom: -100px;
-  right: -50px;
+  inset: 0;
+  opacity: 0.16;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 0.7px, transparent 0.7px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse at top, black, transparent 72%);
+  pointer-events: none;
 }
 
-.cta-final h2 {
-  font-size: 52px;
-  margin-bottom: 25px;
+.podcasts-section .container {
   position: relative;
   z-index: 1;
-  font-weight: 800;
-  letter-spacing: 0;
 }
 
-.cta-eyebrow {
-  position: relative;
-  z-index: 1;
+.podcasts-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(260px, 0.65fr);
+  gap: 42px;
+  align-items: end;
+  margin-bottom: 38px;
+}
+
+.podcasts-eyebrow {
   display: inline-block;
-  margin-bottom: 14px;
-  color: rgba(255, 255, 255, 0.78);
+  margin-bottom: 12px;
+  color: var(--primary);
   font-size: 12px;
   font-weight: 900;
-  letter-spacing: 1.4px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
 }
 
-.cta-final p {
-  font-size: 20px;
-  margin-bottom: 45px;
-  opacity: 0.95;
-  position: relative;
-  z-index: 1;
-  line-height: 1.8;
+.podcasts-heading h2 {
+  max-width: 780px;
+  color: white;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.03;
 }
 
-.btn-large {
-  padding: 18px 56px;
-  font-size: 18px;
-  background: white;
+.podcasts-heading p {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.podcasts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.podcast-card {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(34, 37, 36, 0.86), rgba(14, 17, 16, 0.96));
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.22);
+}
+
+.podcast-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #050706;
+}
+
+.podcast-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.podcast-meta {
+  padding: 16px;
+}
+
+.podcast-meta span {
+  display: block;
+  margin-bottom: 8px;
   color: var(--primary);
-  border: none;
-  border-radius: 50px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: var(--transition);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-  position: relative;
-  z-index: 1;
-  letter-spacing: 0.5px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
-.btn-large:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+.podcast-meta h3 {
+  color: white;
+  font-size: 15px;
+  line-height: 1.42;
+}
+
+@media (max-width: 1080px) {
+  .podcasts-grid {
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
-  .cta-final {
-    padding: 80px 0;
+  .podcasts-section {
+    padding: 78px 0;
   }
 
-  .cta-final h2 {
-    font-size: 32px;
-    letter-spacing: 0;
-    margin-bottom: 18px;
-  }
-
-  .cta-final p {
-    font-size: 15px;
-    margin-bottom: 32px;
-    line-height: 1.6;
-  }
-
-  .btn-large {
-    padding: 13px 32px;
-    font-size: 14px;
-  }
-
-  .cta-final::before {
-    width: 350px;
-    height: 350px;
-    bottom: -80px;
-    right: -60px;
+  .podcasts-heading {
+    grid-template-columns: 1fr;
+    gap: 14px;
   }
 }
 
-@media (max-width: 480px) {
-  .cta-final {
-    padding: 60px 0;
+@media (max-width: 560px) {
+  .podcasts-section {
+    padding: 62px 0;
   }
 
-  .cta-final h2 {
-    font-size: 26px;
-    letter-spacing: 0;
-    margin-bottom: 14px;
+  .podcasts-grid {
+    grid-template-columns: 1fr;
   }
 
-  .cta-final p {
-    font-size: 13px;
-    margin-bottom: 24px;
-  }
-
-  .btn-large {
-    padding: 11px 28px;
-    font-size: 13px;
-    width: min(100%, 280px);
-  }
-
-  .cta-final::before {
-    width: 250px;
-    height: 250px;
-    bottom: -70px;
-    right: -80px;
-    opacity: 0.7;
+  .podcast-meta {
+    padding: 14px;
   }
 }
